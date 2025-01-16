@@ -1,0 +1,43 @@
+[lint]
+select = ["ALL"]
+ignore = [
+  "COM812",
+  "COM819",
+  "D1",
+  "C901",
+  "D203",
+  "D212",
+  "E501",
+  "EM",
+  "ERA001",
+  "FA100",
+  "FA102",
+  "FBT003",
+  "FIX",
+  "G004",
+  "ISC003",
+  "PLR",
+  "PYI041",
+  "RET",
+  "S",
+  "SIM118",
+  "T20",
+  "TC002",
+  "TD",
+  "TRY003",
+  "UP006",
+  "UP015",
+]
+unfixable = ["F401", "ISC001"]
+
+[lint.flake8-implicit-str-concat]
+allow-multiline = false
+
+[lint.flake8-import-conventions.extend-aliases]
+"datetime.date" = "Date"
+"datetime.datetime" = "DateTime"
+"datetime.timedelta"="TimeDelta"
+"datetime.timezone" = "TimeZone"
+
+[lint.pep8-naming]
+extend-ignore-names = ["Date","DateTime","TimeDelta","TimeZone"]

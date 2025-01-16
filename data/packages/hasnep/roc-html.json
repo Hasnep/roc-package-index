@@ -1,0 +1,1537 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-html",
+  "download_url": "https://github.com/Hasnep/roc-html/releases/download/v0.6.0/IOyNfA4U_bCVBihrs95US9Tf5PGAWh3qvrBN4DRbK5c.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-html",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "An HTML node, either an HTML element or some text inside an HTML element.",
+          "is_a": "type",
+          "name": "Node",
+          "type_annotation": null
+        },
+        {
+          "description": "Create a `Text` node containing a string.\n\nThe string will be escaped so that it's safely rendered as a text node even if the string contains HTML tags.\n\n```\nexpect\n    textNode = Html.text \"<script>alert('hi')</script>\"\n    Html.renderWithoutDocType textNode == \"&lt;script&gt;alert(&#39;hi&#39;)&lt;/script&gt;\"\n```",
+          "is_a": "value",
+          "name": "text",
+          "type_annotation": "Str -> Node"
+        },
+        {
+          "description": "Mark a string as safe for HTML without actually escaping it.\n\nDO NOT use this function unless you're sure the input string is safe.\n\nNEVER use this function on user input; use the `text` function instead.\n\n```\nexpect\n    htmlNode = Html.dangerouslyIncludeUnescapedHtml \"<script>alert('This JavaScript will run')</script>\"\n    Html.renderWithoutDocType htmlNode ==  \"<script>alert('This JavaScript will run')</script>\"\n```",
+          "is_a": "value",
+          "name": "dangerouslyIncludeUnescapedHtml",
+          "type_annotation": "Str -> Node"
+        },
+        {
+          "description": "Define a non-standard HTML element.\nYou can use this to add elements that are not already supported.\n\nFor example, you could bring back the obsolete <blink> element and add some 90's nostalgia to your web page!\n\n```\nblink : List Attribute, List Node -> Node\nblink = element \"blink\"\n\nblink [] [ text \"This text is blinking!\" ]\n```",
+          "is_a": "value",
+          "name": "element",
+          "type_annotation": "Str -> List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Define a non-standard HTML [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element).\nA void element is an element that cannot have any children.",
+          "is_a": "value",
+          "name": "voidElement",
+          "type_annotation": "Str -> List Attribute -> Node"
+        },
+        {
+          "description": "Render a Node to an HTML string\n\nThe output has no whitespace between nodes, to make it small.\nThis is intended for generating full HTML documents, so it automatically adds `<!DOCTYPE html>` to the start of the string.\nSee also `renderWithoutDocType`.",
+          "is_a": "value",
+          "name": "render",
+          "type_annotation": "Node -> Str"
+        },
+        {
+          "description": "Render a Node to a string, without a `!DOCTYPE` tag.",
+          "is_a": "value",
+          "name": "renderWithoutDocType",
+          "type_annotation": "Node -> Str"
+        },
+        {
+          "description": "Construct a `address` element.",
+          "is_a": "value",
+          "name": "address",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `article` element.",
+          "is_a": "value",
+          "name": "article",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `aside` element.",
+          "is_a": "value",
+          "name": "aside",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `footer` element.",
+          "is_a": "value",
+          "name": "footer",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h1` element.",
+          "is_a": "value",
+          "name": "h1",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h2` element.",
+          "is_a": "value",
+          "name": "h2",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h3` element.",
+          "is_a": "value",
+          "name": "h3",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h4` element.",
+          "is_a": "value",
+          "name": "h4",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h5` element.",
+          "is_a": "value",
+          "name": "h5",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `h6` element.",
+          "is_a": "value",
+          "name": "h6",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `header` element.",
+          "is_a": "value",
+          "name": "header",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `main` element.",
+          "is_a": "value",
+          "name": "main",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `nav` element.",
+          "is_a": "value",
+          "name": "nav",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `section` element.",
+          "is_a": "value",
+          "name": "section",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `del` element.",
+          "is_a": "value",
+          "name": "del",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `ins` element.",
+          "is_a": "value",
+          "name": "ins",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `base` element.",
+          "is_a": "value",
+          "name": "base",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `head` element.",
+          "is_a": "value",
+          "name": "head",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `link` element.",
+          "is_a": "value",
+          "name": "link",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `meta` element.",
+          "is_a": "value",
+          "name": "meta",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `style` element.",
+          "is_a": "value",
+          "name": "style",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `title` element.",
+          "is_a": "value",
+          "name": "title",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `embed` element.",
+          "is_a": "value",
+          "name": "embed",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `iframe` element.",
+          "is_a": "value",
+          "name": "iframe",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `object` element.",
+          "is_a": "value",
+          "name": "object",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `picture` element.",
+          "is_a": "value",
+          "name": "picture",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `portal` element.",
+          "is_a": "value",
+          "name": "portal",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `source` element.",
+          "is_a": "value",
+          "name": "source",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `button` element.",
+          "is_a": "value",
+          "name": "button",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `datalist` element.",
+          "is_a": "value",
+          "name": "datalist",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `fieldset` element.",
+          "is_a": "value",
+          "name": "fieldset",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `form` element.",
+          "is_a": "value",
+          "name": "form",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `input` element.",
+          "is_a": "value",
+          "name": "input",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `label` element.",
+          "is_a": "value",
+          "name": "label",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `legend` element.",
+          "is_a": "value",
+          "name": "legend",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `meter` element.",
+          "is_a": "value",
+          "name": "meter",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `optgroup` element.",
+          "is_a": "value",
+          "name": "optgroup",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `option` element.",
+          "is_a": "value",
+          "name": "option",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `output` element.",
+          "is_a": "value",
+          "name": "output",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `progress` element.",
+          "is_a": "value",
+          "name": "progress",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `select` element.",
+          "is_a": "value",
+          "name": "select",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `textarea` element.",
+          "is_a": "value",
+          "name": "textarea",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `area` element.",
+          "is_a": "value",
+          "name": "area",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `audio` element.",
+          "is_a": "value",
+          "name": "audio",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `img` element.",
+          "is_a": "value",
+          "name": "img",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `map` element.",
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `track` element.",
+          "is_a": "value",
+          "name": "track",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `video` element.",
+          "is_a": "value",
+          "name": "video",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `a` element.",
+          "is_a": "value",
+          "name": "a",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `abbr` element.",
+          "is_a": "value",
+          "name": "abbr",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `b` element.",
+          "is_a": "value",
+          "name": "b",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `bdi` element.",
+          "is_a": "value",
+          "name": "bdi",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `bdo` element.",
+          "is_a": "value",
+          "name": "bdo",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `br` element.",
+          "is_a": "value",
+          "name": "br",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `cite` element.",
+          "is_a": "value",
+          "name": "cite",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `code` element.",
+          "is_a": "value",
+          "name": "code",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `data` element.",
+          "is_a": "value",
+          "name": "data",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `dfn` element.",
+          "is_a": "value",
+          "name": "dfn",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `em` element.",
+          "is_a": "value",
+          "name": "em",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `i` element.",
+          "is_a": "value",
+          "name": "i",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `kbd` element.",
+          "is_a": "value",
+          "name": "kbd",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `mark` element.",
+          "is_a": "value",
+          "name": "mark",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `q` element.",
+          "is_a": "value",
+          "name": "q",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `rp` element.",
+          "is_a": "value",
+          "name": "rp",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `rt` element.",
+          "is_a": "value",
+          "name": "rt",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `ruby` element.",
+          "is_a": "value",
+          "name": "ruby",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `s` element.",
+          "is_a": "value",
+          "name": "s",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `samp` element.",
+          "is_a": "value",
+          "name": "samp",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `small` element.",
+          "is_a": "value",
+          "name": "small",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `span` element.",
+          "is_a": "value",
+          "name": "span",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `strong` element.",
+          "is_a": "value",
+          "name": "strong",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `sub` element.",
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `sup` element.",
+          "is_a": "value",
+          "name": "sup",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `time` element.",
+          "is_a": "value",
+          "name": "time",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `u` element.",
+          "is_a": "value",
+          "name": "u",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `var` element.",
+          "is_a": "value",
+          "name": "var",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `wbr` element.",
+          "is_a": "value",
+          "name": "wbr",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `details` element.",
+          "is_a": "value",
+          "name": "details",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `dialog` element.",
+          "is_a": "value",
+          "name": "dialog",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `summary` element.",
+          "is_a": "value",
+          "name": "summary",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `html` element.",
+          "is_a": "value",
+          "name": "html",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `math` element.",
+          "is_a": "value",
+          "name": "math",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `svg` element.",
+          "is_a": "value",
+          "name": "svg",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `canvas` element.",
+          "is_a": "value",
+          "name": "canvas",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `noscript` element.",
+          "is_a": "value",
+          "name": "noscript",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `script` element.",
+          "is_a": "value",
+          "name": "script",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `body` element.",
+          "is_a": "value",
+          "name": "body",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `caption` element.",
+          "is_a": "value",
+          "name": "caption",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `col` element.",
+          "is_a": "value",
+          "name": "col",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `colgroup` element.",
+          "is_a": "value",
+          "name": "colgroup",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `table` element.",
+          "is_a": "value",
+          "name": "table",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `tbody` element.",
+          "is_a": "value",
+          "name": "tbody",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `td` element.",
+          "is_a": "value",
+          "name": "td",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `tfoot` element.",
+          "is_a": "value",
+          "name": "tfoot",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `th` element.",
+          "is_a": "value",
+          "name": "th",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `thead` element.",
+          "is_a": "value",
+          "name": "thead",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `tr` element.",
+          "is_a": "value",
+          "name": "tr",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `blockquote` element.",
+          "is_a": "value",
+          "name": "blockquote",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `dd` element.",
+          "is_a": "value",
+          "name": "dd",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `div` element.",
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `dl` element.",
+          "is_a": "value",
+          "name": "dl",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `dt` element.",
+          "is_a": "value",
+          "name": "dt",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `figcaption` element.",
+          "is_a": "value",
+          "name": "figcaption",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `figure` element.",
+          "is_a": "value",
+          "name": "figure",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `hr` element.",
+          "is_a": "value",
+          "name": "hr",
+          "type_annotation": "List Attribute -> Node"
+        },
+        {
+          "description": "Construct a `li` element.",
+          "is_a": "value",
+          "name": "li",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `menu` element.",
+          "is_a": "value",
+          "name": "menu",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `ol` element.",
+          "is_a": "value",
+          "name": "ol",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `p` element.",
+          "is_a": "value",
+          "name": "p",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `pre` element.",
+          "is_a": "value",
+          "name": "pre",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `ul` element.",
+          "is_a": "value",
+          "name": "ul",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `slot` element.",
+          "is_a": "value",
+          "name": "slot",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a `template` element.",
+          "is_a": "value",
+          "name": "template",
+          "type_annotation": "List Attribute, List Node -> Node"
+        }
+      ],
+      "name": "Html"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Attribute",
+          "type_annotation": null
+        },
+        {
+          "description": "Define a non-standard attribute.\nYou can use this to add attributes that are not already supported.",
+          "is_a": "value",
+          "name": "attribute",
+          "type_annotation": "Str -> Str -> Attribute"
+        },
+        {
+          "description": "Construct a `accept` attribute.",
+          "is_a": "value",
+          "name": "accept",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `accept-charset` attribute.",
+          "is_a": "value",
+          "name": "acceptCharset",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `accesskey` attribute.",
+          "is_a": "value",
+          "name": "accesskey",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `action` attribute.",
+          "is_a": "value",
+          "name": "action",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `align` attribute.",
+          "is_a": "value",
+          "name": "align",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `allow` attribute.",
+          "is_a": "value",
+          "name": "allow",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `alt` attribute.",
+          "is_a": "value",
+          "name": "alt",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `async` attribute.",
+          "is_a": "value",
+          "name": "async",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `autocapitalize` attribute.",
+          "is_a": "value",
+          "name": "autocapitalize",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `autocomplete` attribute.",
+          "is_a": "value",
+          "name": "autocomplete",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `autofocus` attribute.",
+          "is_a": "value",
+          "name": "autofocus",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `autoplay` attribute.",
+          "is_a": "value",
+          "name": "autoplay",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `background` attribute.",
+          "is_a": "value",
+          "name": "background",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `bgcolor` attribute.",
+          "is_a": "value",
+          "name": "bgcolor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `border` attribute.",
+          "is_a": "value",
+          "name": "border",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `buffered` attribute.",
+          "is_a": "value",
+          "name": "buffered",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `capture` attribute.",
+          "is_a": "value",
+          "name": "capture",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `challenge` attribute.",
+          "is_a": "value",
+          "name": "challenge",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `charset` attribute.",
+          "is_a": "value",
+          "name": "charset",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `checked` attribute.",
+          "is_a": "value",
+          "name": "checked",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `cite` attribute.",
+          "is_a": "value",
+          "name": "cite",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `class` attribute.",
+          "is_a": "value",
+          "name": "class",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `code` attribute.",
+          "is_a": "value",
+          "name": "code",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `codebase` attribute.",
+          "is_a": "value",
+          "name": "codebase",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `color` attribute.",
+          "is_a": "value",
+          "name": "color",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `cols` attribute.",
+          "is_a": "value",
+          "name": "cols",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `colspan` attribute.",
+          "is_a": "value",
+          "name": "colspan",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `content` attribute.",
+          "is_a": "value",
+          "name": "content",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `contenteditable` attribute.",
+          "is_a": "value",
+          "name": "contenteditable",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `contextmenu` attribute.",
+          "is_a": "value",
+          "name": "contextmenu",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `controls` attribute.",
+          "is_a": "value",
+          "name": "controls",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `coords` attribute.",
+          "is_a": "value",
+          "name": "coords",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `crossorigin` attribute.",
+          "is_a": "value",
+          "name": "crossorigin",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `csp` attribute.",
+          "is_a": "value",
+          "name": "csp",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `data` attribute.",
+          "is_a": "value",
+          "name": "data",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `datetime` attribute.",
+          "is_a": "value",
+          "name": "datetime",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `decoding` attribute.",
+          "is_a": "value",
+          "name": "decoding",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `default` attribute.",
+          "is_a": "value",
+          "name": "default",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `defer` attribute.",
+          "is_a": "value",
+          "name": "defer",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `dir` attribute.",
+          "is_a": "value",
+          "name": "dir",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `dirname` attribute.",
+          "is_a": "value",
+          "name": "dirname",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `disabled` attribute.",
+          "is_a": "value",
+          "name": "disabled",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `download` attribute.",
+          "is_a": "value",
+          "name": "download",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `draggable` attribute.",
+          "is_a": "value",
+          "name": "draggable",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `enctype` attribute.",
+          "is_a": "value",
+          "name": "enctype",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `enterkeyhint` attribute.",
+          "is_a": "value",
+          "name": "enterkeyhint",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `for` attribute.",
+          "is_a": "value",
+          "name": "for",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `form` attribute.",
+          "is_a": "value",
+          "name": "form",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `formaction` attribute.",
+          "is_a": "value",
+          "name": "formaction",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `formenctype` attribute.",
+          "is_a": "value",
+          "name": "formenctype",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `formmethod` attribute.",
+          "is_a": "value",
+          "name": "formmethod",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `formnovalidate` attribute.",
+          "is_a": "value",
+          "name": "formnovalidate",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `formtarget` attribute.",
+          "is_a": "value",
+          "name": "formtarget",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `headers` attribute.",
+          "is_a": "value",
+          "name": "headers",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `height` attribute.",
+          "is_a": "value",
+          "name": "height",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `hidden` attribute.",
+          "is_a": "value",
+          "name": "hidden",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `high` attribute.",
+          "is_a": "value",
+          "name": "high",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `href` attribute.",
+          "is_a": "value",
+          "name": "href",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `hreflang` attribute.",
+          "is_a": "value",
+          "name": "hreflang",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `http-equiv` attribute.",
+          "is_a": "value",
+          "name": "httpEquiv",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `icon` attribute.",
+          "is_a": "value",
+          "name": "icon",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `id` attribute.",
+          "is_a": "value",
+          "name": "id",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `importance` attribute.",
+          "is_a": "value",
+          "name": "importance",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `inputmode` attribute.",
+          "is_a": "value",
+          "name": "inputmode",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `integrity` attribute.",
+          "is_a": "value",
+          "name": "integrity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `intrinsicsize` attribute.",
+          "is_a": "value",
+          "name": "intrinsicsize",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `ismap` attribute.",
+          "is_a": "value",
+          "name": "ismap",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `itemprop` attribute.",
+          "is_a": "value",
+          "name": "itemprop",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `keytype` attribute.",
+          "is_a": "value",
+          "name": "keytype",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `kind` attribute.",
+          "is_a": "value",
+          "name": "kind",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `label` attribute.",
+          "is_a": "value",
+          "name": "label",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `lang` attribute.",
+          "is_a": "value",
+          "name": "lang",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `language` attribute.",
+          "is_a": "value",
+          "name": "language",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `list` attribute.",
+          "is_a": "value",
+          "name": "list",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `loading` attribute.",
+          "is_a": "value",
+          "name": "loading",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `loop` attribute.",
+          "is_a": "value",
+          "name": "loop",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `low` attribute.",
+          "is_a": "value",
+          "name": "low",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `manifest` attribute.",
+          "is_a": "value",
+          "name": "manifest",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `max` attribute.",
+          "is_a": "value",
+          "name": "max",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `maxlength` attribute.",
+          "is_a": "value",
+          "name": "maxlength",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `media` attribute.",
+          "is_a": "value",
+          "name": "media",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `method` attribute.",
+          "is_a": "value",
+          "name": "method",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `min` attribute.",
+          "is_a": "value",
+          "name": "min",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `minlength` attribute.",
+          "is_a": "value",
+          "name": "minlength",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `multiple` attribute.",
+          "is_a": "value",
+          "name": "multiple",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `muted` attribute.",
+          "is_a": "value",
+          "name": "muted",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `name` attribute.",
+          "is_a": "value",
+          "name": "name",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `novalidate` attribute.",
+          "is_a": "value",
+          "name": "novalidate",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `open` attribute.",
+          "is_a": "value",
+          "name": "open",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `optimum` attribute.",
+          "is_a": "value",
+          "name": "optimum",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `pattern` attribute.",
+          "is_a": "value",
+          "name": "pattern",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `ping` attribute.",
+          "is_a": "value",
+          "name": "ping",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `placeholder` attribute.",
+          "is_a": "value",
+          "name": "placeholder",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `poster` attribute.",
+          "is_a": "value",
+          "name": "poster",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `preload` attribute.",
+          "is_a": "value",
+          "name": "preload",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `radiogroup` attribute.",
+          "is_a": "value",
+          "name": "radiogroup",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `readonly` attribute.",
+          "is_a": "value",
+          "name": "readonly",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `referrerpolicy` attribute.",
+          "is_a": "value",
+          "name": "referrerpolicy",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `rel` attribute.",
+          "is_a": "value",
+          "name": "rel",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `required` attribute.",
+          "is_a": "value",
+          "name": "required",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `reversed` attribute.",
+          "is_a": "value",
+          "name": "reversed",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `role` attribute.",
+          "is_a": "value",
+          "name": "role",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `rows` attribute.",
+          "is_a": "value",
+          "name": "rows",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `rowspan` attribute.",
+          "is_a": "value",
+          "name": "rowspan",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `sandbox` attribute.",
+          "is_a": "value",
+          "name": "sandbox",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `scope` attribute.",
+          "is_a": "value",
+          "name": "scope",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `scoped` attribute.",
+          "is_a": "value",
+          "name": "scoped",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `selected` attribute.",
+          "is_a": "value",
+          "name": "selected",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `shape` attribute.",
+          "is_a": "value",
+          "name": "shape",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `size` attribute.",
+          "is_a": "value",
+          "name": "size",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `sizes` attribute.",
+          "is_a": "value",
+          "name": "sizes",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `slot` attribute.",
+          "is_a": "value",
+          "name": "slot",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `span` attribute.",
+          "is_a": "value",
+          "name": "span",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `spellcheck` attribute.",
+          "is_a": "value",
+          "name": "spellcheck",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `src` attribute.",
+          "is_a": "value",
+          "name": "src",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `srcdoc` attribute.",
+          "is_a": "value",
+          "name": "srcdoc",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `srclang` attribute.",
+          "is_a": "value",
+          "name": "srclang",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `srcset` attribute.",
+          "is_a": "value",
+          "name": "srcset",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `start` attribute.",
+          "is_a": "value",
+          "name": "start",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `step` attribute.",
+          "is_a": "value",
+          "name": "step",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `style` attribute.",
+          "is_a": "value",
+          "name": "style",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `summary` attribute.",
+          "is_a": "value",
+          "name": "summary",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `tabindex` attribute.",
+          "is_a": "value",
+          "name": "tabindex",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `target` attribute.",
+          "is_a": "value",
+          "name": "target",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `title` attribute.",
+          "is_a": "value",
+          "name": "title",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `translate` attribute.",
+          "is_a": "value",
+          "name": "translate",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `type` attribute.",
+          "is_a": "value",
+          "name": "type",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `usemap` attribute.",
+          "is_a": "value",
+          "name": "usemap",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `value` attribute.",
+          "is_a": "value",
+          "name": "value",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `width` attribute.",
+          "is_a": "value",
+          "name": "width",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `wrap` attribute.",
+          "is_a": "value",
+          "name": "wrap",
+          "type_annotation": "Str -> Attribute"
+        }
+      ],
+      "name": "Attribute"
+    }
+  ],
+  "package_id": "hasnep/roc-html",
+  "source_code_url": "https://github.com/hasnep/roc-html"
+}

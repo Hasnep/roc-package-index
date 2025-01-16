@@ -1,0 +1,461 @@
+{
+  "documentation_url": "https://www.imclerran.com/roc-isodate/",
+  "download_url": "https://github.com/imclerran/roc-isodate/releases/download/v0.5.2/4h2zENssbUDlWTTsTuwCmb0tal733VWhjft8LO7WcQo.tar.br",
+  "homepage_url": "https://github.com/imclerran/roc-isodate",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Date",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "unixEpoch",
+          "type_annotation": "Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYd",
+          "type_annotation": "Int *, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isLeapYear",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYmd",
+          "type_annotation": "Int *, Int *, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYwd",
+          "type_annotation": "Int *, Int *, Int * -> Date"
+        },
+        {
+          "description": "Returns the day of the week, from 0=Sunday to 6=Saturday",
+          "is_a": "value",
+          "name": "weekday",
+          "type_annotation": "I64, U8, U8 -> U8"
+        },
+        {
+          "description": "Returns the number of days in the given month of the given year.",
+          "is_a": "value",
+          "name": "daysInMonth",
+          "type_annotation": "I64, U8 -> U8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYw",
+          "type_annotation": "Int *, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toNanosSinceEpoch",
+          "type_annotation": "Date -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromNanosSinceEpoch",
+          "type_annotation": "Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addYears",
+          "type_annotation": "Date, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addMonths",
+          "type_annotation": "Date, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDays",
+          "type_annotation": "Date, Int * -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDurationAndDate",
+          "type_annotation": "Duration, Date -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDateAndDuration",
+          "type_annotation": "Date, Duration -> Date"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoStr",
+          "type_annotation": "Date -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoU8",
+          "type_annotation": "Date -> List U8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoStr",
+          "type_annotation": "Str -> Result Date [InvalidDateFormat]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoU8",
+          "type_annotation": "List U8 -> Result Date [InvalidDateFormat]"
+        }
+      ],
+      "name": "Date"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DateTime",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "unixEpoch",
+          "type_annotation": "DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYd",
+          "type_annotation": "Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYmd",
+          "type_annotation": "Int *, Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYwd",
+          "type_annotation": "Int *, Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYw",
+          "type_annotation": "Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYmdhms",
+          "type_annotation": "Int *, Int *, Int *, Int *, Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromYmdhmsn",
+          "type_annotation": "Int *, Int *, Int *, Int *, Int *, Int *, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toNanosSinceEpoch",
+          "type_annotation": "DateTime -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromNanosSinceEpoch",
+          "type_annotation": "Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addNanoseconds",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addSeconds",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addMinutes",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addHours",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDays",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addMonths",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addYears",
+          "type_annotation": "DateTime, Int * -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDurationAndDateTime",
+          "type_annotation": "Duration, DateTime -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDateTimeAndDuration",
+          "type_annotation": "DateTime, Duration -> DateTime"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoStr",
+          "type_annotation": "DateTime -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoU8",
+          "type_annotation": "DateTime -> List U8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoStr",
+          "type_annotation": "Str -> Result DateTime [InvalidDateTimeFormat]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoU8",
+          "type_annotation": "List U8 -> Result DateTime [InvalidDateTimeFormat]"
+        }
+      ],
+      "name": "DateTime"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Duration",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromNanoseconds",
+          "type_annotation": "Int * -> Result Duration [DurationOverflow]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toNanoseconds",
+          "type_annotation": "Duration -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromSeconds",
+          "type_annotation": "Int * -> Result Duration [DurationOverflow]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toSeconds",
+          "type_annotation": "Duration -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromMinutes",
+          "type_annotation": "Int * -> Result Duration [DurationOverflow]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toMinutes",
+          "type_annotation": "Duration -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromHours",
+          "type_annotation": "Int * -> Result Duration [DurationOverflow]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toHours",
+          "type_annotation": "Duration -> I128"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromDays",
+          "type_annotation": "Int * -> Result Duration [DurationOverflow]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toDays",
+          "type_annotation": "Duration -> I64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDurations",
+          "type_annotation": "Duration, Duration -> Result Duration [DurationOverflow]"
+        }
+      ],
+      "name": "Duration"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Time",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "midnight",
+          "type_annotation": "Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "normalize",
+          "type_annotation": "Time -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromHms",
+          "type_annotation": "Int *, Int *, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromHmsn",
+          "type_annotation": "Int *, Int *, Int *, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toNanosSinceMidnight",
+          "type_annotation": "Time -> I64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromNanosSinceMidnight",
+          "type_annotation": "Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addNanoseconds",
+          "type_annotation": "Time, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addSeconds",
+          "type_annotation": "Time, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addMinutes",
+          "type_annotation": "Time, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addHours",
+          "type_annotation": "Time, Int * -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addDurationAndTime",
+          "type_annotation": "Duration, Time -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addTimeAndDuration",
+          "type_annotation": "Time, Duration -> Time"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoStr",
+          "type_annotation": "Time -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toIsoU8",
+          "type_annotation": "Time -> List U8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoStr",
+          "type_annotation": "Str -> Result Time [InvalidTimeFormat]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromIsoU8",
+          "type_annotation": "List U8 -> Result Time [InvalidTimeFormat]"
+        }
+      ],
+      "name": "Time"
+    }
+  ],
+  "package_id": "imclerran/roc-isodate",
+  "source_code_url": "https://github.com/imclerran/roc-isodate"
+}

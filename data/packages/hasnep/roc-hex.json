@@ -1,0 +1,26 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-hex",
+  "download_url": "https://github.com/Hasnep/roc-hex/releases/download/v0.2.0/dThXyw8dEVrieVQgI2zyydZXnDE16SmR7ItPqv8Xf2o.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-hex",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Convert a hexadecimal string to an integer with an optional leading negative symbol.",
+          "is_a": "value",
+          "name": "fromStr",
+          "type_annotation": "Str -> [ Ok I64, Err [InvalidHexStr] ]"
+        },
+        {
+          "description": "Convert an integer to a hexadecimal string.\nThe output will always be lowercase and will have a leading `-` if the number is negative, but *not* a leading `+` if the number is positive.",
+          "is_a": "value",
+          "name": "toStr",
+          "type_annotation": "I64 -> Str"
+        }
+      ],
+      "name": "Hex"
+    }
+  ],
+  "package_id": "hasnep/roc-hex",
+  "source_code_url": "https://github.com/hasnep/roc-hex"
+}

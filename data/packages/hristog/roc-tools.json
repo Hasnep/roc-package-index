@@ -1,0 +1,395 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/hristog/roc-tools/releases/download/v0.0.1-beta/EXFq0vC6wHodRt4_QO0yspBf8enZx2isElAJ3WZ6SCI.tar.br",
+  "homepage_url": "https://github.com/hristog/roc-tools",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose2With2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose2With3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose2With4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose2With5",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose3With2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose3With3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose3With4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compose3With5",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "flip2",
+          "type_annotation": "(a, b -> c), b, a -> c"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "flip3",
+          "type_annotation": "(a, b, c -> d), c, b, a -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "flip4",
+          "type_annotation": "(a, b, c, d -> e), d, c, b, a -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "flip5",
+          "type_annotation": "(a, b, c, d, e -> f), e, d, c, b, a -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial2Takes1",
+          "type_annotation": "(a, b -> c), a -> b -> c"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial2Takes1Backwards",
+          "type_annotation": "(a, b -> c), b -> a -> c"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial3Takes1",
+          "type_annotation": "(a, b, c -> d), a -> b, c -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial3Takes1Backwards",
+          "type_annotation": "(a, b, c -> d), c -> a, b -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial3Takes2",
+          "type_annotation": "(a, b, c -> d), a, b -> c -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial3Takes2Backwards",
+          "type_annotation": "(a, b, c -> d), b, c -> a -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial4Takes1",
+          "type_annotation": "(a, b, c, d -> e), a -> b, c, d -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial4Takes2",
+          "type_annotation": "(a, b, c, d -> e), a, b -> c, d -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial4Takes3",
+          "type_annotation": "(a, b, c, d -> e), a, b, c -> d -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial5Takes1",
+          "type_annotation": "(a, b, c, d, e -> f), a -> b, c, d, e -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial5Takes2",
+          "type_annotation": "(a, b, c, d, e -> f), a, b -> c, d, e -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial5Takes3",
+          "type_annotation": "(a, b, c, d, e -> f), a, b, c -> d, e -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "partial5Takes4",
+          "type_annotation": "(a, b, c, d, e -> f), a, b, c, d -> e -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry2Backwards",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry3",
+          "type_annotation": "(a, b, c -> d), a -> b -> c -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry3Backwards",
+          "type_annotation": "(a, b, c -> d), c -> b -> a -> d"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry4",
+          "type_annotation": "(a, b, c, d -> e), a -> b -> c -> d -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry4Backwards",
+          "type_annotation": "(a, b, c, d -> e), d -> c -> b -> a -> e"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry5",
+          "type_annotation": "(a, b, c, d, e -> f), a -> b -> c -> d -> e -> f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "curry5Backwards",
+          "type_annotation": "(a, b, c, d, e -> f), e -> d -> c -> b -> a -> f"
+        }
+      ],
+      "name": "FuncTools"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "cartesianProduct",
+          "type_annotation": "List (List a) -> List (List a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "cartesianProduct2",
+          "type_annotation": "List a, List b -> List ( a, b )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "combinations2",
+          "type_annotation": "List a -> List (List a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "count",
+          "type_annotation": "List a -> Dict a U64 where a implements Eq & Hash"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "enumerate",
+          "type_annotation": "List a -> List ( U64, a )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "enumerateStartAt",
+          "type_annotation": "List a, I64 -> List ( I64, a )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "headTail",
+          "type_annotation": "List a -> Result ( a, List a ) [ListWasEmpty]"
+        },
+        {
+          "description": "Run a transformation function on the first element of each list,\nand use that as the first element in the returned list.\nRepeat until a list runs out of elements.\n```roc\nfn = \\a, _, _, _, _ -> a\nexpect map5 [1, 2, 3, 4] [\"A\", \"B\", \"C\"] [5, 5, 5] ['A', 'B', 'C', 'D', 'E'] [10.0, 15.0, 20.0, 25.0] == [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "map5",
+          "type_annotation": "List a, List b, List c, List d, List e, (a, b, c, d, e -> f) -> List f"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "max",
+          "type_annotation": "List (Num a) -> Result (Num a) [ListWasEmpty]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "maxIndex",
+          "type_annotation": "List (Num a) -> Result ( U64, Num a ) [ListWasEmpty]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "maxWithDefault",
+          "type_annotation": "List (Num a), Num a -> Num a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "maxIndexWithDefault",
+          "type_annotation": "List (Num a), U64, Num a -> ( U64, Num a )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "maxWithKey",
+          "type_annotation": "List (Num a), (Num a -> Num *) -> Result (Num a) [ListWasEmpty]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "mode",
+          "type_annotation": "List a -> Result a [ListWasEmpty] where a implements Eq & Hash"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "slice",
+          "type_annotation": "List elem, U64, U64 -> List elem"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "splitAt",
+          "type_annotation": "List a, U64 -> ( List a, List a )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zip",
+          "type_annotation": "List (List a) -> List (List a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zip2",
+          "type_annotation": "List a, List b -> List ( a, b )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zip3",
+          "type_annotation": "List a, List b, List c -> List ( a, b, c )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zip4",
+          "type_annotation": "List a, List b, List c, List d -> List ( a, b, c, d )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zip5",
+          "type_annotation": "List a, List b, List c, List d, List e -> List ( a, b, c, d, e )"
+        }
+      ],
+      "name": "ListTools"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "divMod",
+          "type_annotation": "Int a, Int a -> ( Int a, Int a )"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "square",
+          "type_annotation": "Num a -> Num a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "exp",
+          "type_annotation": "Frac a -> Frac a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "nthRoot",
+          "type_annotation": null
+        }
+      ],
+      "name": "NumTools"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "cmpU8Based",
+          "type_annotation": "Str, Str -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "formatFWithTrailingZerosMaybeTrim",
+          "type_annotation": "Num (FloatingPoint *), U64 -> Str"
+        }
+      ],
+      "name": "StrTools"
+    }
+  ],
+  "package_id": "hristog/roc-tools",
+  "source_code_url": "https://github.com/hristog/roc-tools"
+}

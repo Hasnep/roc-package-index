@@ -1,0 +1,313 @@
+{
+  "documentation_url": "https://lukewilliamboswell.github.io/roc-ansi/",
+  "download_url": "https://github.com/lukewilliamboswell/roc-ansi/releases/download/0.7.0/NmbsrdwKIOb1DtUIV7L_AhCvTx7nhfaW3KkOpT7VUZg.tar.br",
+  "homepage_url": "https://github.com/lukewilliamboswell/roc-ansi",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Color",
+          "type_annotation": "Color.Color"
+        },
+        {
+          "description": "[Ansi Escape Codes](https://en.wikipedia.org/wiki/ANSI_escape_code)",
+          "is_a": "type",
+          "name": "Escape",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toStr",
+          "type_annotation": "Escape -> Str"
+        },
+        {
+          "description": "Add styles to a string",
+          "is_a": "value",
+          "name": "style",
+          "type_annotation": "Str, List Style -> Str"
+        },
+        {
+          "description": "Add color styles to a string and then resets to default",
+          "is_a": "value",
+          "name": "color",
+          "type_annotation": "Str, { fg ? Color, bg ? Color } -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Input",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "parseRawStdin",
+          "type_annotation": "List U8 -> Input"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "inputToStr",
+          "type_annotation": "Input -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "symbolToStr",
+          "type_annotation": "Symbol -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "upperToStr",
+          "type_annotation": "Letter -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "lowerToStr",
+          "type_annotation": "Letter -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "ScreenSize",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "CursorPosition",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DrawFn",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Pixel",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "parseCursor",
+          "type_annotation": "List U8 -> CursorPosition"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "updateCursor",
+          "type_annotation": "{ cursor : CursorPosition, screen : ScreenSize }a, [ Up, Down, Left, Right ] -> { cursor : CursorPosition, screen : ScreenSize }a"
+        },
+        {
+          "description": "Loop through each pixel in screen and build up a single string to write to stdout",
+          "is_a": "value",
+          "name": "drawScreen",
+          "type_annotation": "{ cursor : CursorPosition, screen : ScreenSize }*, List DrawFn -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "drawBox",
+          "type_annotation": "{ r : U16, c : U16, w : U16, h : U16, fg ? Color, bg ? Color, char ? Str, styles ? List Style } -> DrawFn"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "drawVLine",
+          "type_annotation": "{ r : U16, c : U16, len : U16, fg ? Color, bg ? Color, char ? Str, styles ? List Style } -> DrawFn"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "drawHLine",
+          "type_annotation": "{ r : U16, c : U16, len : U16, fg ? Color, bg ? Color, char ? Str, styles ? List Style } -> DrawFn"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "drawCursor",
+          "type_annotation": "{ fg ? Color, bg ? Color, char ? Str, styles ? List Style } -> DrawFn"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "drawText",
+          "type_annotation": "Str, { r : U16, c : U16, fg ? Color, bg ? Color, styles ? List Style } -> DrawFn"
+        }
+      ],
+      "name": "ANSI"
+    },
+    {
+      "definitions": [
+        {
+          "description": "[Ansi 16 colors](https://en.wikipedia.org/wiki/ANSI_escape_code#3-bit_and_4-bit)\nThis colors can be customized, leading to variations across different terminals.\nTherefore, if your use case requires a consistent color palette, it's recommended to avoid using them.",
+          "is_a": "type",
+          "name": "C16",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Name",
+          "type_annotation": "[ Black, Red, Green, Yellow, Blue, Magenta, Cyan, White ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "nameToCode",
+          "type_annotation": "Name -> U8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toC256",
+          "type_annotation": "C16 -> C256"
+        }
+      ],
+      "name": "C16"
+    },
+    {
+      "definitions": [
+        {
+          "description": "[Ansi 16 colors](https://en.wikipedia.org/wiki/ANSI_escape_code#8-bit)\nSystem range (0-15)\nChromatic range 6x6x6 cube (16-231)\nGrayscale range (232-255)",
+          "is_a": "type",
+          "name": "C256",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toRgb",
+          "type_annotation": "C256 -> Rgb"
+        }
+      ],
+      "name": "C256"
+    },
+    {
+      "definitions": [
+        {
+          "description": "[Color](https://en.wikipedia.org/wiki/ANSI_escape_code#Colors)\nit includes the 4-bit, 8-bit and 24-bit colors supported on *most* modern terminal emulators.",
+          "is_a": "type",
+          "name": "Color",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toCode",
+          "type_annotation": "Color, U8 -> List U8"
+        }
+      ],
+      "name": "Color"
+    },
+    {
+      "definitions": [
+        {
+          "description": "[Control](https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_(Control_Sequence_Introducer)_sequences) (commonly known as Control Sequence Introducer or CSI)\nrepresents the control sequences for terminal commands.\nThe provided commands are common and well-supported, though not exhaustive.",
+          "is_a": "type",
+          "name": "Control",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toCode",
+          "type_annotation": "Control -> Str"
+        }
+      ],
+      "name": "Control"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Rgb",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Hex",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromHex",
+          "type_annotation": "Hex -> Rgb"
+        }
+      ],
+      "name": "Rgb"
+    },
+    {
+      "definitions": [
+        {
+          "description": "[Style](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters) (commonly known as Select Graphic Rendition or SGR)\nrepresents the control sequence for terminal display attributes.\nIt controls various attributes, which remain in effect until explicitly reset by a subsequent style sequence.\nThe provided attributes are common and well-supported, though not exhaustive.",
+          "is_a": "type",
+          "name": "Style",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toCode",
+          "type_annotation": "Style -> List U8"
+        }
+      ],
+      "name": "Style"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Represents a [Piece table](https://en.wikipedia.org/wiki/Piece_table) which\nis typically used to represent a text document while it is edited in a text\neditor",
+          "is_a": "type",
+          "name": "PieceTable",
+          "type_annotation": null
+        },
+        {
+          "description": "Represents an index into the original or add buffer",
+          "is_a": "type",
+          "name": "Entry",
+          "type_annotation": null
+        },
+        {
+          "description": "Insert `values` into the table at a given `index`.\n\nIf index is larger than current buffer, appends to end of file.",
+          "is_a": "value",
+          "name": "insert",
+          "type_annotation": "PieceTable a, { values : List a, index : U64 } -> PieceTable a"
+        },
+        {
+          "description": "Calculate the total length when buffer indexes will be converted to a list",
+          "is_a": "value",
+          "name": "length",
+          "type_annotation": "List Entry -> U64"
+        },
+        {
+          "description": "Delete the value at `index`\n\nIf index is out of range this has no effect.",
+          "is_a": "value",
+          "name": "delete",
+          "type_annotation": "PieceTable a, { index : U64 } -> PieceTable a"
+        },
+        {
+          "description": "Fuse the original and added buffers into a single list",
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "PieceTable a -> List a"
+        }
+      ],
+      "name": "PieceTable"
+    }
+  ],
+  "package_id": "lukewilliamboswell/roc-ansi",
+  "source_code_url": "https://github.com/lukewilliamboswell/roc-ansi"
+}

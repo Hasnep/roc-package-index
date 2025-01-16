@@ -1,0 +1,104 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-turtle",
+  "download_url": "https://github.com/Hasnep/roc-turtle/releases/download/v0.1.0/FxIGHKCq1bbbJI9WicK2m7ibr3eH66QNdB0WZtjE17E.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-turtle",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "A position on the canvas.",
+          "is_a": "type",
+          "name": "Position",
+          "type_annotation": null
+        },
+        {
+          "description": "A turtle that can move around the canvas and draw lines.",
+          "is_a": "type",
+          "name": "Turtle",
+          "type_annotation": null
+        },
+        {
+          "description": "Create a new turtle at the origin facing right with the pen down.",
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ position ? Position, direction ? F64, pen ? [ Up, Down ] } -> Turtle"
+        },
+        {
+          "description": "Get the turtle's current position.",
+          "is_a": "value",
+          "name": "getPosition",
+          "type_annotation": "Turtle -> Position"
+        },
+        {
+          "description": "Move the turtle forward by a distance.",
+          "is_a": "value",
+          "name": "forward",
+          "type_annotation": "Turtle, F64 -> Turtle"
+        },
+        {
+          "description": "Move the turtle to a new position without changing its direction.",
+          "is_a": "value",
+          "name": "moveTo",
+          "type_annotation": "Turtle, Position -> Turtle"
+        },
+        {
+          "description": "Get the turtle's current direction.",
+          "is_a": "value",
+          "name": "getDirection",
+          "type_annotation": "Turtle -> F64"
+        },
+        {
+          "description": "Turn the turtle by an angle.",
+          "is_a": "value",
+          "name": "turn",
+          "type_annotation": "Turtle, F64 -> Turtle"
+        },
+        {
+          "description": "Turn the turtle to an absolute angle.",
+          "is_a": "value",
+          "name": "turnTo",
+          "type_annotation": "Turtle, F64 -> Turtle"
+        },
+        {
+          "description": "Point the turtle at a position.",
+          "is_a": "value",
+          "name": "pointAt",
+          "type_annotation": "Turtle, Position -> Turtle"
+        },
+        {
+          "description": "Get the pens' current state.",
+          "is_a": "value",
+          "name": "getPen",
+          "type_annotation": "Turtle -> [ Up, Down ]"
+        },
+        {
+          "description": "Set the pen to `Up`, `Down`, or `Invert` (toggle between `Up` and `Down`)",
+          "is_a": "value",
+          "name": "setPen",
+          "type_annotation": "Turtle, [ Up, Down, Invert ] -> Turtle"
+        },
+        {
+          "description": "Get all the lines drawn by the turtle so far.",
+          "is_a": "value",
+          "name": "getLines",
+          "type_annotation": "Turtle -> List (List Position)"
+        },
+        {
+          "description": "Repeat a function n times",
+          "is_a": "value",
+          "name": "repeat",
+          "type_annotation": "Turtle, U64, (Turtle -> Turtle) -> Turtle"
+        },
+        {
+          "description": "Convert the turtle's lines to an SVG string",
+          "is_a": "value",
+          "name": "toSvg",
+          "type_annotation": "Turtle, { x : { from : F64, to : F64 }, y : { from : F64, to : F64 }, scale ? F64 } -> Str"
+        }
+      ],
+      "name": "Turtle"
+    }
+  ],
+  "package_id": "hasnep/roc-turtle",
+  "source_code_url": "https://github.com/hasnep/roc-turtle"
+}

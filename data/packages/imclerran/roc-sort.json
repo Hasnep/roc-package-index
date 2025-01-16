@@ -1,0 +1,91 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/imclerran/roc-sort/releases/download/v0.2.1/du3aUJ9HesAko5x62Km_cdpE5F9y97fqn9wrhO4ZhHs.tar.br",
+  "homepage_url": "https://github.com/imclerran/roc-sort",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "quicksort",
+          "type_annotation": "List a, (a, a -> [ LT, EQ, GT ]) -> List a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "mergesort",
+          "type_annotation": "List a, (a, a -> [ LT, EQ, GT ]) -> List a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sortNums",
+          "type_annotation": "List (Num a) -> List (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sortNumsRev",
+          "type_annotation": "List (Num a) -> List (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sortStrs",
+          "type_annotation": "List (Str a) -> List (Str a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sortStrsRev",
+          "type_annotation": "List (Str a) -> List (Str a)"
+        }
+      ],
+      "name": "Sort"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compareNum",
+          "type_annotation": "Num a, Num a -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "num",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "reverseNum",
+          "type_annotation": "Num a, Num a -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "compareStr",
+          "type_annotation": "Str, Str -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "str",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "reverseStr",
+          "type_annotation": "Str, Str -> [ LT, EQ, GT ]"
+        }
+      ],
+      "name": "Compare"
+    }
+  ],
+  "package_id": "imclerran/roc-sort",
+  "source_code_url": "https://github.com/imclerran/roc-sort"
+}

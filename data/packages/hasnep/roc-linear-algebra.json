@@ -1,0 +1,1357 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-linear-algebra",
+  "download_url": "https://github.com/Hasnep/roc-linear-algebra/releases/download/v0.2.0/r1qHVwbBCy0fed0Ox3lqpiFOkPJQHCpJfGzRXZJWV8c.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-linear-algebra",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Vector1",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List F64 -> Result Vector1 [InvalidSize]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Vector1 -> List F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Vector1 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Vector1, Vector1 -> Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Vector1, Vector1 -> Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Vector1, Vector1 -> Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Vector1, Vector1 -> Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "dot",
+          "type_annotation": "Vector1, Vector1 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Vector1, Vector1, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Vector1"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Vector2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List F64 -> Result Vector2 [InvalidSize]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Vector2 -> List F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Vector2 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Vector2, Vector2 -> Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Vector2, Vector2 -> Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Vector2, Vector2 -> Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Vector2, Vector2 -> Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "dot",
+          "type_annotation": "Vector2, Vector2 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Vector2, Vector2, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Vector2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Vector3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List F64 -> Result Vector3 [InvalidSize]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Vector3 -> List F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Vector3 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Vector3, Vector3 -> Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Vector3, Vector3 -> Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Vector3, Vector3 -> Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Vector3, Vector3 -> Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "dot",
+          "type_annotation": "Vector3, Vector3 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "cross",
+          "type_annotation": "Vector3, Vector3 -> Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Vector3, Vector3, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Vector3"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Vector4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List F64 -> Result Vector4 [InvalidSize]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Vector4 -> List F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Vector4 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Vector4, Vector4 -> Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Vector4, Vector4 -> Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Vector4, Vector4 -> Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Vector4, Vector4 -> Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "dot",
+          "type_annotation": "Vector4, Vector4 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Vector4, Vector4, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Vector4"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix1x1",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "identity",
+          "type_annotation": "Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromDiagonal",
+          "type_annotation": "Vector1.Vector1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector1.Vector1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Matrix1x1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "diagonal",
+          "type_annotation": "Matrix1x1 -> Vector1.Vector1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "determinant",
+          "type_annotation": "Matrix1x1 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "invert",
+          "type_annotation": "Matrix1x1 -> Result Matrix1x1 [NonInvertible]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix1x1, Matrix1x1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix1x1, Matrix1x1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix1x1, Matrix1x1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix1x1, Matrix1x1 -> Matrix1x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix1x1, Matrix1x1, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix1x1"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix2x1",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector2.Vector2 -> Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix2x1, Matrix2x1 -> Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix2x1, Matrix2x1 -> Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix2x1, Matrix2x1 -> Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix2x1, Matrix2x1 -> Matrix2x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix2x1, Matrix2x1, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix2x1"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix3x1",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector3.Vector3 -> Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix3x1, Matrix3x1 -> Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix3x1, Matrix3x1 -> Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix3x1, Matrix3x1 -> Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix3x1, Matrix3x1 -> Matrix3x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix3x1, Matrix3x1, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix3x1"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix4x1",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector4.Vector4 -> Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix4x1, Matrix4x1 -> Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix4x1, Matrix4x1 -> Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix4x1, Matrix4x1 -> Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix4x1, Matrix4x1 -> Matrix4x1"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix4x1, Matrix4x1, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix4x1"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix1x2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector2.Vector2 -> Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix1x2, Matrix1x2 -> Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix1x2, Matrix1x2 -> Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix1x2, Matrix1x2 -> Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix1x2, Matrix1x2 -> Matrix1x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix1x2, Matrix1x2, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix1x2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix2x2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "identity",
+          "type_annotation": "Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromDiagonal",
+          "type_annotation": "Vector2.Vector2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Matrix2x2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "diagonal",
+          "type_annotation": "Matrix2x2 -> Vector2.Vector2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "determinant",
+          "type_annotation": "Matrix2x2 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "invert",
+          "type_annotation": "Matrix2x2 -> Result Matrix2x2 [NonInvertible]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix2x2, Matrix2x2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix2x2, Matrix2x2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix2x2, Matrix2x2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix2x2, Matrix2x2 -> Matrix2x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix2x2, Matrix2x2, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix2x2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix3x2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix3x2, Matrix3x2 -> Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix3x2, Matrix3x2 -> Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix3x2, Matrix3x2 -> Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix3x2, Matrix3x2 -> Matrix3x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix3x2, Matrix3x2, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix3x2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix4x2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix4x2, Matrix4x2 -> Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix4x2, Matrix4x2 -> Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix4x2, Matrix4x2 -> Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix4x2, Matrix4x2 -> Matrix4x2"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix4x2, Matrix4x2, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix4x2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix1x3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector3.Vector3 -> Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix1x3, Matrix1x3 -> Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix1x3, Matrix1x3 -> Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix1x3, Matrix1x3 -> Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix1x3, Matrix1x3 -> Matrix1x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix1x3, Matrix1x3, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix1x3"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix2x3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix2x3, Matrix2x3 -> Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix2x3, Matrix2x3 -> Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix2x3, Matrix2x3 -> Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix2x3, Matrix2x3 -> Matrix2x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix2x3, Matrix2x3, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix2x3"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix3x3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "identity",
+          "type_annotation": "Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromDiagonal",
+          "type_annotation": "Vector3.Vector3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Matrix3x3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "diagonal",
+          "type_annotation": "Matrix3x3 -> Vector3.Vector3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "determinant",
+          "type_annotation": "Matrix3x3 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "invert",
+          "type_annotation": "Matrix3x3 -> Result Matrix3x3 [NonInvertible]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix3x3, Matrix3x3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix3x3, Matrix3x3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix3x3, Matrix3x3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix3x3, Matrix3x3 -> Matrix3x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix3x3, Matrix3x3, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix3x3"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix4x3",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix4x3, Matrix4x3 -> Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix4x3, Matrix4x3 -> Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix4x3, Matrix4x3 -> Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix4x3, Matrix4x3 -> Matrix4x3"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix4x3, Matrix4x3, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix4x3"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix1x4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromVector",
+          "type_annotation": "Vector4.Vector4 -> Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix1x4, Matrix1x4 -> Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix1x4, Matrix1x4 -> Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix1x4, Matrix1x4 -> Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix1x4, Matrix1x4 -> Matrix1x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix1x4, Matrix1x4, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix1x4"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix2x4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix2x4, Matrix2x4 -> Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix2x4, Matrix2x4 -> Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix2x4, Matrix2x4 -> Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix2x4, Matrix2x4 -> Matrix2x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix2x4, Matrix2x4, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix2x4"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix3x4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix3x4, Matrix3x4 -> Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix3x4, Matrix3x4 -> Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix3x4, Matrix3x4 -> Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix3x4, Matrix3x4 -> Matrix3x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix3x4, Matrix3x4, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix3x4"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix4x4",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "identity",
+          "type_annotation": "Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zeros",
+          "type_annotation": "Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ones",
+          "type_annotation": "Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromDiagonal",
+          "type_annotation": "Vector4.Vector4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Matrix4x4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "diagonal",
+          "type_annotation": "Matrix4x4 -> Vector4.Vector4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "determinant",
+          "type_annotation": "Matrix4x4 -> F64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "invert",
+          "type_annotation": "Matrix4x4 -> Result Matrix4x4 [NonInvertible]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Matrix4x4, Matrix4x4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Matrix4x4, Matrix4x4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "elementwiseMul",
+          "type_annotation": "Matrix4x4, Matrix4x4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Matrix4x4, Matrix4x4 -> Matrix4x4"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Matrix4x4, Matrix4x4, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Matrix4x4"
+    }
+  ],
+  "package_id": "hasnep/roc-linear-algebra",
+  "source_code_url": "https://github.com/hasnep/roc-linear-algebra"
+}

@@ -1,0 +1,973 @@
+{
+  "documentation_url": "https://smores56.github.io/weaver/",
+  "download_url": "https://github.com/smores56/weaver/releases/download/0.5.1/nqyqbOkpECWgDUMbY-rG9ug883TVbOimHZFHek-bQeI.tar.br",
+  "homepage_url": "https://github.com/smores56/weaver",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Add a required option that takes a custom type to your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if the option is not given as an argument\nor a value is not provided to the option.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Opt.single { short: \"c\", parser: parse_color, type: \"color\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-c\", \"green\"]\n    == SuccessfullyParsed Green\n```",
+          "is_a": "value",
+          "name": "single",
+          "type_annotation": "DefaultableOptionConfigParams a -> CliBuilder a GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a custom type to your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if more than one instance of the argument\nis provided, there is no value given for the option call, or the value\ndoesn't parse correctly.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Opt.maybe { short: \"c\", type: \"color\", parser: parse_color },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe",
+          "type_annotation": "OptionConfigParams data -> CliBuilder (Result data [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a custom type and can be given multiple times\nto your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if any calls of the option don't provide\na value or any of the options don't parse correctly.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Opt.list { short: \"c\", type: \"color\", parser: parse_color },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-c\", \"green\", \"--color=red\"]\n    == SuccessfullyParsed [Green, Red]\n```",
+          "is_a": "value",
+          "name": "list",
+          "type_annotation": "OptionConfigParams data -> CliBuilder (List data) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional flag to your CLI builder.\n\nParsing arguments will fail if the flag is given more than once\nor if a value is provided to it, e.g. `--flag=value`.\n\n```roc\nexpect\n    { parser } =\n        Opt.flag { short: \"f\", long: \"force\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-f\"]\n    == SuccessfullyParsed Bool.true\n```",
+          "is_a": "value",
+          "name": "flag",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder Bool GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a flag that can be given multiple times to your CLI builder.\n\nParsing arguments will fail if this flag is ever given a value,\ne.g. `--flag=value`.\n\n```roc\nexpect\n    { parser } =\n        Opt.count { short: \"f\", long: \"force\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-f\", \"--force\", \"-fff\"]\n    == SuccessfullyParsed 5\n```",
+          "is_a": "value",
+          "name": "count",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder U64 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an [Arg] to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument\nor a value is not provided to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.arg { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=abc\"]\n    == SuccessfullyParsed (Arg.from_str \"abc\")\n```",
+          "is_a": "value",
+          "name": "arg",
+          "type_annotation": "DefaultableOptionConfigBaseParams Arg -> CliBuilder Arg GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an [Arg] to your CLI builder.\n\nParsing arguments will fail if more than one instance of the argument\nis provided or there is no value given for the option call.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_arg { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_arg",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result Arg [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an [Arg] and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value.\n\n```roc\nexpect\n    { parser } =\n        Opt.arg_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"abc\", \"--answer\", \"def\", \"--answer=ghi\"]\n    == SuccessfullyParsed (List.map [\"abc\", \"def\", \"ghi\"] Arg.from_str)\n```",
+          "is_a": "value",
+          "name": "arg_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List Arg) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a byte list to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument\nor a value is not provided to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.bytes { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=abc\"]\n    == SuccessfullyParsed [97, 98, 99]\n```",
+          "is_a": "value",
+          "name": "bytes",
+          "type_annotation": "DefaultableOptionConfigBaseParams (List U8) -> CliBuilder (List U8) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a byte list to your CLI builder.\n\nParsing arguments will fail if more than one instance of the argument\nis provided or there is no value given for the option call.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_bytes { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_bytes",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result (List U8) [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a byte list and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value.\n\n```roc\nexpect\n    { parser } =\n        Opt.bytes_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"abc\", \"--answer\", \"def\", \"--answer=ghi\"]\n    == SuccessfullyParsed [[97, 98, 99], [100, 101, 102], [103, 104, 105]]\n```",
+          "is_a": "value",
+          "name": "bytes_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List (List U8)) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a string to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Opt.str { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=abc\"]\n    == SuccessfullyParsed \"abc\"\n```",
+          "is_a": "value",
+          "name": "str",
+          "type_annotation": "DefaultableOptionConfigBaseParams Str -> CliBuilder Str GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a string to your CLI builder.\n\nParsing arguments will fail if more than one instance of the argument\nis provided, there is no value given for the option call, or the value\nis not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_str { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_str",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result Str [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a string and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value or any of the values are not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Opt.str_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"abc\", \"--answer\", \"def\", \"--answer=ghi\"]\n    == SuccessfullyParsed [\"abc\", \"def\", \"ghi\"]\n```",
+          "is_a": "value",
+          "name": "str_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List Str) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `Dec` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.dec { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "dec",
+          "type_annotation": "DefaultableOptionConfigBaseParams Dec -> CliBuilder Dec GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `Dec` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_dec { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_dec",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result Dec [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `Dec` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.dec_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"-3.0\"]\n    == SuccessfullyParsed [1.0, 2.0, -3.0]\n```",
+          "is_a": "value",
+          "name": "dec_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List Dec) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `F32` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.f32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "f32",
+          "type_annotation": "DefaultableOptionConfigBaseParams F32 -> CliBuilder F32 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `F32` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_f32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_f32",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result F32 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `F32` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.f32_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"-3.0\"]\n    == SuccessfullyParsed [1.0, 2.0, -3.0]\n```",
+          "is_a": "value",
+          "name": "f32_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List F32) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `F64` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.f64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "f64",
+          "type_annotation": "DefaultableOptionConfigBaseParams F64 -> CliBuilder F64 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `F64` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_f64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_f64",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result F64 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `F64` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.f64_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"-3.0\"]\n    == SuccessfullyParsed [1.0, 2.0, -3.0]\n```",
+          "is_a": "value",
+          "name": "f64_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List F64) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `U8` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.u8 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u8",
+          "type_annotation": "DefaultableOptionConfigBaseParams U8 -> CliBuilder U8 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `U8` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_u8 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u8",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result U8 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `U8` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.u8_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "u8_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List U8) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `U16` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.u16 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u16",
+          "type_annotation": "DefaultableOptionConfigBaseParams U16 -> CliBuilder U16 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `U16` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_u16 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u16",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result U16 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `U16` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.u16_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "u16_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List U16) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `U32` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.u32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u32",
+          "type_annotation": "DefaultableOptionConfigBaseParams U32 -> CliBuilder U32 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `U32` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_u32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u32",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result U32 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `U32` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.u32_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "u32_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List U32) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `U64` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.u64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u64",
+          "type_annotation": "DefaultableOptionConfigBaseParams U64 -> CliBuilder U64 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `U64` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_u64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u64",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result U64 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `U64` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.u64_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "u64_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List U64) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes a `U128` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.u128 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u128",
+          "type_annotation": "DefaultableOptionConfigBaseParams U128 -> CliBuilder U128 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes a `U128` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_u128 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u128",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result U128 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes a `U128` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.u128_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "u128_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List U128) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an `I8` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.i8 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i8",
+          "type_annotation": "DefaultableOptionConfigBaseParams I8 -> CliBuilder I8 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an `I8` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_i8 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i8",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result I8 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an `I8` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.i8_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "i8_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List I8) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an `I16` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.i16 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i16",
+          "type_annotation": "DefaultableOptionConfigBaseParams I16 -> CliBuilder I16 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an `I16` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_i16 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i16",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result I16 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an `I16` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.i16_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "i16_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List I16) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an `I32` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.i32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i32",
+          "type_annotation": "DefaultableOptionConfigBaseParams I32 -> CliBuilder I32 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an `I32` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_i32 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i32",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result I32 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an `I32` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.i32_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "i32_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List I32) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an `I64` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.i64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i64",
+          "type_annotation": "DefaultableOptionConfigBaseParams I64 -> CliBuilder I64 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an `I64` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_i64 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i64",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result I64 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an `I64` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.i64_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "i64_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List I64) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add a required option that takes an `I128` to your CLI builder.\n\nParsing arguments will fail if the option is not given as an argument,\na value is not provided to the option, or the value is not a number.\n\n```roc\nexpect\n    { parser } =\n        Opt.i128 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"--answer=42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i128",
+          "type_annotation": "DefaultableOptionConfigBaseParams I128 -> CliBuilder I128 GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an optional option that takes an `I128` to your CLI builder.\n\nParsing arguments will fail if a value is not provided to the option,\nthe value is not a number, or there is more than one call to the option.\n\n```roc\nexpect\n    { parser } =\n        Opt.maybe_i128 { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i128",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (Result I128 [NoValue]) GetOptionsAction GetOptionsAction"
+        },
+        {
+          "description": "Add an option that takes an `I128` and can be given multiple times\nto your CLI builder.\n\nParsing arguments will fail if any calls of the option don't provide\na value, or the values are not all numbers.\n\n```roc\nexpect\n    { parser } =\n        Opt.i128_list { long: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"-a\", \"1\", \"--answer=2\", \"--answer\", \"3\"]\n    == SuccessfullyParsed [1, 2, 3]\n```",
+          "is_a": "value",
+          "name": "i128_list",
+          "type_annotation": "OptionConfigBaseParams -> CliBuilder (List I128) GetOptionsAction GetOptionsAction"
+        }
+      ],
+      "name": "Opt"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The result of attempting to parse args into config data.",
+          "is_a": "type",
+          "name": "ArgParserResult",
+          "type_annotation": null
+        },
+        {
+          "description": "The parameters that an [ArgParser] takes to extract data\nfrom args.",
+          "is_a": "type",
+          "name": "ArgParserParams",
+          "type_annotation": null
+        },
+        {
+          "description": "The intermediate state that an [ArgParser] passes between\ndifferent parsing steps.",
+          "is_a": "type",
+          "name": "ArgParserState",
+          "type_annotation": null
+        },
+        {
+          "description": "A function that takes command line arguments and a subcommand,\nand attempts to extract configuration data from said arguments.",
+          "is_a": "type",
+          "name": "ArgParser",
+          "type_annotation": null
+        },
+        {
+          "description": "A bind operation for [ArgParserState].\n\nIf an [ArgParser] successfully parses some data, then said data\nis provided to a callback and the resulting [ArgParserResult] is\npassed along in the newly bound [ArgParser].",
+          "is_a": "value",
+          "name": "on_successful_arg_parse",
+          "type_annotation": "ArgParser a, (ArgParserState a -> ArgParserResult (ArgParserState b)) -> ArgParser b"
+        },
+        {
+          "description": "Maps successfully parsed data that was parsed by an [ArgParser]\nby a user-defined operation.",
+          "is_a": "value",
+          "name": "map_successfully_parsed",
+          "type_annotation": "ArgParserResult a, (a -> b) -> ArgParserResult b"
+        },
+        {
+          "description": "Errors that can occur while extracting values from command line arguments.",
+          "is_a": "type",
+          "name": "ArgExtractErr",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "str_type_name",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "num_type_name",
+          "type_annotation": null
+        },
+        {
+          "description": "Whether help text should have fancy styling.",
+          "is_a": "type",
+          "name": "TextStyle",
+          "type_annotation": "[ Color, Plain ]"
+        },
+        {
+          "description": "The type of value that an option expects to parse.",
+          "is_a": "type",
+          "name": "ExpectedValue",
+          "type_annotation": null
+        },
+        {
+          "description": "How many values an option/parameter can take.",
+          "is_a": "type",
+          "name": "Plurality",
+          "type_annotation": "[ Optional, One, Many ]"
+        },
+        {
+          "description": "The two built-in flags that we parse automatically.",
+          "is_a": "type",
+          "name": "SpecialFlags",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "InvalidValue",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DefaultValue",
+          "type_annotation": "[ NoDefault, Value a, Generate ({} -> a) ]"
+        },
+        {
+          "description": "A parser that extracts an argument value from a string.",
+          "is_a": "type",
+          "name": "ValueParser",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "OptionConfigBaseParams",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DefaultableOptionConfigBaseParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for creating an option.",
+          "is_a": "type",
+          "name": "OptionConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for creating an option.",
+          "is_a": "type",
+          "name": "DefaultableOptionConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for options in our CLI building system.",
+          "is_a": "type",
+          "name": "OptionConfig",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for the `-h/--help` option that we parse automatically.",
+          "is_a": "value",
+          "name": "help_option",
+          "type_annotation": "OptionConfig"
+        },
+        {
+          "description": "Metadata for the `-V/--version` option that we parse automatically.",
+          "is_a": "value",
+          "name": "version_option",
+          "type_annotation": "OptionConfig"
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "ParameterConfigBaseParams",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DefaultableParameterConfigBaseParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for creating an parameter.",
+          "is_a": "type",
+          "name": "ParameterConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for creating an parameter.",
+          "is_a": "type",
+          "name": "DefaultableParameterConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for parameters in our CLI building system.",
+          "is_a": "type",
+          "name": "ParameterConfig",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for bundling an CLI.",
+          "is_a": "type",
+          "name": "CliConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for a root-level CLI.",
+          "is_a": "type",
+          "name": "CliConfig",
+          "type_annotation": null
+        },
+        {
+          "description": "Default-value options for bundling a subcommand.",
+          "is_a": "type",
+          "name": "SubcommandConfigParams",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for a set of subcommands under a parent command.\n\nSince subcommands can have their own sub-subcommands,\nthis type alias needs to be an enum with an empty variant\nto avoid infinite recursion.",
+          "is_a": "type",
+          "name": "SubcommandsConfig",
+          "type_annotation": null
+        },
+        {
+          "description": "Metadata for a subcommand.",
+          "is_a": "type",
+          "name": "SubcommandConfig",
+          "type_annotation": null
+        }
+      ],
+      "name": "Base"
+    },
+    {
+      "definitions": [
+        {
+          "description": "A parser that interprets command line arguments and returns well-formed data.",
+          "is_a": "type",
+          "name": "CliParser",
+          "type_annotation": null
+        },
+        {
+          "description": "Map over the parsed value of a Weaver field.\n\nUseful for naming bare fields, or handling default values.\n\n```roc\nexpect\n    { parser } =\n        { Cli.weave <-\n            verbosity: Opt.count { short: \"v\", long: \"verbose\" }\n                |> Cli.map Verbosity,\n            file: Param.maybe_str { name: \"file\" }\n                |> Cli.map \\f -> Result.withDefault f \"NO_FILE\",\n        }\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n   parser [\"example\", \"-vvv\"]\n   == SuccessfullyParsed { verbosity: Verbosity 3, file: \"NO_FILE\" }\n```",
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "CliBuilder a from_action to_action, (a -> b) -> CliBuilder b from_action to_action"
+        },
+        {
+          "description": "Begin weaving together a CLI builder using the `<-` builder notation.\n\nCheck the module-level documentation for general usage instructions.\n\n```roc\nexpect\n    { parser } =\n        { Cli.weave <-\n            verbosity: Opt.count { short: \"v\", long: \"verbose\" },\n            file: Param.str { name: \"file\" },\n        }\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n   parser [\"example\", \"file.txt\", \"-vvv\"]\n   == SuccessfullyParsed { verbosity: 3, file: \"file.txt\" }\n```",
+          "is_a": "value",
+          "name": "weave",
+          "type_annotation": "CliBuilder a action1 action2, CliBuilder b action2 action3, (a, b -> c) -> CliBuilder c action1 action3"
+        },
+        {
+          "description": "Bundle a CLI builder into a parser, ensuring that its configuration is valid.\n\nThough the majority of the validation we'd need to do for type safety is\nrendered unnecessary by the design of this library, there are some things\nthat the type system isn't able to prevent. Here are the checks we currently\nperform after building your CLI parser:\n\n- All commands and subcommands must have kebab-case names.\n- All options must have either:\n  - A short flag which is a single character.\n  - A long flag which is more than one character and kebab-case.\n  - Both a short and a long flag with the above requirements.\n- All parameters must be have kebab-case names.\n- All custom option/parameter types are have kebab-case names.\n- No options can overlap, even between different subcommands, so long\n  as the options between the subcommands are ambiguous.\n  - For example, a CLI with a `-t` option at the root level and also\n    a `-t` option in the subcommand `sub` would fail validation since\n    we wouldn't know who should get the `-t` option.\n  - However, a CLI with two subcommands that each have a `-t` option\n    would not fail validation since only one subcommand can be called\n    at once.\n\nIf you would like to avoid these validations, you can use [finish_without_validating]\ninstead, but you may receive some suprising results when parsing because\nour parsing logic assumes the above validations have been made.\n\n```roc\nexpect\n    { Cli.weave <-\n        verbosity: Opt.count { short: \"v\", long: \"verbose\" },\n        file: Param.str { name: \"file\" },\n    }\n    |> Cli.finish { name: \"example\" }\n    |> Result.isOk\n\nexpect\n    { Cli.weave <-\n        verbosity: Opt.count { short: \"\" },\n        file: Param.str { name: \"\" },\n    }\n    |> Cli.finish { name: \"example\" }\n    |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "finish",
+          "type_annotation": "CliBuilder data from_action to_action, CliConfigParams -> Result (CliParser data) CliValidationErr"
+        },
+        {
+          "description": "Bundle a CLI builder into a parser without validating its configuration.\n\nWe recommend using the [finish] function to validate your parser as our\nlibrary's logic assumes said validation has taken place. However, this method\ncould be useful if you know better than our validations about the correctness\nof your CLI.\n\n```roc\nexpect\n    { parser } =\n        { Cli.weave <-\n            verbosity: Opt.count { short: \"v\", long: \"verbose\" },\n            file: Param.maybe_str { name: \"file\" },\n        }\n        |> Cli.finish_without_validating { name: \"example\" }\n\n    parser [\"example\", \"-v\", \"-v\"]\n    == SuccessfullyParsed { verbosity: 2, file: Err NoValue }\n```",
+          "is_a": "value",
+          "name": "finish_without_validating",
+          "type_annotation": "CliBuilder data from_action to_action, CliConfigParams -> CliParser data"
+        },
+        {
+          "description": "Assert that a CLI is properly configured, crashing your program if not.\n\nGiven that there are some aspects of a CLI that we cannot ensure are\ncorrect at compile time, the easiest way to ensure that your CLI is properly\nconfigured is to validate it and crash immediately on failure, following the\nFail Fast principle.\n\nYou can avoid making this assertion by handling the error yourself or\nby finish your CLI with the [finish_without_validating] function, but\nthe validations we perform (detailed in [finish]'s docs) are important\nfor correct parsing.\n\n```roc\nOpt.num { short: \"a\" }\n|> Cli.finish { name: \"example\" }\n|> Cli.assert_valid\n```",
+          "is_a": "value",
+          "name": "assert_valid",
+          "type_annotation": "Result (CliParser data) CliValidationErr -> CliParser data"
+        },
+        {
+          "description": "Parse arguments using a CLI parser or show a useful message on failure.\n\nWe have the following priorities in returning messages to the user:\n1) If the `-h/--help` flag is passed, the help page for the command/subcommand\n   called will be displayed no matter if your arguments were correctly parsed.\n2) If the `-V/--version` flag is passed, the version for the app will\n   be displayed no matter if your arguments were correctly parsed.\n3) If the provided arguments were parsed and neither of the above two\n   built-in flags were passed, we return to you your data.\n4) If the provided arguments were not correct, we return a short message\n   with which argument was not provided correctly, followed by the\n   usage section of the relevant command/subcommand's help text.\n\n```roc\nexampleCli =\n    { Cli.weave <-\n        verbosity: Opt.count { short: \"v\", long: \"verbose\" },\n        alpha: Opt.maybe_num { short: \"a\", long: \"alpha\" },\n    }\n    |> Cli.finish {\n        name: \"example\",\n        version: \"v0.1.0\",\n        description: \"An example CLI.\",\n    }\n    |> Cli.assert_valid\n\nexpect\n    exampleCli\n    |> Cli.parse_or_display_message [\"example\", \"-h\"] Arg.to_os_raw\n    == Err\n        \"\"\"\n        example v0.1.0\n\n        An example CLI.\n\n        Usage:\n          example [OPTIONS]\n\n        Options:\n          -v             How verbose our logs should be.\n          -a, --alpha    Set the alpha level.\n          -h, --help     Show this help page.\n          -V, --version  Show the version.\n        \"\"\"\n\nexpect\n    exampleCli\n    |> Cli.parse_or_display_message [\"example\", \"-V\"] Arg.to_os_raw\n    == Err \"v0.1.0\"\n\nexpect\n    exampleCli\n    |> Cli.parse_or_display_message [\"example\", \"-v\"] Arg.to_os_raw\n    == Ok { verbosity: 1 }\n\nexpect\n    exampleCli\n    |> Cli.parse_or_display_message [\"example\", \"-x\"] Arg.to_os_raw\n    == Err\n        \"\"\"\n        Error: The argument -x was not recognized.\n\n        Usage:\n          example [OPTIONS]\n        \"\"\"\n```",
+          "is_a": "value",
+          "name": "parse_or_display_message",
+          "type_annotation": "CliParser data, List arg, (arg -> [ Unix (List U8), Windows (List U16) ]) -> Result data Str"
+        }
+      ],
+      "name": "Cli"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Render [ArgExtractErr] errors as readable messages.\n\nUsed in [Cli.parse_or_display_message].",
+          "is_a": "value",
+          "name": "format_arg_extract_err",
+          "type_annotation": "ArgExtractErr -> Str"
+        },
+        {
+          "description": "Render [CliValidationErr] errors as readable messages.\n\nDisplayed as the crash message when [Cli.assert_valid] fails.",
+          "is_a": "value",
+          "name": "format_cli_validation_err",
+          "type_annotation": "CliValidationErr -> Str"
+        }
+      ],
+      "name": "ErrorFormatter"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Render the help text for a command at or under the root config.\n\nThe second argument should be a list of subcommand names, e.g.\n`[\"example\", \"subcommand-1\", \"subcommand-2\"]`. If the subcommand\nisn't found, the root command's help page is rendered by default.\n\n```roc\nexample_cli =\n    Opt.count { short: \"v\", help: \"How verbose our logs should be.\" }\n    |> Cli.finish {\n        name: \"example\",\n        version: \"v0.1.0\",\n        description: \"An example CLI.\",\n    }\n    |> Cli.assert_valid\n\nexpect\n    help_text example_cli.config [\"example\"]\n    ==\n        \"\"\"\n        example v0.1.0\n\n        An example CLI.\n\n        Usage:\n          example -v [OPTIONS]\n\n        Options:\n          -v             How verbose our logs should be.\n          -h, --help     Show this help page.\n          -V, --version  Show the version.\n        \"\"\"\n```",
+          "is_a": "value",
+          "name": "help_text",
+          "type_annotation": "CliConfig, List Str, TextStyle -> Str"
+        },
+        {
+          "description": "Render just the usage text for a command at or under the root config.\n\nThe second argument should be a list of subcommand names, e.g.\n`[\"example\", \"subcommand-1\", \"subcommand-2\"]`. If the subcommand\nisn't found, the root command's usage text is rendered by default.\n\n```roc\nexample_cli =\n    Opt.count { short: \"v\", help: \"How verbose our logs should be.\" }\n    |> Cli.finish {\n        name: \"example\",\n        version: \"v0.1.0\",\n        description: \"An example CLI.\",\n    }\n    |> Cli.assert_valid\n\nexpect\n    help_text example_cli.config [\"example\"]\n    ==\n        \"\"\"\n        Usage:\n          example -v [OPTIONS]\n        \"\"\"\n```",
+          "is_a": "value",
+          "name": "usage_help",
+          "type_annotation": "CliConfig, List Str, TextStyle -> Str"
+        }
+      ],
+      "name": "Help"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Add a required parameter of a custom type to your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if the parameter fails to parse or\nis not provided.\n\nParameters must be provided last after any option or subcommand fields,\nas they are parsed last of the three extracted values, and parameter\nlist fields cannot be followed by any other fields. This is enforced\nusing the type state pattern, where we encode the state of the program\ninto its types. If you're curious, check the internal `Builder`\nmodule to see how this works using the `action` type variable.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Param.single { name: \"answer\", type: \"color\", parser: parse_color },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"blue\"]\n    == SuccessfullyParsed Blue\n```",
+          "is_a": "value",
+          "name": "single",
+          "type_annotation": "DefaultableParameterConfigParams data -> CliBuilder data {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional parameter of a custom type to your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if the parameter fails to parse.\n\nParameters must be provided last after any option or subcommand fields,\nas they are parsed last of the three extracted values, and parameter\nlist fields cannot be followed by any other fields. This is enforced\nusing the type state pattern, where we encode the state of the program\ninto its types. If you're curious, check the internal `Builder`\nmodule to see how this works using the `action` type variable.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Param.maybe { name: \"answer\", type: \"color\", parser: parse_color },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe",
+          "type_annotation": "ParameterConfigParams data -> CliBuilder (Result data [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a parameter of a custom type that can be provided\nmultiple times to your CLI builder.\n\nYou need to provide a kebab-case type name for your help messages as well as a\nparser for said type. The parser needs to return an `Err (InvalidValue Str)`\non failure, where the `Str` is the reason the parsing failed that will\nget displayed in the incorrect usage message.\n\nParsing arguments will fail if any of the values fail to parse.\n\nParameters must be provided last after any option or subcommand fields,\nas they are parsed last of the three extracted values, and parameter\nlist fields cannot be followed by any other fields. This is enforced\nusing the type state pattern, where we encode the state of the program\ninto its types. If you're curious, check the internal `Builder`\nmodule to see how this works using the `action` type variable.\n\n```roc\nexpect\n    Color : [Green, Red, Blue]\n\n    parse_color : Arg -> Result Color [InvalidValue Str, InvalidUtf8]\n    parse_color = \\color ->\n        when Arg.to_str color is\n            Ok \"green\" -> Ok Green\n            Ok \"red\" -> Ok Red\n            Ok \"blue\" -> Ok Blue\n            other -> Err (InvalidValue \"'$(other)' is not a valid color, must be green, red, or blue\")\n\n    { parser } =\n        Param.list { name: \"answer\", type: \"color\", parser: parse_color },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"blue\", \"red\", \"green\"]\n    == SuccessfullyParsed [Blue, Red, Green]\n```",
+          "is_a": "value",
+          "name": "list",
+          "type_annotation": "ParameterConfigParams data -> CliBuilder (List data) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required [Arg] parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided.\n\n```roc\nexpect\n    { parser } =\n        Param.arg { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\"]\n    == SuccessfullyParsed (Arg.from_str \"abc\")\n```",
+          "is_a": "value",
+          "name": "arg",
+          "type_annotation": "DefaultableParameterConfigBaseParams Arg -> CliBuilder Arg {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional [Arg] parameter to your CLI builder.\n\nParsing arguments cannot fail because of this parameter.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_arg { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_arg",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder ArgValue {}action GetParamsAction"
+        },
+        {
+          "description": "Add an [Arg] parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments cannot fail because of this parameter.\n\n```roc\nexpect\n    { parser } =\n        Param.arg_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\", \"def\", \"ghi\"]\n    == SuccessfullyParsed (List.map [\"abc\", \"def\", \"ghi\"] Arg.from_str)\n```",
+          "is_a": "value",
+          "name": "arg_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List Arg) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required byte list parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided.\n\n```roc\nexpect\n    { parser } =\n        Param.arg { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\"]\n    == SuccessfullyParsed [97, 98, 99]\n```",
+          "is_a": "value",
+          "name": "bytes",
+          "type_annotation": "DefaultableParameterConfigBaseParams (List U8) -> CliBuilder (List U8) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional byte list parameter to your CLI builder.\n\nParsing arguments cannot fail because of this parameter.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_bytes { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_bytes",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result (List U8) [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a byte list parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments cannot fail because of this parameter.\n\n```roc\nexpect\n    { parser } =\n        Param.bytes_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\", \"def\", \"ghi\"]\n    == SuccessfullyParsed [[97, 98, 99], [100, 101, 102], [103, 104, 105]]\n```",
+          "is_a": "value",
+          "name": "bytes_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List (List U8)) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required string parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor if it is not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Param.str { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\"]\n    == SuccessfullyParsed \"abc\"\n```",
+          "is_a": "value",
+          "name": "str",
+          "type_annotation": "DefaultableParameterConfigBaseParams Str -> CliBuilder Str {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional string parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_str { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_str",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result Str [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a string parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the arguments are not valid UTF-8.\n\n```roc\nexpect\n    { parser } =\n        Param.str_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"abc\", \"def\", \"ghi\"]\n    == SuccessfullyParsed [\"abc\", \"def\", \"ghi\"]\n```",
+          "is_a": "value",
+          "name": "str_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List Str) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `Dec` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.dec { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "dec",
+          "type_annotation": "DefaultableParameterConfigBaseParams Dec -> CliBuilder Dec {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `Dec` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_dec { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_dec",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result Dec [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `Dec` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.dec_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56.0\"]\n    == SuccessfullyParsed [12.0, 34.0, -56.0]\n```",
+          "is_a": "value",
+          "name": "dec_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List Dec) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `F32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.f32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "f32",
+          "type_annotation": "DefaultableParameterConfigBaseParams F32 -> CliBuilder F32 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `F32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_f32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_f32",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result F32 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `F32` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.f32_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56.0\"]\n    == SuccessfullyParsed [12.0, 34.0, -56.0]\n```",
+          "is_a": "value",
+          "name": "f32_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List F32) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `F64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.f64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42.5\"]\n    == SuccessfullyParsed 42.5\n```",
+          "is_a": "value",
+          "name": "f64",
+          "type_annotation": "DefaultableParameterConfigBaseParams F64 -> CliBuilder F64 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `F64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_f64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_f64",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result F64 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `F64` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.f64_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56.0\"]\n    == SuccessfullyParsed [12, 34, -56.0]\n```",
+          "is_a": "value",
+          "name": "f64_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List F64) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `U8` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.u8 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u8",
+          "type_annotation": "DefaultableParameterConfigBaseParams U8 -> CliBuilder U8 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `U8` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_u8 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u8",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result U8 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `U8` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.u8_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"56\"]\n    == SuccessfullyParsed [12, 34, 56]\n```",
+          "is_a": "value",
+          "name": "u8_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List U8) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `U16` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.u16 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u16",
+          "type_annotation": "DefaultableParameterConfigBaseParams U16 -> CliBuilder U16 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `U16` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_u16 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u16",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result U16 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `U16` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.u16_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"56\"]\n    == SuccessfullyParsed [12, 34, 56]\n```",
+          "is_a": "value",
+          "name": "u16_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List U16) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `U32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.u32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u32",
+          "type_annotation": "DefaultableParameterConfigBaseParams U32 -> CliBuilder U32 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `U32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_u32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u32",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result U32 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `U32` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.u32_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"56\"]\n    == SuccessfullyParsed [12, 34, 56]\n```",
+          "is_a": "value",
+          "name": "u32_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List U32) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `U64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.u64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u64",
+          "type_annotation": "DefaultableParameterConfigBaseParams U64 -> CliBuilder U64 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `U64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_u64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u64",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result U64 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `U64` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.u64_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"56\"]\n    == SuccessfullyParsed [12, 34, 56]\n```",
+          "is_a": "value",
+          "name": "u64_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List U64) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `U128` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.u128 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "u128",
+          "type_annotation": "DefaultableParameterConfigBaseParams U128 -> CliBuilder U128 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `U128` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_u128 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_u128",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result U128 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add a `U128` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.u128_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"56\"]\n    == SuccessfullyParsed [12, 34, 56]\n```",
+          "is_a": "value",
+          "name": "u128_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List U128) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `I8` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.i8 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i8",
+          "type_annotation": "DefaultableParameterConfigBaseParams I8 -> CliBuilder I8 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `I8` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_i8 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i8",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result I8 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an `I8` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.i8_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56\"]\n    == SuccessfullyParsed [12, 34, -56]\n```",
+          "is_a": "value",
+          "name": "i8_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List I8) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `I16` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.i16 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i16",
+          "type_annotation": "DefaultableParameterConfigBaseParams I16 -> CliBuilder I16 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `I16` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_i16 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i16",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result I16 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an `I16` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.i16_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56\"]\n    == SuccessfullyParsed [12, 34, -56]\n```",
+          "is_a": "value",
+          "name": "i16_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List I16) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `I32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.i32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i32",
+          "type_annotation": "DefaultableParameterConfigBaseParams I32 -> CliBuilder I32 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `I32` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_i32 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i32",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result I32 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an `I32` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.i32_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56\"]\n    == SuccessfullyParsed [12, 34, -56]\n```",
+          "is_a": "value",
+          "name": "i32_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List I32) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `I64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.i64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i64",
+          "type_annotation": "DefaultableParameterConfigBaseParams I64 -> CliBuilder I64 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `I64` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_i64 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i64",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result I64 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an `I64` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.i64_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56\"]\n    == SuccessfullyParsed [12, 34, -56]\n```",
+          "is_a": "value",
+          "name": "i64_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List I64) {}action StopCollectingAction"
+        },
+        {
+          "description": "Add a required `I128` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not provided\nor it is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.i128 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"42\"]\n    == SuccessfullyParsed 42\n```",
+          "is_a": "value",
+          "name": "i128",
+          "type_annotation": "DefaultableParameterConfigBaseParams I128 -> CliBuilder I128 {}action GetParamsAction"
+        },
+        {
+          "description": "Add an optional `I128` parameter to your CLI builder.\n\nParsing arguments will fail if the parameter is not a valid number.\n\n```roc\nexpect\n    { parser } =\n        Param.maybe_i128 { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\"]\n    == SuccessfullyParsed (Err NoValue)\n```",
+          "is_a": "value",
+          "name": "maybe_i128",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (Result I128 [NoValue]) {}action GetParamsAction"
+        },
+        {
+          "description": "Add an `I128` parameter that can be provided multiple times\nto your CLI builder.\n\nParsing arguments will fail if any of the parameters are\nnot valid numbers.\n\n```roc\nexpect\n    { parser } =\n        Param.i128_list { name: \"answer\" },\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"12\", \"34\", \"--\", \"-56\"]\n    == SuccessfullyParsed [12, 34, -56]\n```",
+          "is_a": "value",
+          "name": "i128_list",
+          "type_annotation": "ParameterConfigBaseParams -> CliBuilder (List I128) {}action StopCollectingAction"
+        }
+      ],
+      "name": "Param"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "SubcommandParserConfig",
+          "type_annotation": null
+        },
+        {
+          "description": "Bundle a CLI builder into a subcommand.\n\nSubcommands use the same CLI builder that top-level CLIs do,\nso they are composed using the same tools. The difference lies in\nhow subcommands are prepared for usage by parents. In addition to\nproviding a `name` and a `description`, you also provide a `mapper`,\nwhich is a function that converts the subcommand's data into a common\ntype that all subcommands under a parent command need to share. This\nis required since the parent command will have a field (added with\nthe [field] function) that must have a unified type.\n\n```roc\nfooSubcommand =\n    { Cli.weave <-\n        foo: Opt.str { short: \"f\" },\n        bar: Opt.str { short: \"b\" },\n    }\n    |> SubCmd.finish { name: \"foobar\", description: \"Foo and bar subcommand\", mapper: FooBar }\n```",
+          "is_a": "value",
+          "name": "finish",
+          "type_annotation": "CliBuilder state fromAction toAction, { name : Str, description ? Str, mapper : state -> commonState } -> { name : Str, parser : ArgParser commonState, config : SubcommandConfig }"
+        },
+        {
+          "description": "Use previously defined subcommands as data in a parent CLI builder.\n\nOnce all options have been parsed, we then check the first parameter\npassed to see if it's one of the provided subcommands. If so, we parse\nthe remaining arguments as that subcommand's data, and otherwise continue\nparsing the current command.\n\nThe [optional] function can only be used after all  `Opt` fields have been\nregistered (if any) as we don't want to parse options for a subcommand\ninstead of a parent, and cannot be used after any parameters have been\nregistered. This is enforced using the type state pattern, where we encode\nthe state of the program into its types. If you're curious, check the\ninternal `Builder` module to see how this works using the `action` type\nvariable.\n\n```roc\nexpect\n    foo_subcommand =\n        Opt.str { short: \"f\" }\n        |> SubCmd.finish { name: \"foo\", description: \"Foo subcommand\", mapper: Foo }\n\n    bar_subcommand =\n        Opt.str { short: \"b\" }\n        |> SubCmd.finish { name: \"bar\", description: \"Bar subcommand\", mapper: Bar }\n\n    { parser } =\n        SubCmd.optional [foo_subcommand, bar_subcommand],\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assert_valid\n\n    parser [\"example\", \"bar\", \"-b\", \"abc\"]\n    == SuccessfullyParsed (Ok (Bar \"abc\"))\n```",
+          "is_a": "value",
+          "name": "optional",
+          "type_annotation": "List (SubcommandParserConfig sub_state) -> CliBuilder (Result sub_state [NoSubcommand]) GetOptionsAction GetParamsAction"
+        },
+        {
+          "description": "Use previously defined subcommands as data in a parent CLI builder.\n\nOnce all options have been parsed, we then check the first parameter\npassed to see if it's one of the provided subcommands. If so, we parse\nthe remaining arguments as that subcommand's data, and otherwise we\nfail parsing.\n\nThe [required] function can only be used after all  `Opt` fields have been\nregistered (if any) as we don't want to parse options for a subcommand\ninstead of a parent, and cannot be used after any parameters have been\nregistered. This is enforced using the type state pattern, where we encode\nthe state of the program into its types. If you're curious, check the\ninternal `Builder` module to see how this works using the `action` type\nvariable.\n\n```roc\nexpect\n    foo_subcommand =\n        Opt.str { short: \"f\" }\n        |> SubCmd.finish { name: \"foo\", description: \"Foo subcommand\", mapper: Foo }\n\n    bar_subcommand =\n        Opt.str { short: \"b\" }\n        |> SubCmd.finish { name: \"bar\", description: \"Bar subcommand\", mapper: Bar }\n\n    { parser } =\n        SubCmd.required [foo_subcommand, bar_subcommand],\n        |> Cli.finish { name: \"example\" }\n        |> Cli.assertValid\n\n    parser [\"example\", \"bar\", \"-b\", \"abc\"]\n    == SuccessfullyParsed (Bar \"abc\")\n```",
+          "is_a": "value",
+          "name": "required",
+          "type_annotation": "List (SubcommandParserConfig sub_data) -> CliBuilder sub_data GetOptionsAction GetParamsAction"
+        }
+      ],
+      "name": "SubCmd"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The types of errors that might be found in a misconfigured CLI.",
+          "is_a": "type",
+          "name": "CliValidationErr",
+          "type_annotation": null
+        },
+        {
+          "description": "Ensure that a CLI's configuration is valid.\n\nThough the majority of the validation we'd need to do for type safety is\nrendered unnecessary by the design of this library, there are some things\nthat the type system isn't able to prevent. Here are the checks we currently\nperform after building your CLI parser:\n\n- All commands and subcommands must have kebab-case names.\n- All options must have either:\n  - A short flag which is a single character.\n  - A long flag which is more than one character and kebab-case.\n  - Both a short and a long flag with the above requirements.\n- All parameters must be have kebab-case names.\n- No options can overlap, even between different subcommands, so long\n  as the options between the subcommands are ambiguous.\n  - For example, a CLI with a `-t` option at the root level and also\n    a `-t` option in the subcommand `sub` would fail validation since\n    we wouldn't know who should get the `-t` option.\n  - However, a CLI with two subcommands that each have a `-t` option\n    would not fail validation since only one subcommand can be called\n    at once.",
+          "is_a": "value",
+          "name": "validate_cli",
+          "type_annotation": "CliConfig -> Result {} CliValidationErr"
+        }
+      ],
+      "name": "Validate"
+    }
+  ],
+  "package_id": "smores56/weaver",
+  "source_code_url": "https://github.com/smores56/weaver"
+}

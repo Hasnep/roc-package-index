@@ -1,0 +1,505 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-math",
+  "download_url": "https://github.com/Hasnep/roc-math/releases/download/v0.4.0/8g5DyNYa1lc8xqjJGlVWbiEJR1ychoKfCbUGq7eYLCI.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-math",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "The [natural exponential function](https://en.wikipedia.org/wiki/Exponential_function), the inverse of the [naturalLog] function.",
+          "is_a": "value",
+          "name": "exp",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [multiplicative inverse function](https://en.wikipedia.org/wiki/Multiplicative_inverse), defined as x\u207b\u00b9 = 1/x.",
+          "is_a": "value",
+          "name": "reciprocal",
+          "type_annotation": "Num * -> F64"
+        },
+        {
+          "description": "The [natural logarithm function](https://en.wikipedia.org/wiki/natural_logarithm), the inverse of the [exp] function.",
+          "is_a": "value",
+          "name": "naturalLog",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [standard logistic function](https://en.wikipedia.org/wiki/Logistic_function), defined as S(x) = e\u02e3 / (e\u02e3 + 1).",
+          "is_a": "value",
+          "name": "sigmoid",
+          "type_annotation": "Num * -> F64"
+        },
+        {
+          "description": "The [rectified linear unit activation](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) (ReLU) function.",
+          "is_a": "value",
+          "name": "relu",
+          "type_annotation": "Num a -> Num a"
+        },
+        {
+          "description": "A variant of the [mathematical sign function](https://en.wikipedia.org/wiki/Sign_function) that handles `NaN` and infinity values.",
+          "is_a": "value",
+          "name": "sign",
+          "type_annotation": "F64 -> [ PositiveNumber, NegativeNumber, Zero, NaN, PositiveInfinity, NegativeInfinity ]"
+        },
+        {
+          "description": "The [sign function](https://en.wikipedia.org/wiki/Sign_function) for integers.\n\nFor getting the sign of a floating-point number, use the [sign] function instead.",
+          "is_a": "value",
+          "name": "signInt",
+          "type_annotation": "Int * -> [ PositiveNumber, NegativeNumber, Zero ]"
+        }
+      ],
+      "name": "Math"
+    },
+    {
+      "definitions": [
+        {
+          "description": "An angle, in either radians, degrees, turns or gon (also called gradians).",
+          "is_a": "type",
+          "name": "Angle",
+          "type_annotation": null
+        },
+        {
+          "description": "Convert an angle to radians.",
+          "is_a": "value",
+          "name": "toRadians",
+          "type_annotation": "Angle -> [Radians F64]"
+        },
+        {
+          "description": "Convert an angle to degrees.",
+          "is_a": "value",
+          "name": "toDegrees",
+          "type_annotation": "Angle -> [Degrees F64]"
+        },
+        {
+          "description": "Convert an angle to turns.",
+          "is_a": "value",
+          "name": "toTurns",
+          "type_annotation": "Angle -> [Turns F64]"
+        },
+        {
+          "description": "Convert an angle to gon.",
+          "is_a": "value",
+          "name": "toGon",
+          "type_annotation": "Angle -> [Gon F64]"
+        },
+        {
+          "description": "Check if two angles are approximately equal.\n\nThe tolerance values apply to the angles when converted to radians.",
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Angle, Angle, { rtol ? F64, atol ? F64 } -> Bool"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isNaN",
+          "type_annotation": "Angle -> Bool"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toStr",
+          "type_annotation": "Angle -> Str"
+        }
+      ],
+      "name": "Angle"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The [greatest common divisor](https://en.wikipedia.org/wiki/Greatest_common_divisor) of two positive integers `a` and `b` is the largest integer that divides both `a` and `b`.",
+          "is_a": "value",
+          "name": "gcd",
+          "type_annotation": "U64, U64 -> U64"
+        },
+        {
+          "description": "The [least common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) of two positive integer `a` and `b` is the smallest positive integer that is a multiple of both `a` and `b`.",
+          "is_a": "value",
+          "name": "lcm",
+          "type_annotation": "U64, U64 -> U64"
+        },
+        {
+          "description": "An integer `a` divides another integer `b` if and only if there exists an integer `c` such that `a * c = b`",
+          "is_a": "value",
+          "name": "divides",
+          "type_annotation": "I64, I64 -> Bool"
+        },
+        {
+          "description": "The positive [divisors](https://en.wikipedia.org/wiki/Divisor) of a positive integer `n` are all the positive numbers that divide `n` with no remainder, including `n` itself.\n\nTo get the divisors of `n` excluding `n` itself, see [properDivisors].",
+          "is_a": "value",
+          "name": "divisors",
+          "type_annotation": "U64 -> List U64"
+        },
+        {
+          "description": "The [proper divisors](https://en.wikipedia.org/wiki/Divisor) of a positive integer `n` are all the positive numbers that divide `n` with no remainder, excluding `n` itself.\n\nTo get the divisors of `n` including `n` itself, see [divisors].",
+          "is_a": "value",
+          "name": "properDivisors",
+          "type_annotation": "U64 -> List U64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "isPrime",
+          "type_annotation": "U64 -> Bool"
+        },
+        {
+          "description": "The [prime factors](https://en.wikipedia.org/wiki/Prime_factor) of a positive integer `n` are the prime numbers that divide `n` exactly.",
+          "is_a": "value",
+          "name": "primeFactors",
+          "type_annotation": "U64 -> List U64"
+        },
+        {
+          "description": "A [perfect number](https://en.wikipedia.org/wiki/Perfect_number) is a positive integer that is equal to the sum of its proper divisors, excluding itself.",
+          "is_a": "value",
+          "name": "isPerfect",
+          "type_annotation": "U64 -> Bool"
+        }
+      ],
+      "name": "Arithmetic"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The [factorial](https://en.wikipedia.org/wiki/Factorial) of `n` is product of all the integers from 1 to `n`.",
+          "is_a": "value",
+          "name": "factorial",
+          "type_annotation": "U64 -> U64"
+        },
+        {
+          "description": "The [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient), the number of ways of choosing `k` things from a collection of size `n`.",
+          "is_a": "value",
+          "name": "choose",
+          "type_annotation": "U64, U64 -> U64"
+        }
+      ],
+      "name": "Combinatorics"
+    },
+    {
+      "definitions": [
+        {
+          "description": "A complex number z = x + yi, where i = \u221a-1.",
+          "is_a": "type",
+          "name": "Complex",
+          "type_annotation": null
+        },
+        {
+          "description": "The imaginary unit.",
+          "is_a": "value",
+          "name": "i",
+          "type_annotation": "Complex"
+        },
+        {
+          "description": "The complex number z = 0 + 0i.",
+          "is_a": "value",
+          "name": "zero",
+          "type_annotation": "Complex"
+        },
+        {
+          "description": "Convert a number x to a complex number z = x + 0i.",
+          "is_a": "value",
+          "name": "fromReal",
+          "type_annotation": "Num * -> Complex"
+        },
+        {
+          "description": "Convert a number y to a complex number z = 0 + yi.",
+          "is_a": "value",
+          "name": "fromImag",
+          "type_annotation": "Num * -> Complex"
+        },
+        {
+          "description": "Convert two numbers x and y to a complex number z = x + yi. The inverse of [toTuple].",
+          "is_a": "value",
+          "name": "fromTuple",
+          "type_annotation": "( Num *, Num * ) -> Complex"
+        },
+        {
+          "description": "Convert a complex number z = x + yi to a tuple `(x, y)`. The inverse of [fromTuple].",
+          "is_a": "value",
+          "name": "toTuple",
+          "type_annotation": "Complex -> ( F64, F64 )"
+        },
+        {
+          "description": "Add two complex numbers together.",
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Complex, Complex -> Complex"
+        },
+        {
+          "description": "Subtract one complex number from another.",
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Complex, Complex -> Complex"
+        },
+        {
+          "description": "Multiply two complex numbers together.",
+          "is_a": "value",
+          "name": "mul",
+          "type_annotation": "Complex, Complex -> Complex"
+        },
+        {
+          "description": "Divide one complex number by another.",
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Complex, Complex -> Complex"
+        },
+        {
+          "description": "The reciprocal of a non-zero complex number.",
+          "is_a": "value",
+          "name": "reciprocal",
+          "type_annotation": "Complex -> Complex"
+        },
+        {
+          "description": "The absolute value of a complex number, which is the distance from 0. Defined as |x + yi| = \u221ax\u00b2 + y\u00b2.",
+          "is_a": "value",
+          "name": "abs",
+          "type_annotation": "Complex -> F64"
+        },
+        {
+          "description": "The argument of a complex number, the angle from the positive x-axis.",
+          "is_a": "value",
+          "name": "arg",
+          "type_annotation": "Complex -> F64"
+        },
+        {
+          "description": "Convert a complex number to polar form.",
+          "is_a": "value",
+          "name": "toPolar",
+          "type_annotation": "Complex -> { r : F64, arg : F64 }"
+        },
+        {
+          "description": "Check if two complex numbers are approximately equal.",
+          "is_a": "value",
+          "name": "isApproxEq",
+          "type_annotation": "Complex, Complex, { rtol ? F64, atol ? F64 } -> Bool"
+        }
+      ],
+      "name": "Complex"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The circle constant [\u03c0](https://en.wikipedia.org/wiki/Pi), defined as the ratio of a circle's diameter to the circle's circumference.",
+          "is_a": "value",
+          "name": "pi",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "An alias for [pi].",
+          "is_a": "type",
+          "name": "\u03c0",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "The other circle constant [\u03c4](https://en.wikipedia.org/wiki/Tau_(mathematical_constant)), defined as the ratio of a circle's radius to the circle's circumference.",
+          "is_a": "value",
+          "name": "tau",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "An alias for [tau].",
+          "is_a": "type",
+          "name": "\u03c4",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "[Euler's number](https://en.wikipedia.org/wiki/E_(mathematical_constant)), the base of the natural logarithm.",
+          "is_a": "value",
+          "name": "e",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "An alias for [e].",
+          "is_a": "type",
+          "name": "\u212f",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "[The golden ratio](https://en.wikipedia.org/wiki/Golden_ratio), defined as \u03c6 = (1 + \u221a5)/2, and satisfies the quadratic equation \u03c6\u00b2 = \u03c6 + 1.",
+          "is_a": "value",
+          "name": "goldenRatio",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "An alias for [goldenRatio].",
+          "is_a": "type",
+          "name": "\u03c6",
+          "type_annotation": "F64"
+        },
+        {
+          "description": "The [square root of two](https://en.wikipedia.org/wiki/Square_root_of_2) (\u221a2).",
+          "is_a": "value",
+          "name": "sqrt2",
+          "type_annotation": "F64"
+        }
+      ],
+      "name": "Const"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The [arithmetic mean](https://en.wikipedia.org/wiki/Mean#Arithmetic_mean_(AM)) of a list `x` is defined as the sum of the elements of `x` divided by the number of elements in `x`.\n\nFor a version of this function that silently returns `NaN` when the input list is empty, see [meanUnchecked].",
+          "is_a": "value",
+          "name": "mean",
+          "type_annotation": "List (Num *) -> Result F64 [ListWasEmpty]"
+        },
+        {
+          "description": "A version of [mean] that silently returns `NaN` when the input list is empty.",
+          "is_a": "value",
+          "name": "meanUnchecked",
+          "type_annotation": "List (Num *) -> F64"
+        },
+        {
+          "description": "The [unbiased sample variance](https://en.wikipedia.org/wiki/Variance#Unbiased_sample_variance) of a list of numbers.\n\nDefined as S\u00b2 = \u2211(x - x\u0304)\u00b2 / (n \u2212 1).",
+          "is_a": "value",
+          "name": "variance",
+          "type_annotation": "List (Num *) -> Result F64 [ListWasEmpty]"
+        },
+        {
+          "description": "A version of the [variance] function that silently returns `NaN` when the input list is empty.",
+          "is_a": "value",
+          "name": "varianceUnchecked",
+          "type_annotation": "List (Num *) -> F64"
+        },
+        {
+          "description": "A version of the [variance] function that uses a pre-calculated mean value for efficiency.",
+          "is_a": "value",
+          "name": "varianceWithMean",
+          "type_annotation": "List (Num *), F64 -> F64"
+        },
+        {
+          "description": "A function that calculates both the [mean] and [variance] of a list at the same time.\nThis is more efficient than calculating both values separately.",
+          "is_a": "value",
+          "name": "meanAndVariance",
+          "type_annotation": "List (Num *) -> Result ( F64, F64 ) [ListWasEmpty]"
+        },
+        {
+          "description": "A function that calculates both the [mean] and [variance] of a list at the same time.\nThis is more efficient than calculating both values separately.",
+          "is_a": "value",
+          "name": "meanAndVarianceUnchecked",
+          "type_annotation": "List (Num *) -> ( F64, F64 )"
+        },
+        {
+          "description": "The [corrected sample standard deviation](https://en.wikipedia.org/wiki/Standard_deviation#Corrected_sample_standard_deviation) of a list of numbers.",
+          "is_a": "value",
+          "name": "standardDeviation",
+          "type_annotation": "List (Num *) -> Result F64 [ListWasEmpty]"
+        },
+        {
+          "description": "The [n-th sample moment](https://en.wikipedia.org/wiki/Moment_(mathematics)#Sample_moments) of a list of numbers.",
+          "is_a": "value",
+          "name": "nthSampleMoment",
+          "type_annotation": "List (Num *), U64 -> Result F64 [ListWasEmpty]"
+        },
+        {
+          "description": "The [n-th sample moment](https://en.wikipedia.org/wiki/Moment_(mathematics)#Sample_moments) of a list of numbers that silently returns NaN when the input list is empty.",
+          "is_a": "value",
+          "name": "nthSampleMomentUnchecked",
+          "type_annotation": "List (Num *), U64 -> F64"
+        },
+        {
+          "description": "The [n-th sample moment](https://en.wikipedia.org/wiki/Moment_(mathematics)#Sample_moments) of a list of numbers, given a pre-calculated mean.",
+          "is_a": "value",
+          "name": "nthSampleMomentWithMean",
+          "type_annotation": "List (Num *), U64, F64 -> F64"
+        },
+        {
+          "description": "The [median](https://en.wikipedia.org/wiki/Median) of a list of numbers.",
+          "is_a": "value",
+          "name": "median",
+          "type_annotation": "List (Num *) -> Result F64 [ListWasEmpty]"
+        },
+        {
+          "description": "A version of the [median] function that silently returns `NaN` when the input list is empty.",
+          "is_a": "value",
+          "name": "medianUnchecked",
+          "type_annotation": "List (Num *) -> F64"
+        },
+        {
+          "description": "The difference between the maximum and minimum values in a list.",
+          "is_a": "value",
+          "name": "range",
+          "type_annotation": "List (Num a) -> Result (Num a) [ListWasEmpty]"
+        }
+      ],
+      "name": "Stats"
+    },
+    {
+      "definitions": [
+        {
+          "description": "The [sine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle.",
+          "is_a": "value",
+          "name": "sin",
+          "type_annotation": "Angle -> F64"
+        },
+        {
+          "description": "The [cosine](https://en.wikipedia.org/wiki/Sine_and_cosine) of an angle.",
+          "is_a": "value",
+          "name": "cos",
+          "type_annotation": "Angle -> F64"
+        },
+        {
+          "description": "The [tangent](https://en.wikipedia.org/wiki/Trigonometric_functions) of an angle.",
+          "is_a": "value",
+          "name": "tan",
+          "type_annotation": "Angle -> F64"
+        },
+        {
+          "description": "The [arcsine](https://en.wikipedia.org/wiki/Sine_and_cosine#Inverses) of a number.\n\nSilently returns `NaN` if the input is outside the range `[-1, 1]`.",
+          "is_a": "value",
+          "name": "asin",
+          "type_annotation": "F64, [ ToRadians, ToDegrees, ToTurns, ToGon ] -> Angle"
+        },
+        {
+          "description": "The [arccosine](https://en.wikipedia.org/wiki/Sine_and_cosine#Inverses) of a number.\n\nSilently returns `NaN` if the input is outside the range `[-1, 1]`.",
+          "is_a": "value",
+          "name": "acos",
+          "type_annotation": "F64, [ ToRadians, ToDegrees, ToTurns, ToGon ] -> Angle"
+        },
+        {
+          "description": "The [arctangent](https://en.wikipedia.org/wiki/Trigonometric_functions#Inverses) of a number.",
+          "is_a": "value",
+          "name": "atan",
+          "type_annotation": "F64, [ ToRadians, ToDegrees, ToTurns, ToGon ] -> Angle"
+        },
+        {
+          "description": "The [hyperbolic sine](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "sinh",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [hyperbolic cosine](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "cosh",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [hyperbolic tangent](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "tanh",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [hyperbolic cotangent](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "coth",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [hyperbolic secant](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "sech",
+          "type_annotation": "F64 -> F64"
+        },
+        {
+          "description": "The [hyperbolic cosecant](https://en.wikipedia.org/wiki/Hyperbolic_functions).",
+          "is_a": "value",
+          "name": "csch",
+          "type_annotation": "F64 -> F64"
+        }
+      ],
+      "name": "Trig"
+    }
+  ],
+  "package_id": "hasnep/roc-math",
+  "source_code_url": "https://github.com/hasnep/roc-math"
+}

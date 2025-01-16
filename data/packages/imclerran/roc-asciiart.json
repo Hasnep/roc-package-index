@@ -1,0 +1,73 @@
+{
+  "documentation_url": "https://www.imclerran.com/roc-asciiart/",
+  "download_url": "https://github.com/imclerran/roc-asciiart/releases/download/v0.1.1/LOVPJ6AtkakCJSvFE_wPWG7ru2_FjcX1G1JlBAMnhCY.tar.br",
+  "homepage_url": "https://github.com/imclerran/roc-asciiart",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Converts a string to an ASCII art representation. The art is a single string with newline chars.",
+          "is_a": "value",
+          "name": "strToArt",
+          "type_annotation": "Str -> Str"
+        },
+        {
+          "description": "Converts a string to a ASCII art as a list of the horizontal lines which compose the art. New line chars are not included.",
+          "is_a": "value",
+          "name": "strToArtLines",
+          "type_annotation": "Str -> List Str"
+        },
+        {
+          "description": "Converts a string to an ASCII art representation. Same as strToArt, but removes the top and bottomw lines if they are empty.",
+          "is_a": "value",
+          "name": "strToArtTrimmed",
+          "type_annotation": "Str -> Str"
+        },
+        {
+          "description": "Converts a string to a list of AsciiLetter objects.",
+          "is_a": "value",
+          "name": "strToLetters",
+          "type_annotation": "Str -> List AsciiLetter"
+        },
+        {
+          "description": "Converts a list of AsciiLetter objects to ASCII art as a list strings for each horizontal line of the art.",
+          "is_a": "value",
+          "name": "lettersToArtLines",
+          "type_annotation": "List AsciiLetter -> List Str"
+        },
+        {
+          "description": "Converts a list of AsciiLetter objects to ASCII art as a single string with newline chars dividing horizontal lines.",
+          "is_a": "value",
+          "name": "lettersToArt",
+          "type_annotation": "List AsciiLetter -> Str"
+        }
+      ],
+      "name": "Art"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Convert a char byte to an AsciiLetter object.\n\nPossible chars are:\n- All letters (upper and lower case)\n- Numbers 0-9\n- Space\n- Symbols:\n  - ! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~",
+          "is_a": "value",
+          "name": "charToAsciiLetter",
+          "type_annotation": "U8 -> AsciiLetter"
+        },
+        {
+          "description": "```\nAsciiLetter : {\n    rows : List (List U8),\n    maxHeadOverlap: U8,\n    maxTailOverlap: U8,\n}\n```",
+          "is_a": "type",
+          "name": "AsciiLetter",
+          "type_annotation": null
+        },
+        {
+          "description": "An empty AsciiLetter object with empty rows and 0 head and tail overlap.",
+          "is_a": "value",
+          "name": "emptyLetter",
+          "type_annotation": "AsciiLetter"
+        }
+      ],
+      "name": "Letters"
+    }
+  ],
+  "package_id": "imclerran/roc-asciiart",
+  "source_code_url": "https://github.com/imclerran/roc-asciiart"
+}

@@ -1,0 +1,47 @@
+name: Update data
+
+on:
+  # Run on all PRs
+  pull_request:
+  # Run when a PR is merged into main
+  push:
+    branches:
+      - main
+  # Run every Monday at 01:23
+  schedule:
+    - cron: 23 1 * * 1
+
+jobs:
+  update:
+    name: Update data
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # ratchet:DeterminateSystems/nix-installer-action@v16
+      - name: Cache Nix environment
+        uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # ratchet:DeterminateSystems/magic-nix-cache-action@v8
+      - name: Use Nix dev shell for subsequent steps
+        uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # ratchet:rrbutani/use-nix-shell-action@v1
+        with:
+          extraNixOptions: --accept-flake-config
+      - name: Install Roc
+        uses: Hasnep/setup-roc@1385796e520f33b3e56484e644a75c0110378873 # ratchet:Hasnep/setup-roc@v0.4.0
+        with:
+          roc-version: nightly
+      - name: Run Pre-commit
+        run: pre-commit run --all-files
+        env:
+          SKIP: no-commit-to-branch # Prevent this action failing when running on the main branch
+      - name: Download data
+        run: just run
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Commit if changed
+        uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # ratchet:stefanzweifel/git-auto-commit-action@v5
+        if: github.event_name != 'pull_request'

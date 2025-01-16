@@ -1,0 +1,408 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/mulias/roc-array2d/releases/download/v0.3.1/2Jqajvxn36vRryyQBSluU6Fo6vVI5yNSYmcJcyaKp0Y.tar.br",
+  "homepage_url": "https://github.com/mulias/roc-array2d",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Fixed size two dimensional array. Unlike the builtin `List` data type\n`Array2D` is fully allocated on creation, with a starting element for each\nvalid index.",
+          "is_a": "type",
+          "name": "Array2D",
+          "type_annotation": null
+        },
+        {
+          "description": "Return an empty array with 0 rows, 0 columns, and no elements.",
+          "is_a": "value",
+          "name": "empty",
+          "type_annotation": "{} -> Array2D *"
+        },
+        {
+          "description": "Return an [identity matrix](https://en.wikipedia.org/wiki/Identity_matrix)\nwith the specified number of `1`s along the diagonal.",
+          "is_a": "value",
+          "name": "identity",
+          "type_annotation": "U64 -> Array2D (Num *)"
+        },
+        {
+          "description": "Create an array with the same value repeated for each element.",
+          "is_a": "value",
+          "name": "repeat",
+          "type_annotation": "a, Shape2D -> Array2D a"
+        },
+        {
+          "description": "Create an array of given `Shape`, populating elements via an init function.",
+          "is_a": "value",
+          "name": "init",
+          "type_annotation": "Shape2D, (Index2D -> a) -> Array2D a"
+        },
+        {
+          "description": "Fill an array of the given `Shape`, populating elements via a starting list\nand an init function. If there are not enough list elements to fill the\narray then the init function is ran with `Err Empty` as the element.",
+          "is_a": "value",
+          "name": "initWithList",
+          "type_annotation": "List a, Shape2D, (Result a [Empty], Index2D -> b) -> Array2D b"
+        },
+        {
+          "description": "Fill an array of the given `Shape` with elements from a list of lists, via\nan init function. Each inner list is used to populate one row of the\n`Array2D`. If there are not enough lists, or if there are not enough\nelements in a list to fill an array row, then the init function is ran with\n`Err Empty` as the element.",
+          "is_a": "value",
+          "name": "initWithLists",
+          "type_annotation": "List (List a), Shape2D, (Result a [Empty], Index2D -> b) -> Array2D b"
+        },
+        {
+          "description": "Create an array from a list. The `strategy` determines how the array is\ninitialized:\n\n   * `Fit` - Return an array with 1 row and enough columns to exactly\n     fitting the list elements.\n\n   * `Fill default shape` - Return an array of `shape`. If there are not\n      enough list elements to fill the array then `default` is used for all\n      remaining elements.",
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List a, [ Fit, Fill a Shape2D ] -> Array2D a"
+        },
+        {
+          "description": "Create an array from a list of lists. The `strategy` determines how the\narray is initialized:\n\n   * `FitShortest` - Return an array where each list is a row. The array has\n     columns equal to the number of elements in the shortest list. Any\n     additional elements are dropped per row.\n\n   * `FitLongest default` - Return an array where each list is a row. The\n     array has columns equal to the number of elements in the longest list.\n     If there are not enough list elements to fill a row then `default` is\n     used for all remaining values.\n\n   * `Fill default shape` - Return an array of `shape`. If there are not\n     enough lists or not enough elements in a list to fill a row then\n     `default` is used for all remaining values.",
+          "is_a": "value",
+          "name": "fromLists",
+          "type_annotation": "List (List a), [ FitShortest, FitLongest a, Fill a Shape2D ] -> Array2D a"
+        },
+        {
+          "description": "Create an array of given `Shape`, populating elements via a starting list.\nIf the list does not have enough elements to fill the array then return `Err\nNotEnoughElements`. If the list has more elements than the size of the\narray then return `Err TooManyElements`.",
+          "is_a": "value",
+          "name": "fromExactList",
+          "type_annotation": "List a, Shape2D -> Result (Array2D a) [ NotEnoughElements, TooManyElements ]"
+        },
+        {
+          "description": "Create an array from a list of lists. If the row lists do not all have the\nsame length then return `Err InconsistentRowLengths`.",
+          "is_a": "value",
+          "name": "fromExactLists",
+          "type_annotation": "List (List a) -> Result (Array2D a) [InconsistentRowLengths]"
+        },
+        {
+          "description": "Get the X/Y dimensions of an array.",
+          "is_a": "value",
+          "name": "shape",
+          "type_annotation": "Array2D * -> Shape2D"
+        },
+        {
+          "description": "Get the total number of elements in an array.",
+          "is_a": "value",
+          "name": "size",
+          "type_annotation": "Array2D * -> U64"
+        },
+        {
+          "description": "Predicate to determine if an index is within the bounds of an array.",
+          "is_a": "value",
+          "name": "hasIndex",
+          "type_annotation": "Array2D *, Index2D -> Bool"
+        },
+        {
+          "description": "Predicate to determine if an array has zero elements. An empty array will\nhave at least one dimension of length 0.",
+          "is_a": "value",
+          "name": "isEmpty",
+          "type_annotation": "Array2D * -> Bool"
+        },
+        {
+          "description": "Change the element at the given index. If the index is outside the bounds of\nthe array, return the original array unmodified.",
+          "is_a": "value",
+          "name": "set",
+          "type_annotation": "Array2D a, Index2D, a -> Array2D a"
+        },
+        {
+          "description": "Attempt to retrieve the array value at a given index. If the index is not\nwithin the array then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": "Array2D a, Index2D -> Result a [OutOfBounds]"
+        },
+        {
+          "description": "Update the value at the given index with the given function.\nIf the index is outside the bounds of the array, return the original\narray unmodified.",
+          "is_a": "value",
+          "name": "update",
+          "type_annotation": "Array2D a, Index2D, (a -> a) -> Array2D a"
+        },
+        {
+          "description": "Update the value at the given index, returning the new array and the\nreplaced value. If the index is outside the bounds of the array, return the\noriginal array unmodified and the intended replacement value as `value`.",
+          "is_a": "value",
+          "name": "replace",
+          "type_annotation": "Array2D a, Index2D, a -> { array : Array2D a, value : a }"
+        },
+        {
+          "description": "Exchange elements at two array indices. If either index is out of bounds\nreturn the array unchanged.",
+          "is_a": "value",
+          "name": "swap",
+          "type_annotation": "Array2D a, Index2D, Index2D -> Array2D a"
+        },
+        {
+          "description": "Convert each element in the array to something new via a conversion\nfunction. Return a new array of the converted values.",
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "Array2D a, (a -> b) -> Array2D b"
+        },
+        {
+          "description": "Similar to `Array2D.map`, also provide the index for each element.",
+          "is_a": "value",
+          "name": "mapWithIndex",
+          "type_annotation": "Array2D a, (a, Index2D -> b) -> Array2D b"
+        },
+        {
+          "description": "Build a value using each element in the array.\n\nStarting with a given `state` value, walk through the array elements in the\norder specified by the `options` record, running a given `step` function to\nproduce a new `state`.\n\nOptions:\n\n   * `direction` - Required, `Forwards` to traverse elements from the first\n     index to the last index, `Backwards` to go from the last index to the\n     first index.\n\n   * `orientation` - Optional, defaults to `Rows`. Determines if elements\n     are visited in [row-major or column-major order](https://en.wikipedia.org/wiki/Row-_and_column-major_order).\n\n   * `start` - Optional, defaults to the first index for `Forwards` and the\n     last index for `Backwards`. The index to start walking from. If the\n     `start` index is outside of the array bounds then either no elements\n     will be walked `Forwards`, or all elements will be walked `Backwards`.",
+          "is_a": "value",
+          "name": "walk",
+          "type_annotation": "Array2D a, state, WalkOptions *, (state, a, Index2D -> state) -> state"
+        },
+        {
+          "description": "Similar to `Array2D.walk`, but the `step` function either continues walking\nwith a `Continue`, or stops early with a `Break`.",
+          "is_a": "value",
+          "name": "walkUntil",
+          "type_annotation": "Array2D a, state, WalkOptions *, (state, a, Index2D -> [ Continue state, Break state ]) -> state"
+        },
+        {
+          "description": "Return the first element in the array, or `Err ArrayWasEmpty` if the array\nwas empty.",
+          "is_a": "value",
+          "name": "first",
+          "type_annotation": "Array2D a -> Result a [ArrayWasEmpty]"
+        },
+        {
+          "description": "Return the last element in the array, or `Err ArrayWasEmpty` if the array\nwas empty.",
+          "is_a": "value",
+          "name": "last",
+          "type_annotation": "Array2D a -> Result a [ArrayWasEmpty]"
+        },
+        {
+          "description": "Return the first index in the array, or `Err ArrayWasEmpty` if the array was\nempty.",
+          "is_a": "value",
+          "name": "firstIndex",
+          "type_annotation": "Array2D * -> Result Index2D [ArrayWasEmpty]"
+        },
+        {
+          "description": "Return the last index in the array, or `Err ArrayWasEmpty` if the array was\nempty.",
+          "is_a": "value",
+          "name": "lastIndex",
+          "type_annotation": "Array2D * -> Result Index2D [ArrayWasEmpty]"
+        },
+        {
+          "description": "Convert an array to a flat list of elements.",
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Array2D a -> List a"
+        },
+        {
+          "description": "Convert an array to a list of lists, where each inner list is one array row.",
+          "is_a": "value",
+          "name": "toLists",
+          "type_annotation": "Array2D a -> List (List a)"
+        },
+        {
+          "description": "Change the shape of an array. Elements maintain [row-major order](https://en.wikipedia.org/wiki/Row-_and_column-major_order)\nbut might be wrapped onto a new row by the change in dimensions. If the new\narray size is smaller then elements at the end will be truncated. If the new\narray size is larger then new elements will be set to the given `default`\nvalue.",
+          "is_a": "value",
+          "name": "reshape",
+          "type_annotation": "Array2D a, a, Shape2D -> Array2D a"
+        },
+        {
+          "description": "Take the [transpose](https://en.wikipedia.org/wiki/Transpose) of an array.\nThis operation flips the array values along the diagonal.",
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Array2D a -> Array2D a"
+        },
+        {
+          "description": "Swap the position of each element so that their `row` component changes and\n`col` component stays the same. This exchanges the top row of the array with\nthe bottom row, the second row with the second to last row, etc.",
+          "is_a": "value",
+          "name": "flipRows",
+          "type_annotation": "Array2D a -> Array2D a"
+        },
+        {
+          "description": "Swap the position of each element so that their `col` component changes and\n`row` component stays the same. This exchanges the first element of each row\nwith the last element of the row, the second element with the second to last\nelement, etc.",
+          "is_a": "value",
+          "name": "flipCols",
+          "type_annotation": "Array2D a -> Array2D a"
+        },
+        {
+          "description": "Rotate every array element clockwise 90 degrees. This swaps the dimensions\nof the array.",
+          "is_a": "value",
+          "name": "rotateClockwise",
+          "type_annotation": "Array2D a -> Array2D a"
+        },
+        {
+          "description": "Rotate every array element counter-clockwise 90 degrees. This swaps the\ndimensions of the array.",
+          "is_a": "value",
+          "name": "rotateCounterClockwise",
+          "type_annotation": "Array2D a -> Array2D a"
+        },
+        {
+          "description": "Run the given function on each element of an array and return the number of\nelements for which the function returned Bool.true.",
+          "is_a": "value",
+          "name": "countIf",
+          "type_annotation": "Array2D a, (a -> Bool) -> U64"
+        },
+        {
+          "description": "Return the index of the first element in the array satisfying a predicate\nfunction. If no satisfying element is found return `Err NotFound`.",
+          "is_a": "value",
+          "name": "findFirstIndex",
+          "type_annotation": "Array2D a, (a -> Bool) -> Result Index2D [NotFound]"
+        },
+        {
+          "description": "Return the index of the last element in the array satisfying a predicate\nfunction. If no satisfying element is found return `Err NotFound`.",
+          "is_a": "value",
+          "name": "findLastIndex",
+          "type_annotation": "Array2D a, (a -> Bool) -> Result Index2D [NotFound]"
+        },
+        {
+          "description": "Concatenate an array of strings into a single string, interspersing each\nelement with an element separator and each row with a row separator.",
+          "is_a": "value",
+          "name": "joinWith",
+          "type_annotation": "Array2D Str, Str, Str -> Str"
+        },
+        {
+          "description": "Create a new array containing elements from a rectangular area within the\ngiven array. The `firstCorner` and `secondCorner` indices can specify any\ntwo corners of the subarray area.",
+          "is_a": "value",
+          "name": "subarray",
+          "type_annotation": "Array2D a, Index2D, Index2D -> Array2D a"
+        },
+        {
+          "description": "Perform [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication)\non two arrays. A prerequisite of this operation is that the number of columns in\nthe first array must match the number of rows in the second array. If this\ndoesn't hold then return `Err InnerDimensionsMismatch`.",
+          "is_a": "value",
+          "name": "mul",
+          "type_annotation": "Array2D (Num a), Array2D (Num a) -> Result (Array2D (Num a)) [InnerDimensionsMismatch]"
+        }
+      ],
+      "name": "Array2D"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Two-dimensional index for referencing elements in an `Array2D`.",
+          "is_a": "type",
+          "name": "Index2D",
+          "type_annotation": null
+        },
+        {
+          "description": "Add indices, returning a new index with the sum of the two `row` values\nand sum of the two `col` values as component parts. If the resulting index\nis not within the array shape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Index2D, Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Subtract indices, returning a new index with the difference of the two `row`\nvalues and difference of the two `col` values as component parts. If the\nresulting index is not within the array shape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Index2D, Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Go to the next row index within the array shape, wrapping to the next column\nwhen the end of a row is reached. If the next index is outside of the array\nshape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "incRow",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Go to the next column index within the array shape, wrapping to the next row\nwhen the end of a column is reached. If the next index is outside of the\narray shape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "incCol",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Go to the previous row index within the array shape, wrapping to the\nprevious column when the start of a row is reached. If the next index is\noutside of the array shape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "decRow",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Go to the previous column index within the array shape, wrapping to the\nprevious row when the start of a column is reached. If the next index is\noutside of the array shape then return `Err OutOfBounds`.",
+          "is_a": "value",
+          "name": "decCol",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Try to get an index adjacent to the current index. If the specified adjacent\nindex is outside of the array shape then return `Err OutOfBounds`. Note that\n`adjacent index shape SameRow SameCol` will return `Ok index`.",
+          "is_a": "value",
+          "name": "adjacentTo",
+          "type_annotation": "Index2D, Shape2D, [ PrevRow, SameRow, NextRow ], [ PrevCol, SameCol, NextCol ] -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "List all indices adjacent to the given index and within the array shape. The\nlist will contain 0 to 8 indices, and will not include the given index.",
+          "is_a": "value",
+          "name": "allAdjacentTo",
+          "type_annotation": "Index2D, Shape2D -> List Index2D"
+        },
+        {
+          "description": "Change the `row` component of the index, reflecting over the center row or\nrows. This swaps the first row with the last row, second row with second to\nlast row, etc.",
+          "is_a": "value",
+          "name": "flipRow",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Change the `col` component of the index, reflecting over the center column\nor columns. This swaps the first column with the last column, second column\nwith second to last column, etc.",
+          "is_a": "value",
+          "name": "flipCol",
+          "type_annotation": "Index2D, Shape2D -> Result Index2D [OutOfBounds]"
+        },
+        {
+          "description": "Get the [transpose](https://en.wikipedia.org/wiki/Transpose) for an index.\nSwaps the `row` and `col` index components, reflecting the index over the\ncenter diagonal line. This operation is independent of array shape, since\ntransposing an array also changes its shape.",
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Index2D -> Index2D"
+        },
+        {
+          "description": "The first index within the given array shape. If the shape is for an empty\narray then return `Err ShapeWasEmpty`.",
+          "is_a": "value",
+          "name": "first",
+          "type_annotation": "Shape2D -> Result Index2D [ShapeWasEmpty]"
+        },
+        {
+          "description": "The last index within the given array shape. If the shape is for an empty\narray then return `Err ShapeWasEmpty`.",
+          "is_a": "value",
+          "name": "last",
+          "type_annotation": "Shape2D -> Result Index2D [ShapeWasEmpty]"
+        },
+        {
+          "description": "Predicate to determine if an index is the first index in a row.",
+          "is_a": "value",
+          "name": "isRowStart",
+          "type_annotation": "Index2D -> Bool"
+        },
+        {
+          "description": "Predicate to determine if an index is the first index in a column.",
+          "is_a": "value",
+          "name": "isColStart",
+          "type_annotation": "Index2D -> Bool"
+        },
+        {
+          "description": "Predicate to determine if an index is the last index in a row for a given\narray shape.",
+          "is_a": "value",
+          "name": "isRowEnd",
+          "type_annotation": "Index2D, Shape2D -> Bool"
+        },
+        {
+          "description": "Predicate to determine if an index is the last index in a column for a given\narray shape.",
+          "is_a": "value",
+          "name": "isColEnd",
+          "type_annotation": "Index2D, Shape2D -> Bool"
+        }
+      ],
+      "name": "Index2D"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Dimensions of an `Array2D` where `rows` is the total number of rows and\n`cols` is that total number of columns.",
+          "is_a": "type",
+          "name": "Shape2D",
+          "type_annotation": null
+        },
+        {
+          "description": "Predicate to determine if an array shape can contain indices. When the shape\nhas zero rows or zero columns then there is no index that can fall within the\nshape bounds.",
+          "is_a": "value",
+          "name": "isEmpty",
+          "type_annotation": "Shape2D -> Bool"
+        },
+        {
+          "description": "Predicate to determine if an index is within the bounds of an array shape.",
+          "is_a": "value",
+          "name": "hasIndex",
+          "type_annotation": "Shape2D, Index2D -> Bool"
+        },
+        {
+          "description": "Total number of elements within the array shape.",
+          "is_a": "value",
+          "name": "size",
+          "type_annotation": "Shape2D -> U64"
+        }
+      ],
+      "name": "Shape2D"
+    }
+  ],
+  "package_id": "mulias/roc-array2d",
+  "source_code_url": "https://github.com/mulias/roc-array2d"
+}

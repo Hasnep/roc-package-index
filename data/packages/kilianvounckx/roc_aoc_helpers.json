@@ -1,0 +1,294 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/KilianVounckx/roc_aoc_helpers/releases/download/0.2.2/yzQ6RQfQRpwRggnP78Qtcs7vQrr4GI5KAyUYEbRnXNk.tar.br",
+  "homepage_url": "https://github.com/kilianvounckx/roc_aoc_helpers",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Vec2",
+          "type_annotation": "{ x : a, y : a }"
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "IVec2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "UVec2",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "zero",
+          "type_annotation": "Vec2 (Num *)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Vec2 (Num a), Vec2 (Num a) -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "addElem",
+          "type_annotation": "Vec2 (Num a), Num a -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Vec2 (Num a), Vec2 (Num a) -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "subElem",
+          "type_annotation": "Vec2 (Num a), Num a -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "mul",
+          "type_annotation": "Vec2 (Num a), Vec2 (Num a) -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "mulElem",
+          "type_annotation": "Vec2 (Num a), Num a -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "div",
+          "type_annotation": "Vec2 (Frac a), Vec2 (Frac a) -> Vec2 (Frac a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "divElem",
+          "type_annotation": "Vec2 (Frac a), Frac a -> Vec2 (Frac a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "divTrunc",
+          "type_annotation": "Vec2 (Int a), Vec2 (Int a) -> Vec2 (Int a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "divTruncElem",
+          "type_annotation": "Vec2 (Int a), Int a -> Vec2 (Int a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "Vec2 a, (a -> b) -> Vec2 b"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "turnRight",
+          "type_annotation": "Vec2 (Num a) -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "turnLeft",
+          "type_annotation": "Vec2 (Num a) -> Vec2 (Num a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "manhattan",
+          "type_annotation": "Vec2 (Num a), Vec2 (Num a) -> Num a"
+        }
+      ],
+      "name": "Vec2"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Matrix",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Index",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromList",
+          "type_annotation": "List a, { width : U64, height : U64 } -> Result (Matrix a) [InvalidDimensions]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromRows",
+          "type_annotation": "List (List a) -> Result (Matrix a) [InvalidDimensions]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "repeat",
+          "type_annotation": "a, { width : U64, height : U64 } -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toList",
+          "type_annotation": "Matrix a -> List a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toRows",
+          "type_annotation": "Matrix a -> List (List a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "height",
+          "type_annotation": "Matrix * -> U64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "width",
+          "type_annotation": "Matrix * -> U64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "indexFromVec2",
+          "type_annotation": "Vec2 U64 -> Index"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "indexToVec2",
+          "type_annotation": "Index -> Vec2 U64"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": "Matrix a, Index -> Result a [ RowOutOfBounds, ColumnOutOfBounds ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "set",
+          "type_annotation": "Matrix a, Index, a -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "swap",
+          "type_annotation": "Matrix a, Index, Index -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "Matrix a, (a -> b) -> Matrix b"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "reverse",
+          "type_annotation": "Matrix a -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "reverseEachRow",
+          "type_annotation": "Matrix a -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "transpose",
+          "type_annotation": "Matrix a -> Matrix a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "findPositions",
+          "type_annotation": "Matrix a, a -> List Matrix.Index where a implements Eq"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "nextIndex",
+          "type_annotation": "Index, Matrix * -> Result Index [ RowOutOfBounds, ColumnOutOfBounds, FinalIndex ]"
+        }
+      ],
+      "name": "Matrix"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "DefaultDict",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "empty",
+          "type_annotation": "v -> DefaultDict k v"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "single",
+          "type_annotation": "v, k, v -> DefaultDict k v"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "insert",
+          "type_annotation": "DefaultDict k v, k, v -> DefaultDict k v"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": "DefaultDict k v, k -> v"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "remove",
+          "type_annotation": "DefaultDict k v, k -> DefaultDict k v"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "update",
+          "type_annotation": "DefaultDict k v, k, (v -> v) -> DefaultDict k v"
+        }
+      ],
+      "name": "DefaultDict"
+    }
+  ],
+  "package_id": "kilianvounckx/roc_aoc_helpers",
+  "source_code_url": "https://github.com/kilianvounckx/roc_aoc_helpers"
+}

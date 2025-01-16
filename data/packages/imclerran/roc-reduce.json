@@ -1,0 +1,86 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/imclerran/roc-reduce/releases/download/v0.1.0/sA1UwfVuTCwkR4oJ-DR7tzCmINANo498nFoFhhmhw7Y.tar.br",
+  "homepage_url": "https://github.com/imclerran/roc-reduce",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Reduce a list to a single value of the same type starting with the first element",
+          "is_a": "value",
+          "name": "listLeft",
+          "type_annotation": "List a, (a, a -> a) -> Result a [ListWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceListLeft",
+          "type_annotation": null
+        },
+        {
+          "description": "Reduce a list to a single value of the same type starting with the last element",
+          "is_a": "value",
+          "name": "listRight",
+          "type_annotation": "List a, (a, a -> a) -> Result a [ListWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceListRight",
+          "type_annotation": null
+        },
+        {
+          "description": "Reduce a dict to a single tuple, where the tuple contains an element of the key type, and the value type",
+          "is_a": "value",
+          "name": "dict",
+          "type_annotation": "Dict k v, ( ( k, v ), ( k, v ) -> ( k, v )) -> Result ( k, v ) [DictWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceDict",
+          "type_annotation": null
+        },
+        {
+          "description": "Reduce a dict to a single value of the same type as the key type",
+          "is_a": "value",
+          "name": "dictKeys",
+          "type_annotation": "Dict k v, (k, k -> k) -> Result k [DictWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceDictKeys",
+          "type_annotation": null
+        },
+        {
+          "description": "Reduce a dict to a single value of the same type as the value type",
+          "is_a": "value",
+          "name": "dictValues",
+          "type_annotation": "Dict k v, (v, v -> v) -> Result v [DictWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceDictValues",
+          "type_annotation": null
+        },
+        {
+          "description": "Reduce a set to a single value of the same type as the element type",
+          "is_a": "value",
+          "name": "set",
+          "type_annotation": "Set a, (a, a -> a) -> Result a [SetWasEmpty]"
+        },
+        {
+          "description": "More descriptive name for unqualified use",
+          "is_a": "value",
+          "name": "reduceSet",
+          "type_annotation": null
+        }
+      ],
+      "name": "Reduce"
+    }
+  ],
+  "package_id": "imclerran/roc-reduce",
+  "source_code_url": "https://github.com/imclerran/roc-reduce"
+}

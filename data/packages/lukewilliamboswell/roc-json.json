@@ -1,0 +1,132 @@
+{
+  "documentation_url": "https://lukewilliamboswell.github.io/roc-json/",
+  "download_url": "https://github.com/lukewilliamboswell/roc-json/releases/download/0.11.0/z45Wzc-J39TLNweQUoLw3IGZtkQiEN3lTBv3BXErRjQ.tar.br",
+  "homepage_url": "https://github.com/lukewilliamboswell/roc-json",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "An opaque type with the `Encode.EncoderFormatting` and\n`DecoderFormatting` abilities.",
+          "is_a": "type",
+          "name": "Json",
+          "type_annotation": null
+        },
+        {
+          "description": "Returns a JSON `Encode.Encoder` and `Decoder`",
+          "is_a": "value",
+          "name": "utf8",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "utf8With",
+          "type_annotation": "{ fieldNameMapping ? FieldNameMapping, skipMissingProperties ? Bool, nullDecodeAsEmpty ? Bool, emptyEncodeAsNull ? EncodeAsNull } -> Json"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "encodeAsNullOption",
+          "type_annotation": "{ list ? Bool, tuple ? Bool, record ? Bool } -> EncodeAsNull"
+        }
+      ],
+      "name": "Json"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Option",
+          "type_annotation": null
+        },
+        {
+          "description": "Missing or null",
+          "is_a": "value",
+          "name": "none",
+          "type_annotation": null
+        },
+        {
+          "description": "A value",
+          "is_a": "value",
+          "name": "some",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "getResult",
+          "type_annotation": null
+        },
+        {
+          "description": "use like `Option.from Ok val`",
+          "is_a": "value",
+          "name": "from",
+          "type_annotation": null
+        },
+        {
+          "description": "Convert a result with any `Err` to an Option",
+          "is_a": "value",
+          "name": "fromResult",
+          "type_annotation": "Result a * ->"
+        }
+      ],
+      "name": "Option"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "OptionOrNull",
+          "type_annotation": null
+        },
+        {
+          "description": "Missing field",
+          "is_a": "value",
+          "name": "none",
+          "type_annotation": null
+        },
+        {
+          "description": "Null",
+          "is_a": "value",
+          "name": "null",
+          "type_annotation": null
+        },
+        {
+          "description": "Some value",
+          "is_a": "value",
+          "name": "some",
+          "type_annotation": null
+        },
+        {
+          "description": "Get option internals.\nFor access to convinence methods and error accumulation you may want `Option.getResult`",
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": null
+        },
+        {
+          "description": "Option as a result",
+          "is_a": "value",
+          "name": "getResult",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "from",
+          "type_annotation": null
+        }
+      ],
+      "name": "OptionOrNull"
+    }
+  ],
+  "package_id": "lukewilliamboswell/roc-json",
+  "source_code_url": "https://github.com/lukewilliamboswell/roc-json"
+}

@@ -1,0 +1,355 @@
+{
+  "packages": {
+    "adomurad/r2e-platform": {
+      "documentation": "https://adomurad.github.io/r2e-platform/",
+      "homepage": "https://github.com/adomurad/r2e-platform",
+      "source_code": {
+        "owner": "adomurad",
+        "repo": "r2e-platform",
+        "type": "github"
+      }
+    },
+    "adomurad/roc-base64": {
+      "documentation": "https://adomurad.github.io/roc-base64/",
+      "homepage": "https://github.com/adomurad/roc-base64",
+      "source_code": {
+        "owner": "adomurad",
+        "repo": "roc-base64",
+        "type": "github"
+      }
+    },
+    "agu-z/roc-pg": {
+      "documentation": null,
+      "homepage": "https://github.com/agu-z/roc-pg",
+      "source_code": {
+        "owner": "agu-z",
+        "repo": "roc-pg",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-ascii": {
+      "documentation": "https://hasnep.github.io/roc-ascii/",
+      "homepage": "https://github.com/hasnep/roc-ascii",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-ascii",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-hex": {
+      "documentation": "https://hasnep.github.io/roc-hex",
+      "homepage": "https://github.com/hasnep/roc-hex",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-hex",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-html": {
+      "documentation": "https://hasnep.github.io/roc-html",
+      "homepage": "https://github.com/hasnep/roc-html",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-html",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-linear-algebra": {
+      "documentation": "https://hasnep.github.io/roc-linear-algebra",
+      "homepage": "https://github.com/hasnep/roc-linear-algebra",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-linear-algebra",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-math": {
+      "documentation": "https://hasnep.github.io/roc-math",
+      "homepage": "https://github.com/hasnep/roc-math",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-math",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-svg": {
+      "documentation": "https://hasnep.github.io/roc-svg",
+      "homepage": "https://github.com/hasnep/roc-svg",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-svg",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-turtle": {
+      "documentation": "https://hasnep.github.io/roc-turtle",
+      "homepage": "https://github.com/hasnep/roc-turtle",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-turtle",
+        "type": "github"
+      }
+    },
+    "hasnep/roc-units": {
+      "documentation": "https://hasnep.github.io/roc-units",
+      "homepage": "https://github.com/hasnep/roc-units",
+      "source_code": {
+        "owner": "hasnep",
+        "repo": "roc-units",
+        "type": "github"
+      }
+    },
+    "hristog/roc-tools": {
+      "documentation": null,
+      "homepage": "https://github.com/hristog/roc-tools",
+      "source_code": {
+        "owner": "hristog",
+        "repo": "roc-tools",
+        "type": "github"
+      }
+    },
+    "imclerran/roc-asciiart": {
+      "documentation": "https://www.imclerran.com/roc-asciiart/",
+      "homepage": "https://github.com/imclerran/roc-asciiart",
+      "source_code": {
+        "owner": "imclerran",
+        "repo": "roc-asciiart",
+        "type": "github"
+      }
+    },
+    "imclerran/roc-isodate": {
+      "documentation": "https://www.imclerran.com/roc-isodate/",
+      "homepage": "https://github.com/imclerran/roc-isodate",
+      "source_code": {
+        "owner": "imclerran",
+        "repo": "roc-isodate",
+        "type": "github"
+      }
+    },
+    "imclerran/roc-reduce": {
+      "documentation": null,
+      "homepage": "https://github.com/imclerran/roc-reduce",
+      "source_code": {
+        "owner": "imclerran",
+        "repo": "roc-reduce",
+        "type": "github"
+      }
+    },
+    "imclerran/roc-sort": {
+      "documentation": null,
+      "homepage": "https://github.com/imclerran/roc-sort",
+      "source_code": {
+        "owner": "imclerran",
+        "repo": "roc-sort",
+        "type": "github"
+      }
+    },
+    "jancvanb/roc-random": {
+      "documentation": null,
+      "homepage": "https://github.com/jancvanb/roc-random",
+      "source_code": {
+        "owner": "jancvanb",
+        "repo": "roc-random",
+        "type": "github"
+      }
+    },
+    "jwoudenberg/rvn": {
+      "documentation": null,
+      "homepage": "https://github.com/jwoudenberg/rvn",
+      "source_code": {
+        "owner": "jwoudenberg",
+        "repo": "rvn",
+        "type": "github"
+      }
+    },
+    "kilianvounckx/okka": {
+      "documentation": null,
+      "homepage": "https://github.com/kilianvounckx/okka",
+      "source_code": {
+        "owner": "kilianvounckx",
+        "repo": "okka",
+        "type": "github"
+      }
+    },
+    "kilianvounckx/roc-extra": {
+      "documentation": null,
+      "homepage": "https://github.com/kilianvounckx/roc-extra",
+      "source_code": {
+        "owner": "kilianvounckx",
+        "repo": "roc-extra",
+        "type": "github"
+      }
+    },
+    "kilianvounckx/roc_aoc_helpers": {
+      "documentation": null,
+      "homepage": "https://github.com/kilianvounckx/roc_aoc_helpers",
+      "source_code": {
+        "owner": "kilianvounckx",
+        "repo": "roc_aoc_helpers",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/plume": {
+      "documentation": "https://lukewilliamboswell.github.io/plume/",
+      "homepage": "https://github.com/lukewilliamboswell/plume",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "plume",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-ansi": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-ansi/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-ansi",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-ansi",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-json": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-json/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-json",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-json",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-parser": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-parser/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-parser",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-parser",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-pga2d": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-pga2d/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-pga2d",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-pga2d",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-random": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-random/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-random",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-random",
+        "type": "github"
+      }
+    },
+    "lukewilliamboswell/roc-tinvyvg": {
+      "documentation": "https://lukewilliamboswell.github.io/roc-tinvyvg/",
+      "homepage": "https://github.com/lukewilliamboswell/roc-tinvyvg",
+      "source_code": {
+        "owner": "lukewilliamboswell",
+        "repo": "roc-tinvyvg",
+        "type": "github"
+      }
+    },
+    "mulias/roc-array2d": {
+      "documentation": null,
+      "homepage": "https://github.com/mulias/roc-array2d",
+      "source_code": {
+        "owner": "mulias",
+        "repo": "roc-array2d",
+        "type": "github"
+      }
+    },
+    "ostcar/kingfisher": {
+      "documentation": null,
+      "homepage": "https://github.com/ostcar/kingfisher",
+      "source_code": {
+        "owner": "ostcar",
+        "repo": "kingfisher",
+        "type": "github"
+      }
+    },
+    "phagenlocher/roc-color": {
+      "documentation": "https://phagenlocher.github.io/roc-color/",
+      "homepage": "https://github.com/phagenlocher/roc-color",
+      "source_code": {
+        "owner": "phagenlocher",
+        "repo": "roc-color",
+        "type": "github"
+      }
+    },
+    "quelgar/roc-utils": {
+      "documentation": null,
+      "homepage": "https://github.com/quelgar/roc-utils",
+      "source_code": {
+        "owner": "quelgar",
+        "repo": "roc-utils",
+        "type": "github"
+      }
+    },
+    "roc-lang/basic-cli": {
+      "documentation": "https://roc-lang.github.io/basic-cli/",
+      "homepage": "https://github.com/roc-lang/basic-cli",
+      "source_code": {
+        "owner": "roc-lang",
+        "repo": "basic-cli",
+        "type": "github"
+      }
+    },
+    "roc-lang/basic-webserver": {
+      "documentation": "https://roc-lang.github.io/basic-webserver/",
+      "homepage": "https://github.com/roc-lang/basic-webserver",
+      "source_code": {
+        "owner": "roc-lang",
+        "repo": "basic-webserver",
+        "type": "github"
+      }
+    },
+    "roc-lang/path": {
+      "documentation": null,
+      "homepage": "https://github.com/roc-lang/path",
+      "source_code": {
+        "entrypoint": "package/main.roc",
+        "type": "git",
+        "uri": "https://github.com/roc-lang/path.git"
+      }
+    },
+    "roc-lang/unicode": {
+      "documentation": "https://roc-lang.github.io/unicode/",
+      "homepage": "https://github.com/roc-lang/unicode",
+      "source_code": {
+        "owner": "roc-lang",
+        "repo": "unicode",
+        "type": "github"
+      }
+    },
+    "shritesh/roc-image": {
+      "documentation": null,
+      "homepage": "https://github.com/shritesh/roc-image",
+      "source_code": {
+        "owner": "shritesh",
+        "repo": "roc-image",
+        "type": "github"
+      }
+    },
+    "smores56/roc-semver": {
+      "documentation": "https://smores56.github.io/roc-semver/",
+      "homepage": "https://github.com/smores56/roc-semver",
+      "source_code": {
+        "owner": "smores56",
+        "repo": "roc-semver",
+        "type": "github"
+      }
+    },
+    "smores56/weaver": {
+      "documentation": "https://smores56.github.io/weaver/",
+      "homepage": "https://github.com/smores56/weaver",
+      "source_code": {
+        "owner": "smores56",
+        "repo": "weaver",
+        "type": "github"
+      }
+    }
+  }
+}

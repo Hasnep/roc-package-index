@@ -1,0 +1,32 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/jwoudenberg/rvn/releases/download/0.4.0/QqiVn2Huc2qkIxjvjxXwQrNDxr_sEo__09deRF7JlCI.tar.br",
+  "homepage_url": "https://github.com/jwoudenberg/rvn",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "A type with the `EncoderFormatting` and `DecoderFormatting` abilities.\nYou likely don't need this!",
+          "is_a": "type",
+          "name": "Rvn",
+          "type_annotation": null
+        },
+        {
+          "description": "Use for encoding Roc values to RVN, or decoding RVN bytes into Roc values.\n\nThe encoded RVN will be formatted with minimal whitespace.",
+          "is_a": "value",
+          "name": "compact",
+          "type_annotation": "Rvn"
+        },
+        {
+          "description": "Use for encoding Roc values to RVN, or decoding RVN bytes into Roc values.\n\nThe encoded RVN will be formatted similarly to the output of `roc format`.",
+          "is_a": "value",
+          "name": "pretty",
+          "type_annotation": "Rvn"
+        }
+      ],
+      "name": "Rvn"
+    }
+  ],
+  "package_id": "jwoudenberg/rvn",
+  "source_code_url": "https://github.com/jwoudenberg/rvn"
+}

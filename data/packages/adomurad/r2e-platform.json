@@ -1,0 +1,585 @@
+{
+  "documentation_url": "https://adomurad.github.io/r2e-platform/",
+  "download_url": "https://github.com/adomurad/r2e-platform/releases/download/0.8.0/o-YITMnvpJZg-zxL2xKiCxBFlJzlEoEwdRY5a39WFZ0.tar.br",
+  "homepage_url": "https://github.com/adomurad/r2e-platform",
+  "modules": [
+    {
+      "definitions": [],
+      "name": "Tutorial"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Create a r2e test\n\n```\nmyTest = test \"open roc-lang.org website\" \\browser ->\n    # open roc-lang.org\n    browser |> Browser.navigateTo! \"http://roc-lang.org\"\n```",
+          "is_a": "value",
+          "name": "test",
+          "type_annotation": null
+        },
+        {
+          "description": "Create a new configured function to create test cases.\n\n```\nlongTest = Test.testWith {\n    pageLoadTimeout: Override 30_000,\n    scriptExecutionTimeout: Override 30_000,\n    assertTimeout: Override 8000,\n    screenshotOnFail: Override No,\n    windowSize: Override (Size 1800 400),\n}\n\ntest1 = longTest \"this is flaky test\" \\browser ->\n    # open the test page\n    browser |> Browser.navigateTo! \"https://adomurad.github.io/e2e-test-page/\"\n```\n\nAll possible overrides:\n```\nConfigOverride : {\n    assertTimeout : [Inherit, Override U64],\n    pageLoadTimeout : [Inherit, Override U64],\n    scriptExecutionTimeout : [Inherit, Override U64],\n    elementImplicitTimeout : [Inherit, Override U64],\n    windowSize : [Inherit, Override [Size U64 U64]],\n    screenshotOnFail : [Inherit, Override [Yes, No]],\n    attempts : [Inherit, Override U64],\n}\n```",
+          "is_a": "value",
+          "name": "testWith",
+          "type_annotation": null
+        }
+      ],
+      "name": "Test"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Opens a new `Browser` window.\n\nOnly the browser provided by the test will be closed automatically,\nplease remember to close the browser windows you open manually.\n\n```\nnewBrowser = Browser.openNewWindow!\n...\nbrowser |> Browser.closeWindow!\n```",
+          "is_a": "value",
+          "name": "openNewWindow",
+          "type_annotation": "Task Browser [WebDriverError Str]"
+        },
+        {
+          "description": "Opens a new `Browser` window and runs a callback.\nWill close the browser after the callback is finished.\n\n```\nBrowser.openNewWindowWithCleanup! \\browser2 ->\n    browser2 |> Browser.navigateTo! \"https://www.roc-lang.org/\"\n```",
+          "is_a": "value",
+          "name": "openNewWindowWithCleanup",
+          "type_annotation": "(Browser -> Task val [WebDriverError Str]err) -> Task val [WebDriverError Str]err"
+        },
+        {
+          "description": "Close a `Browser` window.\n\nDo not close the browser provided by the test,\nthe automatic cleanup will fail trying to close this browser.\n\n```\nnewBrowser = Browser.openNewWindow!\n...\nbrowser |> Browser.closeWindow!\n```",
+          "is_a": "value",
+          "name": "closeWindow",
+          "type_annotation": "Browser -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Navigate the browser to the given URL.\n\n```\n# open google.com\nbrowser |> Browser.navigateTo! \"http://google.com\"\n```",
+          "is_a": "value",
+          "name": "navigateTo",
+          "type_annotation": "Browser, Str -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Get browser title.\n\n```\nbrowser |> Browser.navigateTo! \"http://google.com\"\n# get title\ntitle = browser |> Browser.getTitle!\n# title = \"Google\"\n```",
+          "is_a": "value",
+          "name": "getTitle",
+          "type_annotation": "Browser -> Task.Task Str [WebDriverError Str]"
+        },
+        {
+          "description": "Get current URL.\n\n```\nbrowser |> Browser.navigateTo! \"http://google.com\"\n# get url\nurl = browser |> Browser.getUrl!\n# url = \"https://google.com/\"\n```",
+          "is_a": "value",
+          "name": "getUrl",
+          "type_annotation": "Browser -> Task Str [WebDriverError Str]"
+        },
+        {
+          "description": "Supported locator strategies\n\n`Css Str` - e.g. Css \".my-button-class\"\n\n`TestId Str` - e.g. TestId \"button\" => Css \"[data-testid=\\\"button\\\"]\"\n\n`XPath Str` - e.g. XPath \"/bookstore/book[price>35]/price\"\n\n`LinkText Str` - e.g. LinkText \"Examples\" in <a href=\"/examples-page\">Examples</a>\n\n`PartialLinkText Str` - e.g. PartialLinkText \"Exam\" in <a href=\"/examples-page\">Examples</a>\n",
+          "is_a": "type",
+          "name": "Locator",
+          "type_annotation": null
+        },
+        {
+          "description": "Find an `Element` in the `Browser`.\n\nWhen there are more than 1 elements, then the first will\nbe returned.\n\nSee supported locators at `Locator`.\n\n```\n# find the html element with a css selector \"#my-id\"\nbutton = browser |> Browser.findElement! (Css \"#my-id\")\n```\n\n```\n# find the html element with a css selector \".my-class\"\nbutton = browser |> Browser.findElement! (Css \".my-class\")\n```\n\n```\n# find the html element with an attribute [data-testid=\"my-element\"]\nbutton = browser |> Browser.findElement! (TestId \"my-element\")\n```",
+          "is_a": "value",
+          "name": "findElement",
+          "type_annotation": "Browser, Locator -> Task Element [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Find an `Element` in the `Browser`.\n\nThis function returns a `[Found Element, NotFound]` instead of an error\nwhen element is not found.\n\nWhen there are more than 1 elements, then the first will\nbe returned.\n\nSee supported locators at `Locator`.\n\n```\nmaybeButton = browser |> Browser.tryFindElement! (Css \"#submit-button\")\n\nwhen maybeButton is\n    NotFound -> Stdout.line! \"Button not found\"\n    Found el ->\n        buttonText = el |> Element.getText!\n        Stdout.line! \"Button found with text: $(buttonText)\"\n```",
+          "is_a": "value",
+          "name": "tryFindElement",
+          "type_annotation": "Browser, Locator -> Task [ Found Element, NotFound ] [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Find an `Element` in the `Browser`.\n\nThis function will fail if the element is not found - `ElementNotFound Str`\n\nThis function will fail if there are more than 1 element - `AssertionError Str`\n\n\nSee supported locators at `Locator`.\n\n```\nbutton = browser |> Browser.findSingleElement! (Css \"#submit-button\")\n```",
+          "is_a": "value",
+          "name": "findSingleElement",
+          "type_annotation": "Browser, Locator -> Task Element [ AssertionError Str, ElementNotFound Str, WebDriverError Str ]"
+        },
+        {
+          "description": "Find all `Elements` in the `Browser`.\n\nWhen there are no elements found, then the list will be empty.\n\nSee supported locators at `Locator`.\n\n```\n# find all <li> elements in #my-list\nlistItems = browser |> Browser.findElements! (Css \"#my-list li\")\n```\n",
+          "is_a": "value",
+          "name": "findElements",
+          "type_annotation": "Browser, Locator -> Task (List Element) [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Take a screenshot of the whole document.\n\nThe result will be a **base64** encoded `Str` representation of a PNG file.\n\n```\nbase64PngStr = browser |> Browser.takeScreenshotBase64!\n```",
+          "is_a": "value",
+          "name": "takeScreenshotBase64",
+          "type_annotation": "Browser -> Task Str [WebDriverError Str]"
+        },
+        {
+          "description": "Set browser window position and/or size.\n\n`x` - x position\n`y` - y position\n`width` - width\n`height` - height\n\nThe result will contain new dimensions.\n\n**warning** - when running not headless,\nthe input dimensions (x, y) are the outer bound dimensions (with the frame).\nBut the result contain the dimension of the browser viewport!\n\n```\nnewRect = browser |> Browser.setWindowRect! (Move { x: 400, y: 600 })\n# newRect is { x: 406, y: 627, width: 400, height: 600 }\n```\n```\nnewRect = browser |> Browser.setWindowRect! (Resize { width: 800, height: 750 })\n# newRect is { x: 300, y: 500, width: 800, height: 750 }\n```\n```\nnewRect = browser |> Browser.setWindowRect! (MoveAndResize { x: 400, y: 600, width: 800, height: 750 })\n# newRect is { x: 406, y: 627, width: 800, height: 750 }\n```",
+          "is_a": "value",
+          "name": "setWindowRect",
+          "type_annotation": "Browser, SetWindowRectOptions -> Task.Task WindowRect [WebDriverError Str]"
+        },
+        {
+          "description": "Get browser window position and size.\n\n`x` - x position\n`y` - y position\n`width` - width\n`height` - height\n\n**warning** - when running not headless, the result contains the x and y of the browser's viewport,\nwithout the frame.\n\n```\nrect = browser |> Browser.getWindowRect!\n# rect is { x: 406, y: 627, width: 400, height: 600 }\n```",
+          "is_a": "value",
+          "name": "getWindowRect",
+          "type_annotation": "Browser -> Task WindowRect [WebDriverError Str]"
+        },
+        {
+          "description": "Navigate back in the browser history.\n\n```\nbrowser |> Browser.navigateBack!\n```",
+          "is_a": "value",
+          "name": "navigateBack",
+          "type_annotation": "Browser -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Navigate forward in the browser history.\n\n```\nbrowser |> Browser.navigateForward!\n```",
+          "is_a": "value",
+          "name": "navigateForward",
+          "type_annotation": "Browser -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Reload the current page.\n\n```\nbrowser |> Browser.reloadPage!\n```",
+          "is_a": "value",
+          "name": "reloadPage",
+          "type_annotation": "Browser -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Maximize the `Browser` window.\n\nCan fail when the system does not support this operation.\n\n```\nnewRect = browser |> Browser.maximizeWindow!\n```",
+          "is_a": "value",
+          "name": "maximizeWindow",
+          "type_annotation": "Browser -> Task WindowRect [WebDriverError Str]"
+        },
+        {
+          "description": "Minimize the `Browser` window.\n\nCan fail when the system does not support this operation.\n\n```\nnewRect = browser |> Browser.minimizeWindow!\n```",
+          "is_a": "value",
+          "name": "minimizeWindow",
+          "type_annotation": "Browser -> Task WindowRect [WebDriverError Str]"
+        },
+        {
+          "description": "Make the `Browser` window full screen.\n\nCan fail when the system does not support this operation.\n\n```\nnewRect = browser |> Browser.fullScreenWindow!\n```",
+          "is_a": "value",
+          "name": "fullScreenWindow",
+          "type_annotation": "Browser -> Task WindowRect [WebDriverError Str]"
+        },
+        {
+          "description": "Execute JavaScript in the `Browser`.\n\n```\nbrowser |> Browser.executeJs! \"console.log('wow')\"\n```",
+          "is_a": "value",
+          "name": "executeJs",
+          "type_annotation": "Browser, Str -> Task {} [ WebDriverError Str, JsReturnTypeError Str ] where a implements Decoding"
+        },
+        {
+          "description": "Execute JavaScript in the `Browser` and get the response.\n\nThis function can be used with types like: `Bool`, `Str`, `I64`, `F64`, etc.\nR2E will try to cast the browser response to the choosen type.\n\nWhen the response is empty e.g. property does not exist, then the default value of the choosen type will be used:\n- `Str` - \"\"\n- `Bool` - Bool.false\n- `Num` - 0\n\nThe output will be casted to expected Roc type:\n\n```\n response = browser |> Browser.executeJsWithOutput! \"return 50 + 5;\"\n response |> Assert.shouldBe! 55\n\n response = browser |> Browser.executeJsWithOutput! \"return 50.5 + 5;\"\n response |> Assert.shouldBe! 55.5\n\n response = browser |> Browser.executeJsWithOutput! \"return 50.5 + 5;\"\n response |> Assert.shouldBe! \"55.5\"\n\n response = browser |> Browser.executeJsWithOutput! \"return true\"\n response |> Assert.shouldBe! \"true\"\n\n response = browser |> Browser.executeJsWithOutput! \"return true\"\n response |> Assert.shouldBe! Bool.true\n```\n\nThe function can return a `Promise`.",
+          "is_a": "value",
+          "name": "executeJsWithOutput",
+          "type_annotation": "Browser, Str -> Task a [ WebDriverError Str, JsReturnTypeError Str ] where a implements Decoding"
+        },
+        {
+          "description": "Execute JavaScript in the `Browser` with arguments and get the response.\n\nThis function can be used with types like: `Bool`, `Str`, `I64`, `F64`, etc.\nR2E will try to cast the browser response to the choosen type.\n\nThe arguments is a list of:\n\n```\nJsValue : [String Str, Number F64, Boolean Bool, Null]\n```\n\nWhen the response is empty e.g. property does not exist, then the default value of the choosen type will be used:\n- `Str` - \"\"\n- `Bool` - Bool.false\n- `Num` - 0\n\nArgs can only be used using the `arguments` array in js.\n\nThe output will be casted to expected Roc type:\n\n```\n response = browser |> Browser.executeJsWithArgs! \"return 50 + 5;\" []\n response |> Assert.shouldBe! 55\n\n response = browser |> Browser.executeJsWithArgs! \"return 50.5 + 5;\" [Number 55.5, String \"5\"]\n response |> Assert.shouldBe! 55.5\n```\n\nThe function can return a `Promise`.",
+          "is_a": "value",
+          "name": "executeJsWithArgs",
+          "type_annotation": "Browser, Str, List JsValue -> Task a [ WebDriverError Str, JsReturnTypeError Str ] where a implements Decoding"
+        },
+        {
+          "description": "R2E cookie representation\n\n```\nCookie : {\n    name : Str,\n    value : Str,\n    domain : Str,\n    path : Str,\n    sameSite : SameSiteOption,\n    secure : Bool,\n    httpOnly : Bool,\n    expiry : CookieExpiry,\n}\n\nCookieExpiry : [Session, MaxAge U32]\n\nSameSiteOption : [None, Lax, Strict]\n```",
+          "is_a": "type",
+          "name": "Cookie",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "CookieExpiry",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "SameSiteOption",
+          "type_annotation": "[ None, Lax, Strict ]"
+        },
+        {
+          "description": "Add a cookie in the `Browser`.\n\n```\nbrowser |> Browser.addCookie! { name: \"myCookie\", value: \"value1\" }\n```\n```\nbrowser |> Browser.addCookie! {\n    name: \"myCookie\",\n    value: \"value1\",\n    domain: \"my-top-level-domain.com\",\n    path: \"/path\",\n    sameSite: Lax,\n    secure: Bool.true,\n    httpOnly: Bool.true,\n    expiry: MaxAge 2865848396, # unix epoch\n}\n```",
+          "is_a": "value",
+          "name": "addCookie",
+          "type_annotation": "Browser, NewCookie -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Delete a cookie in the `Browser` by name.\n\n```\nbrowser |> Browser.deleteCookie! \"myCookieName\"\n```",
+          "is_a": "value",
+          "name": "deleteCookie",
+          "type_annotation": "Browser, Str -> Task {} [ WebDriverError Str, CookieNotFound Str ]"
+        },
+        {
+          "description": "Delete all cookies in the `Browser`.\n\n```\nbrowser |> Browser.deleteAllCookies!\n```",
+          "is_a": "value",
+          "name": "deleteAllCookies",
+          "type_annotation": "Browser -> Task {} [WebDriverError Str]"
+        },
+        {
+          "description": "Get a cookie from the `Browser` by name.\n\n```\ncookie1 = browser |> Browser.getCookie! \"myCookie\"\ncookie1 |> Assert.shouldBe! {\n    name: \"myCookie\",\n    value: \"value1\",\n    domain: \".my-domain.io\",\n    path: \"/\",\n    sameSite: Lax,\n    expiry: Session,\n    secure: Bool.true,\n    httpOnly: Bool.false,\n}\n```",
+          "is_a": "value",
+          "name": "getCookie",
+          "type_annotation": "Browser, Str -> Task Cookie [ WebDriverError Str, CookieNotFound Str ]"
+        },
+        {
+          "description": "Get all cookies from the `Browser`.\n\n```\ncookies = browser |> Browser.getAllCookies!\ncookies |> List.len |> Assert.shouldBe! 3\n```",
+          "is_a": "value",
+          "name": "getAllCookies",
+          "type_annotation": "Browser -> Task (List Cookie) [ WebDriverError Str, CookieNotFound Str ]"
+        },
+        {
+          "description": "Get alert/prompt text.\n\n```\ntext = browser |> Browser.getAlertText!\ntext |> Assert.shouldBe \"Are you sure to close tab?\"\n```",
+          "is_a": "value",
+          "name": "getAlertText",
+          "type_annotation": "Browser -> Task Str [ WebDriverError Str, AlertNotFound Str ]"
+        },
+        {
+          "description": "Input text in prompt.\n\n```\nbrowser |> Browser.sendTextToAlert! \"my reply\"\nbrowser |> Browser.acceptAlert!\n```",
+          "is_a": "value",
+          "name": "sendTextToAlert",
+          "type_annotation": "Browser, Str -> Task {} [ WebDriverError Str, AlertNotFound Str ]"
+        },
+        {
+          "description": "Accept alert/prompt.\n\n```\nbrowser |> Browser.acceptAlert!\n```",
+          "is_a": "value",
+          "name": "acceptAlert",
+          "type_annotation": "Browser -> Task {} [ WebDriverError Str, AlertNotFound Str ]"
+        },
+        {
+          "description": "Dismiss alert/prompt.\n\n```\nbrowser |> Browser.dismissAlert!\n```",
+          "is_a": "value",
+          "name": "dismissAlert",
+          "type_annotation": "Browser -> Task {} [ WebDriverError Str, AlertNotFound Str ]"
+        },
+        {
+          "description": "Get the serialized DOM as HTML `Str`.\n\n```\nhtml = browser |> Browser.getPageHtml!\nhtml |> Assert.shouldContainText \"<h1>Header</h1>\"\n```",
+          "is_a": "value",
+          "name": "getPageHtml",
+          "type_annotation": "Browser -> Task Str [WebDriverError Str]"
+        }
+      ],
+      "name": "Browser"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Click on a `Element`.\n\n```\n# find button element\nbutton = browser |> Browser.findElement! (Css \"#submit-button\")\n# click the button\nbutton |> Element.click!\n```",
+          "is_a": "value",
+          "name": "click",
+          "type_annotation": "Element -> Task {} [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get text of the `Element`.\n\nThis function will return the displayed text in the `Browser` for this `Element` and it's children.\n\nWhen the `Element` is not visible, then the text will be an empty `Str`.\n\n```\n# find button element\nbutton = browser |> Browser.findElement! (Css \"#submit-button\")\n# get button text\nbuttonText = button |> Element.getText!\n```",
+          "is_a": "value",
+          "name": "getText",
+          "type_annotation": "Element -> Task Str [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get **value** of the `Element`.\n\nWhen there is no **value** in this element then returns the default value for used type:\n- `Str` - \"\"\n- `Bool` - Bool.false\n- `Num` - 0\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# get input value\ninputValue = input |> Element.getValue!\ninputValue |> Assert.shouldBe \"my-email@fake-email.com\"\n```\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#age-input\")\n# get input value\ninputValue = input |> Element.getValue!\ninputValue |> Assert.shouldBe 18\n```",
+          "is_a": "value",
+          "name": "getValue",
+          "type_annotation": "Element -> Task.Task a [ ElementNotFound Str, PropertyTypeError Str, WebDriverError Str ] where a implements Decoding"
+        },
+        {
+          "description": "Check if `Element` is selected.\n\nCan be used on checkbox inputs, radio inputs, and option elements.\n\n```\n# find checkbox element\ncheckbox = browser |> Browser.findElement! (Css \"#is-tasty-checkbox\")\n# get button text\nisTastyState = checkbox |> Element.isSelected!\n# asert expected value\nisTastyState |> Assert.shoulBe! Selected\n```",
+          "is_a": "value",
+          "name": "isSelected",
+          "type_annotation": "Element -> Task [ Selected, NotSelected ] [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Check if `Element` is visible in the `Browser`.\n\n```\n# find error message element\nerrorMsg = browser |> Browser.findElement! (Css \"#error-msg\")\n# get button text\nisVisible = checkbox |> Element.isVisible!\n# assert expected value\nisVisible |> Assert.shoulBe! Visible\n```",
+          "is_a": "value",
+          "name": "isVisible",
+          "type_annotation": "Element -> Task [ Visible, NotVisible ] [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get **attribute** of an `Element`.\n\n**Attributes** are values you can see in the HTML DOM, like *<input class\"test\" type=\"password\" />*\n\nWhen the **attribute** is not present on the `Element`, this function will return empty `Str`.\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# get input type\ninputType = input |> Element.getAttribute! \"type\"\n```",
+          "is_a": "value",
+          "name": "getAttribute",
+          "type_annotation": "Element, Str -> Task Str [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get **attribute** of an `Element`.\n\n**Attributes** are values you can see in the HTML DOM, like *<input class\"test\" type=\"password\" />*\n\n```\ncheckboxType = checkbox |> Element.getAttributeOrEmpty! \"type\"\nwhen checkboxType is\n    Ok type -> type |> Assert.shouldBe \"checkbox\"\n    Err Empty -> Assert.failWith \"should not be empty\"\n```",
+          "is_a": "value",
+          "name": "getAttributeOrEmpty",
+          "type_annotation": "Element, Str -> Task (Result Str [Empty]) [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get **property** of an `Element`.\n\n**Properties** are the keys that you get when using `GetOwnProperty` on a element in the browser.\n\nThis function can be used with types like: `Bool`, `Str`, `I64`, `F64`, etc.\nR2E will try to cast the browser response to the choosen type.\n\nWhen the response is empty e.g. property does not exist, then the default value of the choosen type will be used:\n- `Str` - \"\"\n- `Bool` - Bool.false\n- `Num` - 0\n\n```\n# get input value\ninputValue = input |> Element.getProperty! \"value\"\n# expect to have value \"email@emails.com\"\ninputValue |> Assert.shouldBe \"email@emails.com\"\n```\n\nBool:\n```\nisChecked = nameInput |> Element.getProperty! \"checked\"\nisChecked |> Assert.shouldBe Bool.false\n```\n\nBool as Str:\n```\nisChecked = nameInput |> Element.getProperty! \"checked\"\nisChecked |> Assert.shouldBe \"false\"\n```\n\nNum:\n```\nclientHeight = nameInput |> Element.getProperty! \"clientHeight\"\nclientHeight |> Assert.shouldBe 17\n```",
+          "is_a": "value",
+          "name": "getProperty",
+          "type_annotation": "Internal.Element, Str -> Task a [ ElementNotFound Str, PropertyTypeError Str, WebDriverError Str ] where a implements Decoding"
+        },
+        {
+          "description": "Get **property** of an `Element`.\n\n**Properties** are the keys that you get when using `GetOwnProperty` on a element in the browser.\n\nThis function can be used with types like: `Bool`, `Str`, `I64`, `F64`, etc.\nR2E will try to cast the browser response to the choosen type.\n\nWhen the response is empty e.g. property does not exist, then `Err Empty` will be returned.\n\n```\n# get input value\ninputValue = input |> Element.getPropertyOrEmpty! \"value\"\n# expect to have value \"email@emails.com\"\ninputType |> Assert.shouldBe (Ok \"email@emails.com\")\n```\n\n```\nisChecked = nameInput |> Element.getProperty! \"checked\"\nwhen isChecked is\n    Ok value -> value |> Assert.shouldBe Bool.false\n    Err Empty -> Assert.failWith \"input should have a checked prop\"\n```\n\n```\nclientHeight = nameInput |> Element.getProperty! \"clientHeight\"\nclientHeight |> Assert.shouldBe (Ok 17)\n```",
+          "is_a": "value",
+          "name": "getPropertyOrEmpty",
+          "type_annotation": "Element, Str -> Task (Result a [Empty]) [ WebDriverError Str, ElementNotFound Str, PropertyTypeError Str ] where a implements Decoding"
+        },
+        {
+          "description": "Send a `Str` to a `Element` (e.g. put text into an input).\n\n```\n# find email input element\nemailInput = browser |> Browser.findElement! (Css \"#email\")\n# input an email into the email input\nemailInput |> Element.sendKeys! \"my.fake.email@fake-email.com\"\n```\n\nSpecial key sequences:\n\n`{enter}` - simulates an \"enter\" key press\n\n```\n# find search input element\nsearchInput = browser |> Browser.findElement! (Css \"#search\")\n# input text and submit\nsearchInput |> Element.sendKeys! \"roc lang{enter}\"\n```",
+          "is_a": "value",
+          "name": "inputText",
+          "type_annotation": "Element, Str -> Task.Task {} [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Clear an editable or resetable `Element`.\n\n```\n# find button element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# click the button\ninput |> Element.clear!\n```",
+          "is_a": "value",
+          "name": "clear",
+          "type_annotation": "Internal.Element -> Task.Task {} [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Supported locator strategies\n\n`Css Str` - e.g. Css \".my-button-class\"\n\n`TestId Str` - e.g. TestId \"button\" => Css \"[data-testid=\\\"button\\\"]\"\n\n`XPath Str` - e.g. XPath \"/bookstore/book[price>35]/price\"\n\n`LinkText Str` - e.g. LinkText \"Examples\" in <a href=\"/examples-page\">Examples</a>\n\n`PartialLinkText Str` - e.g. PartialLinkText \"Exam\" in <a href=\"/examples-page\">Examples</a>\n",
+          "is_a": "type",
+          "name": "Locator",
+          "type_annotation": null
+        },
+        {
+          "description": "Find an `Element` inside the tree of another `Element` in the `Browser`.\n\nWhen there are more than 1 elements, then the first will\nbe returned.\n\nSee supported locators at `Locator`.\n\n```\n# find the html element with a css selector \"#my-id\"\nbutton = element |> Element.findElement! (Css \"#my-id\")\n```\n\n```\n# find the html element with a css selector \".my-class\"\nbutton = element |> Element.findElement! (Css \".my-class\")\n```\n\n```\n# find the html element with an attribute [data-testid=\"my-element\"]\nbutton = element |> Element.findElement! (TestId \"my-element\")\n```",
+          "is_a": "value",
+          "name": "findElement",
+          "type_annotation": "Element, Locator -> Task Element [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Find an `Element` inside the tree of another `Element` in the `Browser`.\n\nThis function returns a `[Found Element, NotFound]` instead of an error\nwhen element is not found.\n\nWhen there are more than 1 elements, then the first will\nbe returned.\n\nSee supported locators at `Locator`.\n\n```\nmaybeButton = element |> Element.tryFindElement! (Css \"#submit-button\")\n\nwhen maybeButton is\n    NotFound -> Stdout.line! \"Button not found\"\n    Found el ->\n        buttonText = el |> Element.getText!\n        Stdout.line! \"Button found with text: $(buttonText)\"\n```",
+          "is_a": "value",
+          "name": "tryFindElement",
+          "type_annotation": "Element, Locator -> Task [ Found Element, NotFound ] [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Find an `Element` inside the tree of another `Element` in the `Browser`.\n\nThis function will fail if the element is not found - `ElementNotFound Str`\n\nThis function will fail if there are more than 1 element - `AssertionError Str`\n\n\nSee supported locators at `Locator`.\n\n```\nbutton = element |> Element.findSingleElement! (Css \"#submit-button\")\n```",
+          "is_a": "value",
+          "name": "findSingleElement",
+          "type_annotation": "Element, Locator -> Task Element [ AssertionError Str, ElementNotFound Str, WebDriverError Str ]"
+        },
+        {
+          "description": "Find all `Elements` inside the tree of another `Element` in the `Browser`.\n\nWhen there are no elements found, then the list will be empty.\n\nSee supported locators at `Locator`.\n\n```\n# find all <li> elements in #my-list in the DOM tree of **element**\nlistItems = element |> Element.findElements! (Css \"#my-list li\")\n```\n",
+          "is_a": "value",
+          "name": "findElements",
+          "type_annotation": "Element, Locator -> Task (List Element) [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get the HTML tag name of an `Element`.\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# get input tag name\ntagName = input |> Element.getTagName!\n# tag name should be \"input\"\ntagName |> Assert.shouldBe \"input\"\n```",
+          "is_a": "value",
+          "name": "getTagName",
+          "type_annotation": "Element -> Task Str [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get a **css property** of an `Element`.\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# get input type\ninputBorder = input |> Element.getCssProperty! \"border\"\n# assert\ninputBorder |> Assert.shouldBe \"2px solid rgb(0, 0, 0)\"\n```",
+          "is_a": "value",
+          "name": "getCssProperty",
+          "type_annotation": "Element, Str -> Task Str [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Get the position and size of the `Element`.\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#email-input\")\n# get input tag name\nrect = input |> Element.getRect!\n# assert the rect\nrect.height |> Assert.shouldBe! 51\nrect.width |> Assert.shouldBe! 139\nrect.x |> Assert.shouldBeEqualTo! 226.1243566\nrect.y |> Assert.shouldBeEqualTo! 218.3593754\n```",
+          "is_a": "value",
+          "name": "getRect",
+          "type_annotation": "Element -> Task ElementRect [ WebDriverError Str, ElementNotFound Str ]"
+        },
+        {
+          "description": "Switch the context to an iFrame.\n\nThis function runs a callback in which you can interact\nwith the page inside an iFrame.\n\n```\nframeEl = browser |> Browser.findElement! (Css \"iframe\")\n\nElement.useIFrame! frameEl \\frame ->\n    span = frame |> Browser.findElement! (Css \"#span-inside-frame\")\n    span |> Assert.elementShouldHaveText \"This is inside an iFrame\"\n```",
+          "is_a": "value",
+          "name": "useIFrame",
+          "type_annotation": "Element, (Internal.Browser -> Task {} ) -> Task {}"
+        }
+      ],
+      "name": "Element"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Checks if the value of __actual__ is equal to the __expected__.\n\n```\n# find button element\nbutton = browser |> Browser.findElement! (Css \"#submit-button\")\n# get button text\nbuttonText = button |> Element.getText!\n# assert text\nbuttonText |> Assert.shouldBe! \"Roc\"\n```",
+          "is_a": "value",
+          "name": "shouldBe",
+          "type_annotation": "a, a -> Task.Task {} [AssertionError Str] where a implements Eq & Inspect"
+        },
+        {
+          "description": "Checks if the value of __actual__ contains the `Str` __expected__.\n\n```\n\"github\" |> Assert.shouldContainText! \"git\"\n```",
+          "is_a": "value",
+          "name": "shouldContainText",
+          "type_annotation": "Str, Str -> Task.Task {} [AssertionError Str]"
+        },
+        {
+          "description": "Checks if the value of __actual__ is equal to the __expected__.\n\nUsed to compare `Frac` numbers.\n\n```\n# find button element\nbutton = browser |> Browser.findElement! (Css \"#submit-button\")\n# get button text\nbuttonSize = button |> Element.getProperty! \"size\"\n# assert value\nbuttonSize |> Assert.shouldBeEqualTo! 20f64\n```",
+          "is_a": "value",
+          "name": "shouldBeEqualTo",
+          "type_annotation": "Frac a, Frac a -> Task.Task {} [AssertionError Str]"
+        },
+        {
+          "description": "Checks if the __actual__ `Num` is grater than the __expected__.\n\n```\n3 |> Assert.shouldBeGreaterThan! 2\n```",
+          "is_a": "value",
+          "name": "shouldBeGreaterThan",
+          "type_annotation": "Num a, Num a -> Task.Task {} [AssertionError Str] where a implements Bool.Eq"
+        },
+        {
+          "description": "Checks if the __actual__ `Num` is grater or equal than the __expected__.\n\n```\n3 |> Assert.shouldBeGreaterOrEqualTo! 2\n```",
+          "is_a": "value",
+          "name": "shouldBeGreaterOrEqualTo",
+          "type_annotation": "Num a, Num a -> Task.Task {} [AssertionError Str] where a implements Bool.Eq"
+        },
+        {
+          "description": "Checks if the __actual__ `Num` is grater than the __expected__.\n\n```\n3 |> Assert.shouldBeGreaterThan! 2\n```",
+          "is_a": "value",
+          "name": "shouldBeLesserThan",
+          "type_annotation": "Num a, Num a -> Task.Task {} [AssertionError Str] where a implements Bool.Eq"
+        },
+        {
+          "description": "Checks if the __actual__ `Num` is grater or equal than the __expected__.\n\n```\n3 |> Assert.shouldBeLesserOrEqualTo! 2\n```",
+          "is_a": "value",
+          "name": "shouldBeLesserOrEqualTo",
+          "type_annotation": "Num a, Num a -> Task.Task {} [AssertionError Str] where a implements Bool.Eq"
+        },
+        {
+          "description": "Checks if the __URL__ is equal to the __expected__.\n\nThis function will wait for the expectation to be met,\nfor the **assertTimeout** specified in test options - default: 3s.\n```\n# assert text\nbrowser |> Assert.urlShouldBe! \"https://roc-lang.org/\"\n```",
+          "is_a": "value",
+          "name": "urlShouldBe",
+          "type_annotation": "Browser, Str -> Task.Task {} [ AssertionError Str, WebDriverError Str ]"
+        },
+        {
+          "description": "Checks if the __title__ of the page is equal to the __expected__.\n\nThis function will wait for the expectation to be met,\nfor the **assertTimeout** specified in test options - default: 3s.\n```\n# assert text\nbrowser |> Assert.titleShouldBe! \"The Roc Programming Language\"\n```",
+          "is_a": "value",
+          "name": "titleShouldBe",
+          "type_annotation": "Browser, Str -> Task {} [ AssertionError Str, WebDriverError Str ]"
+        },
+        {
+          "description": "Fails with given error message.\n\n```\n# fail the test\nAssert.failWith! \"this should not happen\"\n```",
+          "is_a": "value",
+          "name": "failWith",
+          "type_annotation": "Str -> Task.Task [AssertionError Str]"
+        },
+        {
+          "description": "Checks if the length of __list__ is equal to the __expected__ length.\n\n```\n# find all buttons element\nbuttons = browser |> Browser.findElements! (Css \"button\")\n# assert that there are 3 buttons\nbuttons |> Assert.shouldHaveLength! 3\n```",
+          "is_a": "value",
+          "name": "shouldHaveLength",
+          "type_annotation": "List a, U64 -> Task.Task {} [AssertionError Str]"
+        },
+        {
+          "description": "Checks if the `Element` has __expected__ text.\n\nThis function will wait for the `Element` to meet the expectation,\nfor the **assertTimeout** specified in test options - default: 3s.\n\n```\n# find button element\nbutton = browser |> Browser.findElement! (Css \"#submit-button\")\n# check if button has text \"Submit\"\nbutton |> Assert.elementShouldHaveText! \"Submit\"\n```",
+          "is_a": "value",
+          "name": "elementShouldHaveText",
+          "type_annotation": "Element, Str -> Task {} [ AssertionError Str, ElementNotFound Str, WebDriverError Str ]"
+        },
+        {
+          "description": "Checks if the `Element` has __expected__ value.\n\nThis function will wait for the `Element` to meet the expectation,\nfor the **assertTimeout** specified in test options - default: 3s.\n\n```\n# find input element\ninput = browser |> Browser.findElement! (Css \"#username-input\")\n# check if input has value \"fake-username\"\ninput |> Assert.elementShouldHaveValue! \"fake-username\"\n```",
+          "is_a": "value",
+          "name": "elementShouldHaveValue",
+          "type_annotation": "Element, Str -> Task {} [ AssertionError Str, ElementNotFound Str, WebDriverError Str, PropertyTypeError Str ]"
+        },
+        {
+          "description": "Checks if the `Element` is visible in the `Browser`.\n\nThis function will wait for the `Element` to meet the expectation,\nfor the **assertTimeout** specified in test options - default: 3s.\n\n```\n# find error message element\nerrorMsg = browser |> Browser.findElement! (Css \".error-msg\")\n# check if the error message element is visible\nerrorMsg |> Assert.elementShouldBeVisible!\n```",
+          "is_a": "value",
+          "name": "elementShouldBeVisible",
+          "type_annotation": "Element -> Task {} [ AssertionError Str, ElementNotFound Str, WebDriverError Str ]"
+        }
+      ],
+      "name": "Assert"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Write `Str` to Stdout\nfollowed by a newline.\n\n```\nDebug.printLine \"Hello World\"\n```",
+          "is_a": "value",
+          "name": "printLine",
+          "type_annotation": "Str -> Task {} []"
+        },
+        {
+          "description": "Stops the test execution for specified amount of time.\n\n`timeout` - time in [ms]\n\n```\n# wait for 3s\nDebug.wait 3000\n```",
+          "is_a": "value",
+          "name": "wait",
+          "type_annotation": "U64 -> Task {} []"
+        },
+        {
+          "description": "Stops the test execution till the \"enter\" key is pressed in the terminal.\n\n```\nDebug.waitForEnterKey!\n```",
+          "is_a": "value",
+          "name": "waitForEnterKey",
+          "type_annotation": "Task {} []"
+        },
+        {
+          "description": "Blink an `Element` in the `Browser`.\n\nCan be useful for debugging and trouble shooting.\n\n```\nbutton |> Debug.showElement!\n```",
+          "is_a": "value",
+          "name": "showElement",
+          "type_annotation": "Element -> Task {} [ WebDriverError Str, JsReturnTypeError Str ]"
+        },
+        {
+          "description": "Blink a `List` of `Element`s in the `Browser`.\n\nCan be useful for debugging and trouble shooting.\n\n```\ncheckboxes |> Debug.showElements!\n```",
+          "is_a": "value",
+          "name": "showElements",
+          "type_annotation": "List Element -> Task {} [ WebDriverError Str, JsReturnTypeError Str ]"
+        },
+        {
+          "description": "Blink the current active frame (iFrame or top level frame).\n\nCan be useful for debugging and trouble shooting.\n\n```\nbrowser |> Debug.showCurrentFrame!\n```",
+          "is_a": "value",
+          "name": "showCurrentFrame",
+          "type_annotation": "Browser -> Task {} [ WebDriverError Str, JsReturnTypeError Str ]"
+        }
+      ],
+      "name": "Debug"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "R2EConfiguration",
+          "type_annotation": null
+        },
+        {
+          "description": "The default test configuration to run your tests.\n\nThe defaults:\n\n**resultsDirName** - *\"testResults\"*\n\n**reporters** - *[BasicHtmlReporter.reporter]*\n\n**assertTimeout** - *3s*\n\n**pageLoadTimeout** - *10s*\n\n**scriptExecutionTimeout** - *10s*\n\n**elementImplicitTimeout** - *5s*\n\n**windowSize** - *Size 1024 768*\n\n**screenshotOnFail** - *Yes*\n\n**attempts** - *2*\n\n```\napp [testCases, config] { r2e: platform \"...\" }\n\nimport r2e.Test exposing [test]\nimport r2e.Config\n\nconfig = Config.defaultConfig\n\ntestCases = [\n    test1,\n]\n```",
+          "is_a": "value",
+          "name": "defaultConfig",
+          "type_annotation": "R2EConfiguration"
+        },
+        {
+          "description": "The default test configuration with overrides.\n\n```\nconfig = Config.defaultConfigWith {\n    resultsDirName: \"my-results\",\n    reporters: [BasicHtmlReporter.reporter, myJsonReporter],\n    assertTimeout: 5_000,\n}\n```",
+          "is_a": "value",
+          "name": "defaultConfigWith",
+          "type_annotation": "{ resultsDirName ? Str, reporters ? List (ReporterDefinition ), assertTimeout ? U64, pageLoadTimeout ? U64, scriptExecutionTimeout ? U64, elementImplicitTimeout ? U64, windowSize ? [Size U64 U64], screenshotOnFail ? [ Yes, No ], attempts ? U64 } -> R2EConfiguration"
+        }
+      ],
+      "name": "Config"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Get the value of an environment variable.\n\nWill return empty `Str` when the variable is not set.\n\n```\n empty = Env.get! \"FAKE_ENV_FOR_SURE_EMPTY\"\n empty |> Assert.shouldBe! \"\"\n\n env = Env.get! \"SECRET_ENV_KEY\"\n env |> Assert.shouldBe! \"secret_value\"\n```",
+          "is_a": "value",
+          "name": "get",
+          "type_annotation": "Str -> Task Str []"
+        }
+      ],
+      "name": "Env"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Takes in any error Tag and return the same Tag or `[StringError Str]` if the input was any of R2E errors",
+          "is_a": "value",
+          "name": "webDriverErrorToStr",
+          "type_annotation": null
+        }
+      ],
+      "name": "Error"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Creates a custom reporter.\n\n```\ncustomReporter = Reporting.createReporter \"myCustomReporter\" \\results, _meta ->\n    lenStr = results |> List.len |> Num.toStr\n    indexFile = { filePath: \"index.html\", content: \"<h3>Test count: $(lenStr)</h3>\" }\n    testFile = { filePath: \"test.txt\", content: \"this is just a test\" }\n    [indexFile, testFile]\n```",
+          "is_a": "value",
+          "name": "createReporter",
+          "type_annotation": "Str, ReporterCallback err -> ReporterDefinition err"
+        },
+        {
+          "description": "Rename an existing reporter.\nThe name of a reporter is also used to create the report dir in outDir.\n\n```\ncustomReporter =\n    Reporting.BasicHtmlReporter.reporter\n    |> Reporting.rename \"myCustomReporter\"\n```",
+          "is_a": "value",
+          "name": "rename",
+          "type_annotation": "ReporterDefinition err, Str -> ReporterDefinition err"
+        },
+        {
+          "description": "Encode `Str` so it can be used in HTML.\n\nUseful util when writing a custom reporter.",
+          "is_a": "value",
+          "name": "htmlEncode",
+          "type_annotation": "Str -> Str"
+        }
+      ],
+      "name": "Reporting"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Reporter.\n\n```\nreporters = [basicHtmlReporter.reporter]\n```",
+          "is_a": "value",
+          "name": "reporter",
+          "type_annotation": null
+        }
+      ],
+      "name": "BasicHtmlReporter"
+    }
+  ],
+  "package_id": "adomurad/r2e-platform",
+  "source_code_url": "https://github.com/adomurad/r2e-platform"
+}

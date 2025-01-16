@@ -1,0 +1,376 @@
+{
+  "documentation_url": "https://lukewilliamboswell.github.io/plume/",
+  "download_url": "https://github.com/lukewilliamboswell/plume/releases/download/0.3.0/5F47E7jKcQNyzpmqfoFnwmX8w-SOpXufbN5DIvSZRIo.tar.br",
+  "homepage_url": "https://github.com/lukewilliamboswell/plume",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Trace",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ data : List { x : x, y : y, marker : Marker.Marker }, orientation ? [ Vertical, Horizontal ], name ? Str, bar_width ? F32 } -> Result (Trace x y)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "with_name",
+          "type_annotation": "Trace x y, Str -> Trace x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "with_bar_width",
+          "type_annotation": "Trace x y, F32 -> Result (Trace x y) [OutOfRange Str]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Trace x y -> Str where x implements Inspect, y implements Inspect"
+        }
+      ],
+      "name": "Bar"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Chart",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "empty",
+          "type_annotation": "Chart x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_html",
+          "type_annotation": "Chart x y -> Str where x implements Inspect, y implements Inspect"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add_bar_chart",
+          "type_annotation": "Chart x y, Bar.Trace x y -> Chart x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add_scatter_chart",
+          "type_annotation": "Chart x y, Scatter.Trace x y -> Chart x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add_sankey_chart",
+          "type_annotation": "Chart x y, Sankey.Trace x y -> Chart x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "add_pie_chart",
+          "type_annotation": "Chart x y, Pie.Trace x y -> Chart x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "with_layout",
+          "type_annotation": "Chart x y, Layout.Layout x y -> Chart x y"
+        }
+      ],
+      "name": "Chart"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Color",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "rgb",
+          "type_annotation": "U8, U8, U8 -> Color"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "rgba",
+          "type_annotation": "U8, U8, U8, U8 -> Color"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "hex",
+          "type_annotation": "Str -> Result Color [InvalidHex Str]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Color -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "named",
+          "type_annotation": "Str -> Result Color [UnknownColor Str]"
+        }
+      ],
+      "name": "Color"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Font",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "default",
+          "type_annotation": "Font"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ family ? Str, size ? F32, color ? Color.Color, shadow ? [ None, Auto ], style ? Style, textcase ? TextCase, variant ? Variant } -> Result Font"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Font -> Str"
+        }
+      ],
+      "name": "Font"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Layout",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ global_font ? Font.Font, title ? Title.Title, x_axis ? Axis.Axis x, y_axis ? Axis.Axis y, show_legend ? Bool } -> Layout x y"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get_title",
+          "type_annotation": "Layout x y -> Result Str [NotFound]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Layout x y -> Str where x implements Inspect, y implements Inspect"
+        }
+      ],
+      "name": "Layout"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Type",
+          "type_annotation": "[ Solid, Dot, Dash, LongDash, DashDot, LongDashDot ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "dash_to_str",
+          "type_annotation": "Type -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Line",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ width ? F32, color ? Color.Color, dash ? Type } -> Line"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Line -> Str"
+        }
+      ],
+      "name": "Line"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Marker",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ color ? Color.Color, size ? F32, symbol ? Str } -> Result Marker"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get_color",
+          "type_annotation": "Marker -> Color.Color"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get_size",
+          "type_annotation": "Marker -> F32"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get_symbol",
+          "type_annotation": "Marker -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Marker -> Str"
+        }
+      ],
+      "name": "Marker"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Trace",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ data : List { label : label, value : value }, hole ? F32, name ? Str } -> Result (Trace label value)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Trace label value -> Str where label implements Inspect, value implements Inspect"
+        }
+      ],
+      "name": "Pie"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Trace",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ nodes : List (Node node), links : List (Link node value) } -> Trace node value"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Trace node value -> Str where node implements Inspect, value implements Inspect"
+        }
+      ],
+      "name": "Sankey"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Trace",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ data : List { x : x, y : y, marker : Marker.Marker }, orientation ? [ Vertical, Horizontal ], name ? Str, line ? Line.Line, mode ? Str } -> Result (Trace x y)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Trace x y -> Str where x implements Inspect, y implements Inspect"
+        }
+      ],
+      "name": "Scatter"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Title",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "new",
+          "type_annotation": "{ text : Str, font ? Font.Font } -> Title"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "default",
+          "type_annotation": "Title"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "get_text",
+          "type_annotation": "Title -> Result Str [NotFound]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "to_str",
+          "type_annotation": "Title -> Str"
+        }
+      ],
+      "name": "Title"
+    }
+  ],
+  "package_id": "lukewilliamboswell/plume",
+  "source_code_url": "https://github.com/lukewilliamboswell/plume"
+}

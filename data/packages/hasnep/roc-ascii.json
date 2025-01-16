@@ -1,0 +1,577 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-ascii/",
+  "download_url": "https://github.com/Hasnep/roc-ascii/releases/download/v0.2.0/F8xZFTEm1fA7RF6OA1jl6V_ef_roDHfwGsBva29RxEg.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-ascii",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Ascii",
+          "type_annotation": null
+        },
+        {
+          "description": "Convert a UTF-8 [Str] to an ASCII string.",
+          "is_a": "value",
+          "name": "fromStr",
+          "type_annotation": "Str -> Result Ascii [InvalidAscii]"
+        },
+        {
+          "description": "Convert an ASCII string to a UTF-8 [Str].",
+          "is_a": "value",
+          "name": "toStr",
+          "type_annotation": "Ascii -> Str"
+        },
+        {
+          "description": "Convert a list of ASCII [Char]s to an ASCII string.",
+          "is_a": "value",
+          "name": "fromChars",
+          "type_annotation": "List Char -> Ascii"
+        },
+        {
+          "description": "Convert an ASCII string to a list of ASCII [Char]s.",
+          "is_a": "value",
+          "name": "toChars",
+          "type_annotation": "Ascii -> List Char"
+        },
+        {
+          "description": "Convert a list of ASCII code points to an ASCII string.",
+          "is_a": "value",
+          "name": "fromAsciiBytes",
+          "type_annotation": "List U8 -> Result Ascii [InvalidAscii]"
+        },
+        {
+          "description": "Convert an ASCII string to a list of ASCII code points.",
+          "is_a": "value",
+          "name": "toAsciiBytes",
+          "type_annotation": "Ascii -> List U8"
+        },
+        {
+          "description": "Compare the [ASCIIbetical](https://en.wikipedia.org/wiki/ASCII#Character_order) order of two ASCII strings, i.e. by comparing their code points.",
+          "is_a": "value",
+          "name": "compare",
+          "type_annotation": "Ascii, Ascii -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": "Check if an ASCII string is empty.",
+          "is_a": "value",
+          "name": "isEmpty",
+          "type_annotation": "Ascii -> Bool"
+        },
+        {
+          "description": "Convert all the lowercase letters in an ASCII string to uppercase, leaving all other characters unchanged.",
+          "is_a": "value",
+          "name": "toUppercase",
+          "type_annotation": "Ascii -> Ascii"
+        },
+        {
+          "description": "Convert all the uppercase letters in an ASCII string to lowercase, leaving all other characters unchanged.",
+          "is_a": "value",
+          "name": "toLowercase",
+          "type_annotation": "Ascii -> Ascii"
+        },
+        {
+          "description": "Concatenate two ASCII strings.",
+          "is_a": "value",
+          "name": "concat",
+          "type_annotation": "Ascii, Ascii -> Ascii"
+        },
+        {
+          "description": "Join a list of ASCII strings.",
+          "is_a": "value",
+          "name": "join",
+          "type_annotation": "List Ascii -> Ascii"
+        },
+        {
+          "description": "Join a list of ASCII strings with a separator.",
+          "is_a": "value",
+          "name": "joinWith",
+          "type_annotation": "List Ascii, Ascii -> Ascii"
+        },
+        {
+          "description": "Repeat an ASCII string a specified number of times.",
+          "is_a": "value",
+          "name": "repeat",
+          "type_annotation": "Ascii, U64 -> Ascii"
+        },
+        {
+          "description": "Check if an ASCII string starts with another ASCII string.",
+          "is_a": "value",
+          "name": "startsWith",
+          "type_annotation": "Ascii, Ascii -> Bool"
+        },
+        {
+          "description": "Check if an ASCII string ends with another ASCII string.",
+          "is_a": "value",
+          "name": "endsWith",
+          "type_annotation": "Ascii, Ascii -> Bool"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toDec",
+          "type_annotation": "Ascii -> Result Dec [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toF64",
+          "type_annotation": "Ascii -> Result F64 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toF32",
+          "type_annotation": "Ascii -> Result F32 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toU128",
+          "type_annotation": "Ascii -> Result U128 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toI128",
+          "type_annotation": "Ascii -> Result I128 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toU64",
+          "type_annotation": "Ascii -> Result U64 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toI64",
+          "type_annotation": "Ascii -> Result I64 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toU32",
+          "type_annotation": "Ascii -> Result U32 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toI32",
+          "type_annotation": "Ascii -> Result I32 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toU16",
+          "type_annotation": "Ascii -> Result U16 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toI16",
+          "type_annotation": "Ascii -> Result I16 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toU8",
+          "type_annotation": "Ascii -> Result U8 [InvalidNumStr]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "toI8",
+          "type_annotation": "Ascii -> Result I8 [InvalidNumStr]"
+        },
+        {
+          "description": "Count the number of characters in an ASCII string.",
+          "is_a": "value",
+          "name": "len",
+          "type_annotation": "Ascii -> U64"
+        },
+        {
+          "description": "Reverse the characters in an ASCII string.",
+          "is_a": "value",
+          "name": "reverse",
+          "type_annotation": "Ascii -> Ascii"
+        },
+        {
+          "description": "Sort a list of ASCII strings in ascending [ASCIIbetical](https://en.wikipedia.org/wiki/ASCII#Character_order) order.",
+          "is_a": "value",
+          "name": "sortAsc",
+          "type_annotation": "List Ascii -> List Ascii"
+        },
+        {
+          "description": "Sort a list of ASCII strings in descending [ASCIIbetical](https://en.wikipedia.org/wiki/ASCII#Character_order) order.",
+          "is_a": "value",
+          "name": "sortDesc",
+          "type_annotation": "List Ascii -> List Ascii"
+        }
+      ],
+      "name": "Ascii"
+    },
+    {
+      "definitions": [
+        {
+          "description": "A single ASCII character.",
+          "is_a": "type",
+          "name": "Char",
+          "type_annotation": null
+        },
+        {
+          "description": "Parse an ASCII code point to a [Char], returning an error if the code point is not in the range 0 to 127 inclusive.",
+          "is_a": "value",
+          "name": "fromAsciiByte",
+          "type_annotation": "U8 -> Result Char [InvalidAscii]"
+        },
+        {
+          "description": "Get the corresponding  ASCII code point of a [Char].",
+          "is_a": "value",
+          "name": "toAsciiByte",
+          "type_annotation": "Char -> U8"
+        },
+        {
+          "description": "Compare the [ASCIIbetical](https://en.wikipedia.org/wiki/ASCII#Character_order) order of two ASCII characters, i.e. by comparing their code points.",
+          "is_a": "value",
+          "name": "compare",
+          "type_annotation": "Char, Char -> [ LT, EQ, GT ]"
+        },
+        {
+          "description": "Get the ASCII character set of a character.",
+          "is_a": "value",
+          "name": "characterSet",
+          "type_annotation": "Char -> [ LowercaseLetter, UppercaseLetter, Digit, Whitespace, Punctuation, Control ]"
+        },
+        {
+          "description": "Check if an ASCII character is a lowercase letter.",
+          "is_a": "value",
+          "name": "isLowercase",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is an uppercase letter.",
+          "is_a": "value",
+          "name": "isUppercase",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a letter.",
+          "is_a": "value",
+          "name": "isLetter",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a digit.",
+          "is_a": "value",
+          "name": "isDigit",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is an alphanumeric character, i.e. a letter or a digit.",
+          "is_a": "value",
+          "name": "isAlphanumeric",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is an octal digit, i.e. a digit in the range 0 to 7 inclusive.",
+          "is_a": "value",
+          "name": "isOctDigit",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a hexadecimal digit, i.e. a digit or a letter in the range 0 to 9, a to f, or A to F.",
+          "is_a": "value",
+          "name": "isHexDigit",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a whitespace character.",
+          "is_a": "value",
+          "name": "isWhitespace",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a punctuation character.",
+          "is_a": "value",
+          "name": "isPunctuation",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a control character.",
+          "is_a": "value",
+          "name": "isControl",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Check if an ASCII character is a printable character.",
+          "is_a": "value",
+          "name": "isPrintable",
+          "type_annotation": "Char -> Bool"
+        },
+        {
+          "description": "Convert a character to uppercase if it is a lowercase letter, otherwise return the character unchanged.",
+          "is_a": "value",
+          "name": "toUppercase",
+          "type_annotation": "Char -> Char"
+        },
+        {
+          "description": "Convert a character to lowercase if it is an uppercase letter, otherwise return the character unchanged.",
+          "is_a": "value",
+          "name": "toLowercase",
+          "type_annotation": "Char -> Char"
+        },
+        {
+          "description": "All the lowercase ASCII letters.",
+          "is_a": "value",
+          "name": "lowercaseAlphabet",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the uppercase ASCII letters.",
+          "is_a": "value",
+          "name": "uppercaseAlphabet",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII letters.",
+          "is_a": "value",
+          "name": "alphabet",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII digits.",
+          "is_a": "value",
+          "name": "digits",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII whitespace characters.",
+          "is_a": "value",
+          "name": "whitespace",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII punctuation characters.",
+          "is_a": "value",
+          "name": "punctuation",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII control characters.",
+          "is_a": "value",
+          "name": "control",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "All the ASCII printable characters.",
+          "is_a": "value",
+          "name": "printable",
+          "type_annotation": "List Char"
+        },
+        {
+          "description": "The ASCII \"Null\" (\u2400) control character",
+          "is_a": "value",
+          "name": "nul",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Start of Heading\" (\u2401) control character",
+          "is_a": "value",
+          "name": "soh",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Start of Text\" (\u2402) control character",
+          "is_a": "value",
+          "name": "stx",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"End of Text\" (\u2403) control character",
+          "is_a": "value",
+          "name": "etx",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"End of Transmission\" (\u2404) control character",
+          "is_a": "value",
+          "name": "eot",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Enquiry\" (\u2405) control character",
+          "is_a": "value",
+          "name": "enq",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Acknowledgement\" (\u2406) control character",
+          "is_a": "value",
+          "name": "ack",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Bell\" (\u2407) control character",
+          "is_a": "value",
+          "name": "bel",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Backspace\" (\u2408) control character",
+          "is_a": "value",
+          "name": "bs",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Horizontal Tab\" (\u2409) control character",
+          "is_a": "value",
+          "name": "ht",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Line Feed\" (\u240a) control character",
+          "is_a": "value",
+          "name": "lf",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Vertical Tab\" (\u240b) control character",
+          "is_a": "value",
+          "name": "vt",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Form Feed\" (\u240c) control character",
+          "is_a": "value",
+          "name": "ff",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Carriage Return\" (\u240d) control character",
+          "is_a": "value",
+          "name": "cr",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Shift Out\" (\u240e) control character",
+          "is_a": "value",
+          "name": "so",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Shift In\" (\u240f) control character",
+          "is_a": "value",
+          "name": "si",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Data Link Escape\" (\u2410) control character",
+          "is_a": "value",
+          "name": "dle",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Device Control 1/XON\" (\u2411) control character",
+          "is_a": "value",
+          "name": "dc1",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Device Control 2\" (\u2412) control character",
+          "is_a": "value",
+          "name": "dc2",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Device Control 3/XOFF\" (\u2413) control character",
+          "is_a": "value",
+          "name": "dc3",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Device Control 4\" (\u2414) control character",
+          "is_a": "value",
+          "name": "dc4",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Negative Acknowledgement\" (\u2415) control character",
+          "is_a": "value",
+          "name": "nak",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Synchronous Idle\" (\u2416) control character",
+          "is_a": "value",
+          "name": "syn",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"End of Transmission Block\" (\u2417) control character",
+          "is_a": "value",
+          "name": "etb",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Cancel\" (\u2418) control character",
+          "is_a": "value",
+          "name": "can",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"End of Medium\" (\u2419) control character",
+          "is_a": "value",
+          "name": "em",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Substitute\" (\u241a) control character",
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Escape\" (\u241b) control character",
+          "is_a": "value",
+          "name": "esc",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"File Separator\" (\u241c) control character",
+          "is_a": "value",
+          "name": "fs",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Group Separator\" (\u241d) control character",
+          "is_a": "value",
+          "name": "gs",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Record Separator\" (\u241e) control character",
+          "is_a": "value",
+          "name": "rs",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Unit Separator\" (\u241f) control character",
+          "is_a": "value",
+          "name": "us",
+          "type_annotation": "Char"
+        },
+        {
+          "description": "The ASCII \"Delete\" (\u2421) control character",
+          "is_a": "value",
+          "name": "del",
+          "type_annotation": "Char"
+        }
+      ],
+      "name": "Char"
+    }
+  ],
+  "package_id": "hasnep/roc-ascii",
+  "source_code_url": "https://github.com/hasnep/roc-ascii"
+}

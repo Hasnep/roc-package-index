@@ -1,0 +1,459 @@
+{
+  "documentation_url": "https://lukewilliamboswell.github.io/roc-parser/",
+  "download_url": "https://github.com/lukewilliamboswell/roc-parser/releases/download/0.9.0/w8YKp2YAgQt5REYk912HfKAHBjcXsrnvtjI0CBzoAT4.tar.br",
+  "homepage_url": "https://github.com/lukewilliamboswell/roc-parser",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Opaque type for a parser that will try to parse an `a` from an `input`.\n\nAs such, a parser can be considered a recipe for a function of the type\n```\ninput -> Result {val: a, input: input} [ParsingFailure Str]\n```\n\nHow a parser is _actually_ implemented internally is not important\nand this might change between versions;\nfor instance to improve efficiency or error messages on parsing failures.",
+          "is_a": "type",
+          "name": "Parser",
+          "type_annotation": null
+        },
+        {
+          "description": "```\nParseResult input a : Result { val : a, input : input } [ParsingFailure Str]\n```",
+          "is_a": "type",
+          "name": "ParseResult",
+          "type_annotation": null
+        },
+        {
+          "description": "Write a custom parser without using provided combintors.",
+          "is_a": "value",
+          "name": "buildPrimitiveParser",
+          "type_annotation": "(input -> ParseResult input a) -> Parser input a"
+        },
+        {
+          "description": "Most general way of running a parser.\n\nCan be thought of as turning the recipe of a parser into its actual parsing function\nand running this function on the given input.\n\nMoat parsers consume part of `input` when they succeed. This allows you to string parsers\ntogether that run one after the other. The part of the input that the first\nparser did not consume, is used by the next parser.\nThis is why a parser returns on success both the resulting value and the leftover part of the input.\n\nThis is mostly useful when creating your own internal parsing building blocks.",
+          "is_a": "value",
+          "name": "parsePartial",
+          "type_annotation": "Parser input a, input -> ParseResult input a"
+        },
+        {
+          "description": "Runs a parser on the given input, expecting it to fully consume the input\n\nThe `input -> Bool` parameter is used to check whether parsing has 'completed',\ni.e. how to determine if all of the input has been consumed.\n\nFor most input types, a parsing run that leaves some unparsed input behind\nshould be considered an error.",
+          "is_a": "value",
+          "name": "parse",
+          "type_annotation": "Parser input a, input, (input -> Bool) -> Result a [ ParsingFailure Str, ParsingIncomplete input ]"
+        },
+        {
+          "description": "Parser that can never succeed, regardless of the given input.\nIt will always fail with the given error message.\n\nThis is mostly useful as a 'base case' if all other parsers\nin a `oneOf` or `alt` have failed, to provide some more descriptive error message.",
+          "is_a": "value",
+          "name": "fail",
+          "type_annotation": "Str -> Parser * *"
+        },
+        {
+          "description": "Parser that will always produce the given `a`, without looking at the actual input.\nThis is useful as a basic building block, especially in combination with\n`map` and `apply`.\n```\nparseU32 : Parser (List U8) U32\nparseU32 =\n    const Num.toU32\n    |> keep digits\n\nexpect parseStr parseU32 \"123\" == Ok 123u32\n```",
+          "is_a": "value",
+          "name": "const",
+          "type_annotation": "a -> Parser * a"
+        },
+        {
+          "description": "Try the `first` parser and (only) if it fails, try the `second` parser as fallback.",
+          "is_a": "value",
+          "name": "alt",
+          "type_annotation": "Parser input a, Parser input a -> Parser input a"
+        },
+        {
+          "description": "Runs a parser building a function, then a parser building a value,\nand finally returns the result of calling the function with the value.\n\nThis is useful if you are building up a structure that requires more parameters\nthan there are variants of `map`, `map2`, `map3` etc. for.\n\nFor instance, the following two are the same:\n```\nconst (\\x, y, z -> Triple x y z)\n|> map3 String.digits String.digits String.digits\n\nconst (\\x -> \\y -> \\z -> Triple x y z)\n|> apply String.digits\n|> apply String.digits\n|> apply String.digits\n```\nIndeed, this is how `map`, `map2`, `map3` etc. are implemented under the hood.\n\n# Currying\nBe aware that when using `apply`, you need to explicitly 'curry' the parameters to the construction function.\nThis means that instead of writing `\\x, y, z -> ...`\nyou'll need to write `\\x -> \\y -> \\z -> ...`.\nThis is because the parameters of the function will be applied one by one as parsing continues.",
+          "is_a": "value",
+          "name": "apply",
+          "type_annotation": "Parser input (a -> b), Parser input a -> Parser input b"
+        },
+        {
+          "description": "Try a list of parsers in turn, until one of them succeeds.\n```\ncolor : Parser Utf8 [Red, Green, Blue]\ncolor =\n    oneOf [\n        const Red |> skip (string \"red\"),\n        const Green |> skip (string \"green\"),\n        const Blue |> skip (string \"blue\"),\n    ]\n\nexpect parseStr color \"green\" == Ok Green\n```",
+          "is_a": "value",
+          "name": "oneOf",
+          "type_annotation": "List (Parser input a) -> Parser input a"
+        },
+        {
+          "description": "Transforms the result of parsing into something else,\nusing the given transformation function.",
+          "is_a": "value",
+          "name": "map",
+          "type_annotation": "Parser input a, (a -> b) -> Parser input b"
+        },
+        {
+          "description": "Transforms the result of parsing into something else,\nusing the given two-parameter transformation function.",
+          "is_a": "value",
+          "name": "map2",
+          "type_annotation": "Parser input a, Parser input b, (a, b -> c) -> Parser input c"
+        },
+        {
+          "description": "Transforms the result of parsing into something else,\nusing the given three-parameter transformation function.\n\nIf you need transformations with more inputs,\ntake a look at `apply`.",
+          "is_a": "value",
+          "name": "map3",
+          "type_annotation": "Parser input a, Parser input b, Parser input c, (a, b, c -> d) -> Parser input d"
+        },
+        {
+          "description": "Removes a layer of `Result` from running the parser.\n\nUse this to map functions that return a result over the parser,\nwhere errors are turned into `ParsingFailure`s.\n\n```\n# Parse a number from a List U8\nu64 : Parser Utf8 U64\nu64 =\n    string\n    |> map \\val ->\n        when Str.toU64 val is\n            Ok num -> Ok num\n            Err _ -> Err \"$(val) is not a U64.\"\n    |> flatten\n```",
+          "is_a": "value",
+          "name": "flatten",
+          "type_annotation": "Parser input (Result a Str) -> Parser input a"
+        },
+        {
+          "description": "Runs a parser lazily\n\nThis is (only) useful when dealing with a recursive structure.\nFor instance, consider a type `Comment : { message: String, responses: List Comment }`.\nWithout `lazy`, you would ask the compiler to build an infinitely deep parser.\n(Resulting in a compiler error.)\n",
+          "is_a": "value",
+          "name": "lazy",
+          "type_annotation": "({} -> Parser input a) -> Parser input a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "maybe",
+          "type_annotation": "Parser input a -> Parser input (Result a [Nothing])"
+        },
+        {
+          "description": "A parser which runs the element parser *zero* or more times on the input,\nreturning a list containing all the parsed elements.\n\nAlso see [Parser.oneOrMore].",
+          "is_a": "value",
+          "name": "many",
+          "type_annotation": "Parser input a -> Parser input (List a)"
+        },
+        {
+          "description": "A parser which runs the element parser *one* or more times on the input,\nreturning a list containing all the parsed elements.\n\nAlso see [Parser.many].",
+          "is_a": "value",
+          "name": "oneOrMore",
+          "type_annotation": "Parser input a -> Parser input (List a)"
+        },
+        {
+          "description": "Runs a parser for an 'opening' delimiter, then your main parser, then the 'closing' delimiter,\nand only returns the result of your main parser.\n\nUseful to recognize structures surrounded by delimiters (like braces, parentheses, quotes, etc.)\n\n```\nbetweenBraces  = \\parser -> parser |> between (scalar '[') (scalar ']')\n```",
+          "is_a": "value",
+          "name": "between",
+          "type_annotation": "Parser input a, Parser input open, Parser input close -> Parser input a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sepBy1",
+          "type_annotation": "Parser input a, Parser input sep -> Parser input (List a)"
+        },
+        {
+          "description": "```\nparseNumbers : Parser (List U8) (List U64)\nparseNumbers =\n    digits |> sepBy (codeunit ',')\n\nexpect parseStr parseNumbers \"1,2,3\" == Ok [1,2,3]\n```",
+          "is_a": "value",
+          "name": "sepBy",
+          "type_annotation": "Parser input a, Parser input sep -> Parser input (List a)"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "ignore",
+          "type_annotation": "Parser input a -> Parser input {}"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "keep",
+          "type_annotation": "Parser input (a -> b), Parser input a -> Parser input b"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "skip",
+          "type_annotation": "Parser input a, Parser input * -> Parser input a"
+        },
+        {
+          "description": "Match zero or more codeunits until the it reaches the given codeunit.\nThe given codeunit is not included in the match.\n\nThis can be used with [Parser.skip] to ignore text.\n\n```\nignoreText : Parser (List U8) U64\nignoreText =\n    const (\\d -> d)\n    |> skip (chompUntil ':')\n    |> skip (codeunit ':')\n    |> keep digits\n\nexpect parseStr ignoreText \"ignore preceding text:123\" == Ok 123\n```\n\nThis can be used with [Parser.keep] to capture a list of `U8` codeunits.\n\n```\ncaptureText : Parser (List U8) (List U8)\ncaptureText =\n    const (\\codeunits -> codeunits)\n    |> keep (chompUntil ':')\n    |> skip (codeunit ':')\n\nexpect parseStr captureText \"Roc:\" == Ok ['R', 'o', 'c']\n```\n\nUse [String.strFromUtf8] to turn the results into a `Str`.\n\nAlso see [Parser.chompWhile].",
+          "is_a": "value",
+          "name": "chompUntil",
+          "type_annotation": "a -> Parser (List a) (List a) where a implements Eq"
+        },
+        {
+          "description": "Match zero or more codeunits until the check returns false.\nThe codeunit that returned false is not included in the match.\nNote: a chompWhile parser always succeeds!\n\nThis can be used with [Parser.skip] to ignore text.\nThis is useful for chomping whitespace or variable names.\n\n```\nignoreNumbers : Parser (List U8) Str\nignoreNumbers =\n    const (\\str -> str)\n    |> skip (chompWhile \\b -> b >= '0' && b <= '9')\n    |> keep (string \"TEXT\")\n\nexpect parseStr ignoreNumbers \"0123456789876543210TEXT\" == Ok \"TEXT\"\n```\n\nThis can be used with [Parser.keep] to capture a list of `U8` codeunits.\n\n```\ncaptureNumbers : Parser (List U8) (List U8)\ncaptureNumbers =\n    const (\\codeunits -> codeunits)\n    |> keep (chompWhile \\b -> b >= '0' && b <= '9')\n    |> skip (string \"TEXT\")\n\nexpect parseStr captureNumbers \"123TEXT\" == Ok ['1', '2', '3']\n```\n\nUse [String.strFromUtf8] to turn the results into a `Str`.\n\nAlso see [Parser.chompUntil].",
+          "is_a": "value",
+          "name": "chompWhile",
+          "type_annotation": "(a -> Bool) -> Parser (List a) (List a) where a implements Eq"
+        }
+      ],
+      "name": "Parser"
+    },
+    {
+      "definitions": [
+        {
+          "description": "```\nUtf8 : List U8\n```",
+          "is_a": "type",
+          "name": "Utf8",
+          "type_annotation": null
+        },
+        {
+          "description": "Parse a [Str] using a [Parser]\n```\ncolor : Parser Utf8 [Red, Green, Blue]\ncolor =\n    oneOf [\n        Parser.const Red |> Parser.skip (string \"red\"),\n        Parser.const Green |> Parser.skip (string \"green\"),\n        Parser.const Blue |> Parser.skip (string \"blue\"),\n    ]\n\nexpect parseStr color \"green\" == Ok Green\n```",
+          "is_a": "value",
+          "name": "parseStr",
+          "type_annotation": "Parser Utf8 a, Str -> Result a [ ParsingFailure Str, ParsingIncomplete Str ]"
+        },
+        {
+          "description": "Runs a parser against the start of a string, allowing the parser to consume it only partially.\n\n- If the parser succeeds, returns the resulting value as well as the leftover input.\n- If the parser fails, returns `Err (ParsingFailure msg)`\n\n\n```\natSign : Parser Utf8 [AtSign]\natSign = Parser.const AtSign |> Parser.skip (codeunit '@')\n\nexpect parseStr atSign \"@\" == Ok AtSign\nexpect parseStrPartial atSign \"@\" |> Result.map .val == Ok AtSign\nexpect parseStrPartial atSign \"$\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "parseStrPartial",
+          "type_annotation": "Parser Utf8 a, Str -> Parser.ParseResult Str a"
+        },
+        {
+          "description": "Runs a parser against a string, requiring the parser to consume it fully.\n\n- If the parser succeeds, returns `Ok a`\n- If the parser fails, returns `Err (ParsingFailure Str)`\n- If the parser succeeds but does not consume the full string, returns `Err (ParsingIncomplete (List U8))`",
+          "is_a": "value",
+          "name": "parseUtf8",
+          "type_annotation": "Parser Utf8 a, Utf8 -> Result a [ ParsingFailure Str, ParsingIncomplete Utf8 ]"
+        },
+        {
+          "description": "Runs a parser against the start of a list of scalars, allowing the parser to consume it only partially.",
+          "is_a": "value",
+          "name": "parseUtf8Partial",
+          "type_annotation": "Parser Utf8 a, Utf8 -> Parser.ParseResult Utf8 a"
+        },
+        {
+          "description": "```\nisDigit : U8 -> Bool\nisDigit = \\b -> b >= '0' && b <= '9'\n\nexpect parseStr (codeunitSatisfies isDigit) \"0\" == Ok '0'\nexpect parseStr (codeunitSatisfies isDigit) \"*\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "codeunitSatisfies",
+          "type_annotation": "(U8 -> Bool) -> Parser Utf8 U8"
+        },
+        {
+          "description": "```\natSign : Parser Utf8 [AtSign]\natSign = Parser.const AtSign |> Parser.skip (codeunit '@')\n\nexpect parseStr atSign \"@\" == Ok AtSign\nexpect parseStrPartial atSign \"$\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "codeunit",
+          "type_annotation": "U8 -> Parser Utf8 U8"
+        },
+        {
+          "description": "Parse an extact sequence of utf8",
+          "is_a": "value",
+          "name": "utf8",
+          "type_annotation": "List U8 -> Parser Utf8 (List U8)"
+        },
+        {
+          "description": "Parse the given [Str]\n```\nexpect parseStr (string \"Foo\") \"Foo\" == Ok \"Foo\"\nexpect parseStr (string \"Foo\") \"Bar\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "string",
+          "type_annotation": "Str -> Parser Utf8 Str"
+        },
+        {
+          "description": "Matches any [U8] codeunit\n```\nexpect parseStr anyCodeunit \"a\" == Ok 'a'\nexpect parseStr anyCodeunit \"$\" == Ok '$'\n```",
+          "is_a": "value",
+          "name": "anyCodeunit",
+          "type_annotation": "Parser Utf8 U8"
+        },
+        {
+          "description": "Matches any [Utf8] and consumes all the input without fail.\n```\nexpect\n    bytes = Str.toUtf8 \"consumes all the input\"\n    Parser.parse anyThing bytes List.isEmpty == Ok bytes\n```",
+          "is_a": "value",
+          "name": "anyThing",
+          "type_annotation": "Parser Utf8 Utf8"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "anyString",
+          "type_annotation": "Parser Utf8 Str"
+        },
+        {
+          "description": "```\nexpect parseStr digit \"0\" == Ok 0\nexpect parseStr digit \"not a digit\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "digit",
+          "type_annotation": "Parser Utf8 U64"
+        },
+        {
+          "description": "Parse a sequence of digits into a [U64], accepting leading zeroes\n```\nexpect parseStr digits \"0123\" == Ok 123\nexpect parseStr digits \"not a digit\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "digits",
+          "type_annotation": "Parser Utf8 U64"
+        },
+        {
+          "description": "Try a bunch of different parsers.\n\nThe first parser which is tried is the one at the front of the list,\nand the next one is tried until one succeeds or the end of the list was reached.\n```\nboolParser : Parser Utf8 Bool\nboolParser =\n    oneOf [string \"true\", string \"false\"]\n    |> Parser.map (\\x -> if x == \"true\" then Bool.true else Bool.false)\n\nexpect parseStr boolParser \"true\" == Ok Bool.true\nexpect parseStr boolParser \"false\" == Ok Bool.false\nexpect parseStr boolParser \"not a bool\" |> Result.isErr\n```",
+          "is_a": "value",
+          "name": "oneOf",
+          "type_annotation": "List (Parser Utf8 a) -> Parser Utf8 a"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "strFromUtf8",
+          "type_annotation": "Utf8 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "strFromAscii",
+          "type_annotation": "U8 -> Str"
+        }
+      ],
+      "name": "String"
+    },
+    {
+      "definitions": [
+        {
+          "description": "This is a CSV parser which follows RFC4180\n\nFor simplicity's sake, the following things are not yet supported:\n- CSV files with headings\n\nThe following however *is* supported\n- A simple LF (\"\\n\") instead of CRLF (\"\\r\\n\") to separate records.",
+          "is_a": "type",
+          "name": "CSV",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "CSVRecord",
+          "type_annotation": null
+        },
+        {
+          "description": "Attempts to Parser.parse an `a` from a `Str` that is encoded in CSV format.",
+          "is_a": "value",
+          "name": "parseStr",
+          "type_annotation": "Parser CSVRecord a, Str -> Result (List a) [ ParsingFailure Str, SyntaxError Str, ParsingIncomplete CSVRecord ]"
+        },
+        {
+          "description": "Attempts to Parser.parse an `a` from a `CSV` datastructure (a list of lists of bytestring-fields).",
+          "is_a": "value",
+          "name": "parseCSV",
+          "type_annotation": "Parser CSVRecord a, CSV -> Result (List a) [ ParsingFailure Str, ParsingIncomplete CSVRecord ]"
+        },
+        {
+          "description": "Wrapper function to combine a set of fields into your desired `a`\n\n```\nrecord (\\firstName -> \\lastName -> \\age -> User {firstName, lastName, age})\n|> field string\n|> field string\n|> field u64\n```",
+          "is_a": "value",
+          "name": "record",
+          "type_annotation": "a -> Parser CSVRecord a"
+        },
+        {
+          "description": "Turns a parser for a `List U8` into a parser that parses part of a `CSVRecord`.",
+          "is_a": "value",
+          "name": "field",
+          "type_annotation": "Parser String.Utf8 a -> Parser CSVRecord a"
+        },
+        {
+          "description": "Parser for a field containing a UTF8-encoded string",
+          "is_a": "value",
+          "name": "string",
+          "type_annotation": "Parser CSVField Str"
+        },
+        {
+          "description": "Parse a number from a CSV field",
+          "is_a": "value",
+          "name": "u64",
+          "type_annotation": "Parser CSVField U64"
+        },
+        {
+          "description": "Parse a 64-bit float from a CSV field",
+          "is_a": "value",
+          "name": "f64",
+          "type_annotation": "Parser CSVField F64"
+        },
+        {
+          "description": "Attempts to Parser.parse a Str into the internal `CSVRecord` datastructure (A list of bytestring-fields).",
+          "is_a": "value",
+          "name": "parseStrToCSVRecord",
+          "type_annotation": "Str -> Result CSVRecord [ ParsingFailure Str, ParsingIncomplete String.Utf8 ]"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "file",
+          "type_annotation": "Parser String.Utf8 CSV"
+        }
+      ],
+      "name": "CSV"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Request",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Response",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "request",
+          "type_annotation": "Parser String.Utf8 Request"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "response",
+          "type_annotation": "Parser String.Utf8 Response"
+        }
+      ],
+      "name": "HTTP"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Content values",
+          "is_a": "type",
+          "name": "Markdown",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "all",
+          "type_annotation": "Parser String.Utf8 (List Markdown)"
+        },
+        {
+          "description": "Headings\n\n```\nexpect String.parseStr heading \"# Foo Bar\" == Ok (Heading One \"Foo Bar\")\nexpect String.parseStr heading \"Foo Bar\\n---\" == Ok (Heading Two \"Foo Bar\")\n```",
+          "is_a": "value",
+          "name": "heading",
+          "type_annotation": "Parser String.Utf8 Markdown"
+        },
+        {
+          "description": "Links\n\n```\nexpect String.parseStr link \"[roc](https://roc-lang.org)\" == Ok (Link \"roc\" \"https://roc-lang.org\")\n```",
+          "is_a": "value",
+          "name": "link",
+          "type_annotation": "Parser String.Utf8 Markdown"
+        },
+        {
+          "description": "Images\n\n```\nexpect String.parseStr image \"![alt text](/images/logo.png)\" == Ok (Image \"alt text\" \"/images/logo.png\")\n```",
+          "is_a": "value",
+          "name": "image",
+          "type_annotation": "Parser String.Utf8 Markdown"
+        },
+        {
+          "description": "Parse code blocks using triple backticks\nsupports block extension e.g. ```roc\n\n```\nexpect\n    text =\n        \"\"\"\n        ```roc\n        # some code\n        foo = bar\n        ```\n        \"\"\"\n\n    a = String.parseStr code text\n    a == Ok (Code { ext: \"roc\", pre: \"# some code\\nfoo = bar\\n\" })\n```",
+          "is_a": "value",
+          "name": "code",
+          "type_annotation": "Parser String.Utf8 Markdown"
+        }
+      ],
+      "name": "Markdown"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Xml",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "XmlDeclaration",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "XmlVersion",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Node",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Attribute",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "xmlParser",
+          "type_annotation": "Parser Utf8 Xml"
+        }
+      ],
+      "name": "Xml"
+    }
+  ],
+  "package_id": "lukewilliamboswell/roc-parser",
+  "source_code_url": "https://github.com/lukewilliamboswell/roc-parser"
+}

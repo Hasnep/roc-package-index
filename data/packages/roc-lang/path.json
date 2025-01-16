@@ -1,0 +1,134 @@
+{
+  "documentation_url": null,
+  "download_url": null,
+  "homepage_url": "https://github.com/roc-lang/path",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Path",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "unix",
+          "type_annotation": "Str -> Path"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "unixBytes",
+          "type_annotation": "List U8 -> Path"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "windows",
+          "type_annotation": "Str -> Path"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "windowsU16s",
+          "type_annotation": "List U16 -> Path"
+        },
+        {
+          "description": "Returns everything after the last directory separator in the path. Returns `Err` if the path\nends in `..` or in a directory separator.\n\n```roc\nexpect Path.filename (Path.unix \"foo/bar.txt\") == Ok (Path.unix \"bar.txt\")\nexpect Path.filename (Path.unix \"foo/bar\") == Ok (Path.unix \"bar\")\nexpect Path.filename (Path.unix \"foo/bar/\") == Err IsDirPath\nexpect Path.filename (Path.windows \"foo\\\\bar\\\\\") == Err IsDirPath\nexpect Path.filename (Path.unix \"foo/bar..\") == Err EndsInDots\nexpect Path.filename (Path.unix \"foo\") == Ok (Path.unix \"foo\")\nexpect Path.filename (Path.unix \"\") == Ok (Path.unix \"\")\n```",
+          "is_a": "value",
+          "name": "filename",
+          "type_annotation": "Path -> Result Path [ IsDirPath, EndsInDots ]"
+        },
+        {
+          "description": "Like [filename], except converts the resulting path to a [Str] using [toStr].",
+          "is_a": "value",
+          "name": "filenameStr",
+          "type_annotation": "Path -> Result Str [ IsDirPath, EndsInDots, FilenameIsNotStr Path U64 ]"
+        },
+        {
+          "description": "The extension is considered to be everything following the first dot in the filename,\nunless the filename begins with a dot - in which case it's everything following the\nsecond dot in the filename.\n\n* If the filename has only one dot, and it's at the end of the filename, returns `Ok` with an empty [Path].\n* If the filename is empty, returns `Ok` with an empty [Path].\n* If the filename ends in a slash, returns `Err` because this path refers to a directory, and directories don't have file extensions.'\n* If the filename ends in multiple dots, returns `Err` because the extension can't be known without resolving the `..` first.\n\n```roc\nexpect Path.ext (Path.unix \"foo/bar.txt\") == Ok (Path.unix \"txt\")\nexpect Path.ext (Path.unix \"foo/bar.\") == Ok (Path.unix \"\")\nexpect Path.ext (Path.unix \"foo/.bar.txt\") == Ok (Path.unix \"txt\")\nexpect Path.ext (Path.unix \"foo/bar.\") == Ok (Path.unix \"\")\nexpect Path.ext (Path.unix \"foo/bar\") == Ok (Path.unix \"\")\nexpect Path.ext (Path.unix \"foo/.bar\") == Ok (Path.unix \"\")\nexpect Path.ext (Path.unix \"foo/bar.baz.txt\") == Ok (Path.unix \"baz.txt\")\nexpect Path.ext (Path.unix \"foo/.bar.baz.txt\") == Ok (Path.unix \"baz.txt\")\nexpect Path.ext (Path.unix \"foo/bar/\") == Err IsDirPath\nexpect Path.ext (Path.unix \"foo/bar..\") == Err EndsInDots\nexpect Path.ext (Path.unix \"\") == Ok (Path.unix \"\")\n```",
+          "is_a": "value",
+          "name": "ext",
+          "type_annotation": "Path -> Result Path [ IsDirPath, EndsInDots ]"
+        },
+        {
+          "description": "Like [ext], except converts the resulting path to a [Str] using [toStr].",
+          "is_a": "value",
+          "name": "extStr",
+          "type_annotation": "Path -> Result Str [ IsDirPath, EndsInDots, ExtIsNotStr Path U64 ]"
+        },
+        {
+          "description": "Adds a file separator followed by the given string.\n\nThe file separator will be either a slash or backslash, depending on how this [Path]\nwas created. If the path was created using [Path.unix], the separator will be a slash.\nIf it was created using [Path.windows], it will be a backslash.",
+          "is_a": "value",
+          "name": "join",
+          "type_annotation": "Path, Str -> Path"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "concat",
+          "type_annotation": "Path, Path -> Path"
+        },
+        {
+          "description": "Normalizes the path by simplifying redundant parts.\n\nIf the path was created with [Path.unix], this does the following:\n1. Replaces `foo/bar/../baz/` with `foo/baz/` (and does the same with `\\` on Windows).\n2. Replaces `foo/./bar/` with `foo/bar/` (and does the same with `\\` on Windows).\n3. Replaces repeated path separators (e.g. `//`) with one path separator.\n4. If the path contains any `\"\\u(0)\"`s, ends the path before the first one. (See [fromRaw] for why this would be helpful.)\n\nIf the path was created with [Path.windows], this does the same thing except that it considers `/`\nand `\\` to be equivalent (since Windows considers both to be directory separators), and normalizes\nall directory separators to `\\`s in the returned path.\n\nNote that operating systems generally do not normalize symlinks, which means that normalizing a path\ncan change program behavior! For example, if there is a symlink in the operating system which\ncontains two consecitive file separators, then normalizing could mean that a path which previously\nwould have resolved using that symlink will no longer involve the symlink.\n\nThe process of normalizing while also resolving symlinks is known as *canonicalization*. Operating\nsystems already canonicalize paths automatically before operating on them, so typically the only\nreason to explicitly canonicalize them in a program is to display or record the canonicalized path.\nCanonicalizing paths is out of scope for this module, because it requires a [Task] that talks to\nthe operating system (symlinks can change on disk in the middle of a running program, so there's\nno way to get a canonicalized path besides asking the OS for it), and this module is designed not\nto depend on talking to the operating system.",
+          "is_a": "value",
+          "name": "normalize",
+          "type_annotation": "Path -> Path"
+        },
+        {
+          "description": "Returns a string representation of the path, replacing anything that can't be\nrepresented in a string with the Unicode Replacement Character.\n\nTo get back an `Err` instead of silently replacing problems with the Unicode Replacement Character,\nuse [toStr] instead.",
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Path -> Str"
+        },
+        {
+          "description": "Like [display], but renders the path Windows-style (with backslashes for directory separators)\neven if it was originally created as a UNIX path (e.g. using [Path.unix]).",
+          "is_a": "value",
+          "name": "displayWindows",
+          "type_annotation": "Path -> Str"
+        },
+        {
+          "description": "Like [display], but renders the path UNIX-style (with slashes for directory separators)\neven if it was originally created as a Windows path (e.g. using [Path.windows]).",
+          "is_a": "value",
+          "name": "displayUnix",
+          "type_annotation": "Path -> Str"
+        },
+        {
+          "description": "If any content is encountered that can't be converted to a [Str],\nreturns the index into the underlying [List] of data (which can be obtained\nfrom the [Path] using [toRaw]) where that content was encountered.",
+          "is_a": "value",
+          "name": "toStr",
+          "type_annotation": "Path -> Result Str [InvalidStr U64]"
+        },
+        {
+          "description": "Like [toStr], but renders the path Windows-style (with backslashes for directory separators)\neven if it was originally created as a UNIX path (e.g. using [Path.unix]).",
+          "is_a": "value",
+          "name": "toStrWindows",
+          "type_annotation": "Path -> Result Str [InvalidStr U64]"
+        },
+        {
+          "description": "Like [display], but renders the path UNIX-style (with slashes for directory separators)\neven if it was originally created as a Windows path (e.g. using [Path.windows]).",
+          "is_a": "value",
+          "name": "toStrUnix",
+          "type_annotation": "Path -> Result Str [InvalidStr U64]"
+        },
+        {
+          "description": "Converts the given [Path] to either a [List U8] (if the path was created\nusing [Path.unix]) or a [List U16] (if the path was created with [Path.windows]).",
+          "is_a": "value",
+          "name": "toRaw",
+          "type_annotation": "Path -> [ Windows (List U16), Unix (List U8) ]"
+        },
+        {
+          "description": "Takes the output of a [toRaw] call and returns a [Path].\n\nThis function is most often called by platforms, passing values that were received\ndirectly from the operating system. To maximize performance, no validation is performed\non the provided lists. Here are some ways the lists can be invalid, and what\nthe consequences will be if they are:\n\n* If a `Windows` list contains any numbers beween 1 and 31, then the path is not a valid Windows path. All the operations in this `Path` module will work as normal (e.g. [ext], [display], etc.), but if you try to use the path with any operation system functions (like reading a file from disk), Windows will give an error.\n* If either a `Windows` or `Unix` list contains any zeroes, then the operating system will ignore the zero as well as everything that comes after it. (Once again, all the operations in this `Path` module will work as normal.)\n\nThe reason this function does not perform validation is that it will almost always\nbe called by platforms, passing lists that are definitely valid because they came directly from\nthe operating system. For example, when returning the contents of a (maybe very large) directory,\na validation function would have to spend time verifying each of those entries, even though it\nwould always pass.\n\nIn the unusual situation where this function isn't being called by a platform,\naccidentally passing invalid lists is possible, but it's an unlikely mistake to make.",
+          "is_a": "value",
+          "name": "fromRaw",
+          "type_annotation": "[ Windows (List U16), Unix (List U8) ] -> Path"
+        }
+      ],
+      "name": "Path"
+    }
+  ],
+  "package_id": "roc-lang/path",
+  "source_code_url": null
+}

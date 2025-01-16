@@ -1,0 +1,115 @@
+{
+  "documentation_url": "https://adomurad.github.io/roc-base64/",
+  "download_url": "https://github.com/adomurad/roc-base64/releases/download/v0.2.0/hdowh25hurV_dACKR6IMJs-Up3hgAiokhYtRRNSn88k.tar.br",
+  "homepage_url": "https://github.com/adomurad/roc-base64",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Decode a `Str` of **Base64** encoded string.\n\nThis function will silently ignore any problems with the **Base64** input.",
+          "is_a": "value",
+          "name": "decodeStr",
+          "type_annotation": "Str -> List U8"
+        },
+        {
+          "description": "Try decode a `Str` of **Base64** encoded string.\n\nIn case of any non-Base64 characters - returns `Err [MalformedBase64Input]`",
+          "is_a": "value",
+          "name": "tryDecodeStr",
+          "type_annotation": "Str -> Result (List U8) Error.Base64DecodingError"
+        },
+        {
+          "description": "Try decode a `List U8` of **Base64** encoded string.\n\nIn case of any non-Base64 characters - returns `Err [MalformedBase64Input]`",
+          "is_a": "value",
+          "name": "tryDecodeUtf8",
+          "type_annotation": "List U8 -> Result (List U8) Error.Base64DecodingError"
+        },
+        {
+          "description": "Decode a `List U8` of **Base64** encoded string.\n\nThis function will silently ignore any problems with the **Base64** input.",
+          "is_a": "value",
+          "name": "decodeUtf8",
+          "type_annotation": "List U8 -> List U8"
+        },
+        {
+          "description": "Encode a `List U8` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeUtf8",
+          "type_annotation": "List U8 -> List U8"
+        },
+        {
+          "description": "Encode a `Str` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeStr",
+          "type_annotation": "Str -> List U8"
+        },
+        {
+          "description": "Encode a `Str` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeStrToStr",
+          "type_annotation": "Str -> Str"
+        },
+        {
+          "description": "Encode a `List U8` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeUtf8ToStr",
+          "type_annotation": "List U8 -> Str"
+        }
+      ],
+      "name": "Base64"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Decode a `Str` of **Base64Url** encoded string.\n\nThis function will silently ignore any problems with the **Base64Url** input.",
+          "is_a": "value",
+          "name": "decodeStr",
+          "type_annotation": "Str -> List U8"
+        },
+        {
+          "description": "Try decode a `Str` of **Base64Url** encoded string.\n\nIn case of any non-Base64Url characters - returns `Err [MalformedBase64Input]`",
+          "is_a": "value",
+          "name": "tryDecodeStr",
+          "type_annotation": "Str -> Result (List U8) Error.Base64DecodingError"
+        },
+        {
+          "description": "Try decode a `List U8` of **Base64Url** encoded string.\n\nIn case of any non-Base64Url characters - returns `Err [MalformedBase64Input]`",
+          "is_a": "value",
+          "name": "tryDecodeUtf8",
+          "type_annotation": "List U8 -> Result (List U8) Error.Base64DecodingError"
+        },
+        {
+          "description": "Decode a `List U8` of **Base64Url** encoded string.\n\nThis function will silently ignore any problems with the **Base64Url** input.",
+          "is_a": "value",
+          "name": "decodeUtf8",
+          "type_annotation": "List U8 -> List U8"
+        },
+        {
+          "description": "Encode a `List U8` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeUtf8",
+          "type_annotation": "List U8 -> List U8"
+        },
+        {
+          "description": "Encode a `Str` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeStr",
+          "type_annotation": "Str -> List U8"
+        },
+        {
+          "description": "Encode a `Str` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeStrToStr",
+          "type_annotation": "Str -> Str"
+        },
+        {
+          "description": "Encode a `List U8` to **Base64** encoded string.",
+          "is_a": "value",
+          "name": "encodeUtf8ToStr",
+          "type_annotation": "List U8 -> Str"
+        }
+      ],
+      "name": "Base64Url"
+    }
+  ],
+  "package_id": "adomurad/roc-base64",
+  "source_code_url": "https://github.com/adomurad/roc-base64"
+}

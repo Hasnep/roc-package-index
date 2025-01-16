@@ -1,0 +1,1543 @@
+{
+  "documentation_url": "https://hasnep.github.io/roc-svg",
+  "download_url": "https://github.com/Hasnep/roc-svg/releases/download/v0.0.7/vVYSN9mO3igMwoYeu9RtQAnfVFk0Ur2DGWkX9gwHzIE.tar.br",
+  "homepage_url": "https://github.com/hasnep/roc-svg",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "An SVG node, either an element or a text string.",
+          "is_a": "type",
+          "name": "Node",
+          "type_annotation": null
+        },
+        {
+          "description": "Create a `Text` node containing a string.",
+          "is_a": "value",
+          "name": "text",
+          "type_annotation": "Str -> Node"
+        },
+        {
+          "description": "Construct an element",
+          "is_a": "value",
+          "name": "element",
+          "type_annotation": "Str -> List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Render an SVG node",
+          "is_a": "value",
+          "name": "render",
+          "type_annotation": "Node -> Str"
+        },
+        {
+          "description": "Construct an [`a`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/a) element.",
+          "is_a": "value",
+          "name": "a",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`animate`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) element.",
+          "is_a": "value",
+          "name": "animate",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`animateMotion`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animatemotion) element.",
+          "is_a": "value",
+          "name": "animateMotion",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`animateTransform`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animatetransform) element.",
+          "is_a": "value",
+          "name": "animateTransform",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`circle`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/circle) element.",
+          "is_a": "value",
+          "name": "circle",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`clipPath`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/clippath) element.",
+          "is_a": "value",
+          "name": "clipPath",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`defs`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs) element.",
+          "is_a": "value",
+          "name": "defs",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`desc`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/desc) element.",
+          "is_a": "value",
+          "name": "desc",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`ellipse`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) element.",
+          "is_a": "value",
+          "name": "ellipse",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feBlend`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feblend) element.",
+          "is_a": "value",
+          "name": "feBlend",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feColorMatrix`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fecolormatrix) element.",
+          "is_a": "value",
+          "name": "feColorMatrix",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feComponentTransfer`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fecomponenttransfer) element.",
+          "is_a": "value",
+          "name": "feComponentTransfer",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feComposite`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fecomposite) element.",
+          "is_a": "value",
+          "name": "feComposite",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feConvolveMatrix`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feconvolvematrix) element.",
+          "is_a": "value",
+          "name": "feConvolveMatrix",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feDiffuseLighting`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fediffuselighting) element.",
+          "is_a": "value",
+          "name": "feDiffuseLighting",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feDisplacementMap`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fedisplacementmap) element.",
+          "is_a": "value",
+          "name": "feDisplacementMap",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feDistantLight`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fedistantlight) element.",
+          "is_a": "value",
+          "name": "feDistantLight",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feDropShadow`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fedropshadow) element.",
+          "is_a": "value",
+          "name": "feDropShadow",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feFlood`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feflood) element.",
+          "is_a": "value",
+          "name": "feFlood",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feFuncA`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fefunca) element.",
+          "is_a": "value",
+          "name": "feFuncA",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feFuncB`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fefuncb) element.",
+          "is_a": "value",
+          "name": "feFuncB",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feFuncG`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fefuncg) element.",
+          "is_a": "value",
+          "name": "feFuncG",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feFuncR`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fefuncr) element.",
+          "is_a": "value",
+          "name": "feFuncR",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feGaussianBlur`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fegaussianblur) element.",
+          "is_a": "value",
+          "name": "feGaussianBlur",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feImage`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feimage) element.",
+          "is_a": "value",
+          "name": "feImage",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feMerge`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/femerge) element.",
+          "is_a": "value",
+          "name": "feMerge",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feMergeNode`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/femergenode) element.",
+          "is_a": "value",
+          "name": "feMergeNode",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feMorphology`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/femorphology) element.",
+          "is_a": "value",
+          "name": "feMorphology",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feOffset`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feoffset) element.",
+          "is_a": "value",
+          "name": "feOffset",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`fePointLight`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fepointlight) element.",
+          "is_a": "value",
+          "name": "fePointLight",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feSpecularLighting`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fespecularlighting) element.",
+          "is_a": "value",
+          "name": "feSpecularLighting",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feSpotLight`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fespotlight) element.",
+          "is_a": "value",
+          "name": "feSpotLight",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feTile`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/fetile) element.",
+          "is_a": "value",
+          "name": "feTile",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`feTurbulence`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feturbulence) element.",
+          "is_a": "value",
+          "name": "feTurbulence",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`filter`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/filter) element.",
+          "is_a": "value",
+          "name": "filter",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`foreignObject`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignobject) element.",
+          "is_a": "value",
+          "name": "foreignObject",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`g`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g) element.",
+          "is_a": "value",
+          "name": "g",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`image`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/image) element.",
+          "is_a": "value",
+          "name": "image",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`line`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/line) element.",
+          "is_a": "value",
+          "name": "line",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`linearGradient`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/lineargradient) element.",
+          "is_a": "value",
+          "name": "linearGradient",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`marker`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker) element.",
+          "is_a": "value",
+          "name": "marker",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`mask`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mask) element.",
+          "is_a": "value",
+          "name": "mask",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`metadata`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/metadata) element.",
+          "is_a": "value",
+          "name": "metadata",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`mpath`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/mpath) element.",
+          "is_a": "value",
+          "name": "mpath",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`path`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/path) element.",
+          "is_a": "value",
+          "name": "path",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`pattern`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/pattern) element.",
+          "is_a": "value",
+          "name": "pattern",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`polygon`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polygon) element.",
+          "is_a": "value",
+          "name": "polygon",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`polyline`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/polyline) element.",
+          "is_a": "value",
+          "name": "polyline",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`radialGradient`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialgradient) element.",
+          "is_a": "value",
+          "name": "radialGradient",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`rect`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/rect) element.",
+          "is_a": "value",
+          "name": "rect",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`script`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/script) element.",
+          "is_a": "value",
+          "name": "script",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`set`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/set) element.",
+          "is_a": "value",
+          "name": "set",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`stop`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/stop) element.",
+          "is_a": "value",
+          "name": "stop",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`style`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/style) element.",
+          "is_a": "value",
+          "name": "style",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`svg`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/svg) element.",
+          "is_a": "value",
+          "name": "svg",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`switch`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/switch) element.",
+          "is_a": "value",
+          "name": "switch",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`symbol`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/symbol) element.",
+          "is_a": "value",
+          "name": "symbol",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`text`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text) element.",
+          "is_a": "value",
+          "name": "textElement",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`textPath`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/textpath) element.",
+          "is_a": "value",
+          "name": "textPath",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`title`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title) element.",
+          "is_a": "value",
+          "name": "title",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`tspan`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan) element.",
+          "is_a": "value",
+          "name": "tspan",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct an [`use`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use) element.",
+          "is_a": "value",
+          "name": "use",
+          "type_annotation": "List Attribute, List Node -> Node"
+        },
+        {
+          "description": "Construct a [`view`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/view) element.",
+          "is_a": "value",
+          "name": "view",
+          "type_annotation": "List Attribute, List Node -> Node"
+        }
+      ],
+      "name": "Svg"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Attribute",
+          "type_annotation": null
+        },
+        {
+          "description": "Define a non-standard attribute.\nYou can use this to add attributes that are not already supported.",
+          "is_a": "value",
+          "name": "attribute",
+          "type_annotation": "Str -> Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`accumulate`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/accumulate) attribute.",
+          "is_a": "value",
+          "name": "accumulate",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`additive`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/additive) attribute.",
+          "is_a": "value",
+          "name": "additive",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`alignment-baseline`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/alignment-baseline) attribute.",
+          "is_a": "value",
+          "name": "alignmentBaseline",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`amplitude`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/amplitude) attribute.",
+          "is_a": "value",
+          "name": "amplitude",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`attributeName`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/attributename) attribute.",
+          "is_a": "value",
+          "name": "attributeName",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`azimuth`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/azimuth) attribute.",
+          "is_a": "value",
+          "name": "azimuth",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`baseFrequency`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/basefrequency) attribute.",
+          "is_a": "value",
+          "name": "baseFrequency",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`baseline-shift`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/baseline-shift) attribute.",
+          "is_a": "value",
+          "name": "baselineShift",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`begin`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/begin) attribute.",
+          "is_a": "value",
+          "name": "begin",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`bias`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/bias) attribute.",
+          "is_a": "value",
+          "name": "bias",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`by`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/by) attribute.",
+          "is_a": "value",
+          "name": "by",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`calcMode`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/calcmode) attribute.",
+          "is_a": "value",
+          "name": "calcMode",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`class`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/class) attribute.",
+          "is_a": "value",
+          "name": "class",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/clip-path) attribute.",
+          "is_a": "value",
+          "name": "clipPath",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`clipPathUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/clippathunits) attribute.",
+          "is_a": "value",
+          "name": "clipPathUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`clip-rule`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/clip-rule) attribute.",
+          "is_a": "value",
+          "name": "clipRule",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`color`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/color) attribute.",
+          "is_a": "value",
+          "name": "color",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`color-interpolation`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/color-interpolation) attribute.",
+          "is_a": "value",
+          "name": "colorInterpolation",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`color-interpolation-filters`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/color-interpolation-filters) attribute.",
+          "is_a": "value",
+          "name": "colorInterpolationFilters",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`cursor`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/cursor) attribute.",
+          "is_a": "value",
+          "name": "cursor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`cx`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/cx) attribute.",
+          "is_a": "value",
+          "name": "cx",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`cy`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/cy) attribute.",
+          "is_a": "value",
+          "name": "cy",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`d`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d) attribute.",
+          "is_a": "value",
+          "name": "d",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`diffuseConstant`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/diffuseconstant) attribute.",
+          "is_a": "value",
+          "name": "diffuseConstant",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`direction`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/direction) attribute.",
+          "is_a": "value",
+          "name": "direction",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`display`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/display) attribute.",
+          "is_a": "value",
+          "name": "display",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`divisor`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/divisor) attribute.",
+          "is_a": "value",
+          "name": "divisor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`dominant-baseline`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dominant-baseline) attribute.",
+          "is_a": "value",
+          "name": "dominantBaseline",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`dur`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dur) attribute.",
+          "is_a": "value",
+          "name": "dur",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`dx`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dx) attribute.",
+          "is_a": "value",
+          "name": "dx",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`dy`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dy) attribute.",
+          "is_a": "value",
+          "name": "dy",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`edgeMode`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/edgemode) attribute.",
+          "is_a": "value",
+          "name": "edgeMode",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`elevation`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/elevation) attribute.",
+          "is_a": "value",
+          "name": "elevation",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`end`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/end) attribute.",
+          "is_a": "value",
+          "name": "end",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`exponent`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/exponent) attribute.",
+          "is_a": "value",
+          "name": "exponent",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fill`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill) attribute.",
+          "is_a": "value",
+          "name": "fill",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fill-opacity`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-opacity) attribute.",
+          "is_a": "value",
+          "name": "fillOpacity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fill-rule`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill-rule) attribute.",
+          "is_a": "value",
+          "name": "fillRule",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`filter`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/filter) attribute.",
+          "is_a": "value",
+          "name": "filter",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`filterUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/filterunits) attribute.",
+          "is_a": "value",
+          "name": "filterUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`flood-color`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/flood-color) attribute.",
+          "is_a": "value",
+          "name": "floodColor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`flood-opacity`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/flood-opacity) attribute.",
+          "is_a": "value",
+          "name": "floodOpacity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-family`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-family) attribute.",
+          "is_a": "value",
+          "name": "fontFamily",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-size`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-size) attribute.",
+          "is_a": "value",
+          "name": "fontSize",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-size-adjust`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-size-adjust) attribute.",
+          "is_a": "value",
+          "name": "fontSizeAdjust",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-stretch`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-stretch) attribute.",
+          "is_a": "value",
+          "name": "fontStretch",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-style`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-style) attribute.",
+          "is_a": "value",
+          "name": "fontStyle",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-variant`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-variant) attribute.",
+          "is_a": "value",
+          "name": "fontVariant",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`font-weight`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/font-weight) attribute.",
+          "is_a": "value",
+          "name": "fontWeight",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fr`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fr) attribute.",
+          "is_a": "value",
+          "name": "fr",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`from`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/from) attribute.",
+          "is_a": "value",
+          "name": "from",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fx`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fx) attribute.",
+          "is_a": "value",
+          "name": "fx",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`fy`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fy) attribute.",
+          "is_a": "value",
+          "name": "fy",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`gradientTransform`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/gradienttransform) attribute.",
+          "is_a": "value",
+          "name": "gradientTransform",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`gradientUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/gradientunits) attribute.",
+          "is_a": "value",
+          "name": "gradientUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`height`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/height) attribute.",
+          "is_a": "value",
+          "name": "height",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`href`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/href) attribute.",
+          "is_a": "value",
+          "name": "href",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`id`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/id) attribute.",
+          "is_a": "value",
+          "name": "id",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`image-rendering`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/image-rendering) attribute.",
+          "is_a": "value",
+          "name": "imageRendering",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`in`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/in) attribute.",
+          "is_a": "value",
+          "name": "in",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`in2`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/in2) attribute.",
+          "is_a": "value",
+          "name": "in2",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`intercept`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/intercept) attribute.",
+          "is_a": "value",
+          "name": "intercept",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`k1`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/k1) attribute.",
+          "is_a": "value",
+          "name": "k1",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`k2`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/k2) attribute.",
+          "is_a": "value",
+          "name": "k2",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`k3`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/k3) attribute.",
+          "is_a": "value",
+          "name": "k3",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`k4`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/k4) attribute.",
+          "is_a": "value",
+          "name": "k4",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`kernelMatrix`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/kernelmatrix) attribute.",
+          "is_a": "value",
+          "name": "kernelMatrix",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`kernelUnitLength`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/kernelunitlength) attribute.",
+          "is_a": "value",
+          "name": "kernelUnitLength",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`keyPoints`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/keypoints) attribute.",
+          "is_a": "value",
+          "name": "keyPoints",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`keySplines`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/keysplines) attribute.",
+          "is_a": "value",
+          "name": "keySplines",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`keyTimes`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/keytimes) attribute.",
+          "is_a": "value",
+          "name": "keyTimes",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`lang`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/lang) attribute.",
+          "is_a": "value",
+          "name": "lang",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`lengthAdjust`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/lengthadjust) attribute.",
+          "is_a": "value",
+          "name": "lengthAdjust",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`letter-spacing`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/letter-spacing) attribute.",
+          "is_a": "value",
+          "name": "letterSpacing",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`lighting-color`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/lighting-color) attribute.",
+          "is_a": "value",
+          "name": "lightingColor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`limitingConeAngle`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/limitingconeangle) attribute.",
+          "is_a": "value",
+          "name": "limitingConeAngle",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`marker-end`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/marker-end) attribute.",
+          "is_a": "value",
+          "name": "markerEnd",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`markerHeight`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/markerheight) attribute.",
+          "is_a": "value",
+          "name": "markerHeight",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`marker-mid`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/marker-mid) attribute.",
+          "is_a": "value",
+          "name": "markerMid",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`marker-start`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/marker-start) attribute.",
+          "is_a": "value",
+          "name": "markerStart",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`markerUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/markerunits) attribute.",
+          "is_a": "value",
+          "name": "markerUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`markerWidth`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/markerwidth) attribute.",
+          "is_a": "value",
+          "name": "markerWidth",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`mask`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/mask) attribute.",
+          "is_a": "value",
+          "name": "mask",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`maskContentUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/maskcontentunits) attribute.",
+          "is_a": "value",
+          "name": "maskContentUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`maskUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/maskunits) attribute.",
+          "is_a": "value",
+          "name": "maskUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`max`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/max) attribute.",
+          "is_a": "value",
+          "name": "max",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`media`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/media) attribute.",
+          "is_a": "value",
+          "name": "media",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`method`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/method) attribute.",
+          "is_a": "value",
+          "name": "method",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`min`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/min) attribute.",
+          "is_a": "value",
+          "name": "min",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`mode`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/mode) attribute.",
+          "is_a": "value",
+          "name": "mode",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`numOctaves`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/numoctaves) attribute.",
+          "is_a": "value",
+          "name": "numOctaves",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`onclick`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/onclick) attribute.",
+          "is_a": "value",
+          "name": "onclick",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`opacity`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/opacity) attribute.",
+          "is_a": "value",
+          "name": "opacity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`operator`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/operator) attribute.",
+          "is_a": "value",
+          "name": "operator",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`order`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/order) attribute.",
+          "is_a": "value",
+          "name": "order",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`orient`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/orient) attribute.",
+          "is_a": "value",
+          "name": "orient",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`origin`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/origin) attribute.",
+          "is_a": "value",
+          "name": "origin",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`overflow`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/overflow) attribute.",
+          "is_a": "value",
+          "name": "overflow",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`overline-position`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/overline-position) attribute.",
+          "is_a": "value",
+          "name": "overlinePosition",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`overline-thickness`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/overline-thickness) attribute.",
+          "is_a": "value",
+          "name": "overlineThickness",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`paint-order`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/paint-order) attribute.",
+          "is_a": "value",
+          "name": "paintOrder",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`path`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/path) attribute.",
+          "is_a": "value",
+          "name": "path",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`pathLength`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pathlength) attribute.",
+          "is_a": "value",
+          "name": "pathLength",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`patternContentUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/patterncontentunits) attribute.",
+          "is_a": "value",
+          "name": "patternContentUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`patternTransform`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/patterntransform) attribute.",
+          "is_a": "value",
+          "name": "patternTransform",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`patternUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/patternunits) attribute.",
+          "is_a": "value",
+          "name": "patternUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`pointer-events`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pointer-events) attribute.",
+          "is_a": "value",
+          "name": "pointerEvents",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`points`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/points) attribute.",
+          "is_a": "value",
+          "name": "points",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`pointsAtX`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pointsatx) attribute.",
+          "is_a": "value",
+          "name": "pointsAtX",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`pointsAtY`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pointsaty) attribute.",
+          "is_a": "value",
+          "name": "pointsAtY",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`pointsAtZ`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/pointsatz) attribute.",
+          "is_a": "value",
+          "name": "pointsAtZ",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`preserveAlpha`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preservealpha) attribute.",
+          "is_a": "value",
+          "name": "preserveAlpha",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`preserveAspectRatio`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveaspectratio) attribute.",
+          "is_a": "value",
+          "name": "preserveAspectRatio",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`primitiveUnits`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/primitiveunits) attribute.",
+          "is_a": "value",
+          "name": "primitiveUnits",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`r`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/r) attribute.",
+          "is_a": "value",
+          "name": "r",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`radius`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/radius) attribute.",
+          "is_a": "value",
+          "name": "radius",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`refX`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/refx) attribute.",
+          "is_a": "value",
+          "name": "refX",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`refY`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/refy) attribute.",
+          "is_a": "value",
+          "name": "refY",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`repeatCount`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/repeatcount) attribute.",
+          "is_a": "value",
+          "name": "repeatCount",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`repeatDur`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/repeatdur) attribute.",
+          "is_a": "value",
+          "name": "repeatDur",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`restart`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/restart) attribute.",
+          "is_a": "value",
+          "name": "restart",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`result`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/result) attribute.",
+          "is_a": "value",
+          "name": "result",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`rotate`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/rotate) attribute.",
+          "is_a": "value",
+          "name": "rotate",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`rx`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/rx) attribute.",
+          "is_a": "value",
+          "name": "rx",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`ry`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/ry) attribute.",
+          "is_a": "value",
+          "name": "ry",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`scale`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/scale) attribute.",
+          "is_a": "value",
+          "name": "scale",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`seed`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/seed) attribute.",
+          "is_a": "value",
+          "name": "seed",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`shape-rendering`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering) attribute.",
+          "is_a": "value",
+          "name": "shapeRendering",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`side`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/side) attribute.",
+          "is_a": "value",
+          "name": "side",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`spacing`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/spacing) attribute.",
+          "is_a": "value",
+          "name": "spacing",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`specularConstant`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/specularconstant) attribute.",
+          "is_a": "value",
+          "name": "specularConstant",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`specularExponent`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/specularexponent) attribute.",
+          "is_a": "value",
+          "name": "specularExponent",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`spreadMethod`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/spreadmethod) attribute.",
+          "is_a": "value",
+          "name": "spreadMethod",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`startOffset`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/startoffset) attribute.",
+          "is_a": "value",
+          "name": "startOffset",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stdDeviation`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stddeviation) attribute.",
+          "is_a": "value",
+          "name": "stdDeviation",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stitchTiles`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stitchtiles) attribute.",
+          "is_a": "value",
+          "name": "stitchTiles",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stop-color`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stop-color) attribute.",
+          "is_a": "value",
+          "name": "stopColor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stop-opacity`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stop-opacity) attribute.",
+          "is_a": "value",
+          "name": "stopOpacity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`strikethrough-position`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/strikethrough-position) attribute.",
+          "is_a": "value",
+          "name": "strikethroughPosition",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`strikethrough-thickness`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/strikethrough-thickness) attribute.",
+          "is_a": "value",
+          "name": "strikethroughThickness",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke) attribute.",
+          "is_a": "value",
+          "name": "stroke",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-dasharray`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray) attribute.",
+          "is_a": "value",
+          "name": "strokeDasharray",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-dashoffset`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dashoffset) attribute.",
+          "is_a": "value",
+          "name": "strokeDashoffset",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-linecap`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linecap) attribute.",
+          "is_a": "value",
+          "name": "strokeLinecap",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-linejoin`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-linejoin) attribute.",
+          "is_a": "value",
+          "name": "strokeLinejoin",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-miterlimit`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-miterlimit) attribute.",
+          "is_a": "value",
+          "name": "strokeMiterlimit",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-opacity`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-opacity) attribute.",
+          "is_a": "value",
+          "name": "strokeOpacity",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`stroke-width`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-width) attribute.",
+          "is_a": "value",
+          "name": "strokeWidth",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`style`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/style) attribute.",
+          "is_a": "value",
+          "name": "style",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`surfaceScale`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/surfacescale) attribute.",
+          "is_a": "value",
+          "name": "surfaceScale",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`systemLanguage`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/systemlanguage) attribute.",
+          "is_a": "value",
+          "name": "systemLanguage",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`tabindex`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/tabindex) attribute.",
+          "is_a": "value",
+          "name": "tabindex",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`tableValues`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/tablevalues) attribute.",
+          "is_a": "value",
+          "name": "tableValues",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`target`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/target) attribute.",
+          "is_a": "value",
+          "name": "target",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`targetX`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/targetx) attribute.",
+          "is_a": "value",
+          "name": "targetX",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`targetY`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/targety) attribute.",
+          "is_a": "value",
+          "name": "targetY",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`text-anchor`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-anchor) attribute.",
+          "is_a": "value",
+          "name": "textAnchor",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`text-decoration`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-decoration) attribute.",
+          "is_a": "value",
+          "name": "textDecoration",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`textLength`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/textlength) attribute.",
+          "is_a": "value",
+          "name": "textLength",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`text-rendering`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/text-rendering) attribute.",
+          "is_a": "value",
+          "name": "textRendering",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`to`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/to) attribute.",
+          "is_a": "value",
+          "name": "to",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`transform`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform) attribute.",
+          "is_a": "value",
+          "name": "transform",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`transform-origin`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform-origin) attribute.",
+          "is_a": "value",
+          "name": "transformOrigin",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`type`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/type) attribute.",
+          "is_a": "value",
+          "name": "type",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`underline-position`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/underline-position) attribute.",
+          "is_a": "value",
+          "name": "underlinePosition",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`underline-thickness`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/underline-thickness) attribute.",
+          "is_a": "value",
+          "name": "underlineThickness",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct an [`unicode-bidi`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/unicode-bidi) attribute.",
+          "is_a": "value",
+          "name": "unicodeBidi",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`values`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/values) attribute.",
+          "is_a": "value",
+          "name": "values",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`vector-effect`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/vector-effect) attribute.",
+          "is_a": "value",
+          "name": "vectorEffect",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`viewBox`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewbox) attribute.",
+          "is_a": "value",
+          "name": "viewBox",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`visibility`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/visibility) attribute.",
+          "is_a": "value",
+          "name": "visibility",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`width`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/width) attribute.",
+          "is_a": "value",
+          "name": "width",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`word-spacing`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/word-spacing) attribute.",
+          "is_a": "value",
+          "name": "wordSpacing",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`writing-mode`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/writing-mode) attribute.",
+          "is_a": "value",
+          "name": "writingMode",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`x`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x) attribute.",
+          "is_a": "value",
+          "name": "x",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`x1`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x1) attribute.",
+          "is_a": "value",
+          "name": "x1",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`x2`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/x2) attribute.",
+          "is_a": "value",
+          "name": "x2",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`xChannelSelector`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/xchannelselector) attribute.",
+          "is_a": "value",
+          "name": "xChannelSelector",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `xmlns` attribute.",
+          "is_a": "value",
+          "name": "xmlns",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a `xmlns:xlink` attribute.",
+          "is_a": "value",
+          "name": "xmlnsXlink",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`y`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y) attribute.",
+          "is_a": "value",
+          "name": "y",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`y1`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y1) attribute.",
+          "is_a": "value",
+          "name": "y1",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`y2`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/y2) attribute.",
+          "is_a": "value",
+          "name": "y2",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`yChannelSelector`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/ychannelselector) attribute.",
+          "is_a": "value",
+          "name": "yChannelSelector",
+          "type_annotation": "Str -> Attribute"
+        },
+        {
+          "description": "Construct a [`z`](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/z) attribute.",
+          "is_a": "value",
+          "name": "z",
+          "type_annotation": "Str -> Attribute"
+        }
+      ],
+      "name": "Attribute"
+    }
+  ],
+  "package_id": "hasnep/roc-svg",
+  "source_code_url": "https://github.com/hasnep/roc-svg"
+}

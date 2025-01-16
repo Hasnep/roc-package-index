@@ -1,0 +1,127 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/KilianVounckx/okka/releases/download/0.1.0/HI2Em-RnNzEl7Tlgs1Zzrp0feGMPwNvTSpTj1YrqSNY.tar.br",
+  "homepage_url": "https://github.com/kilianvounckx/okka",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "Event",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "type",
+          "name": "KeyEvent",
+          "type_annotation": null
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "fromBytes",
+          "type_annotation": "List U8 -> Result Event [ Unsupported, InvalidCodepoint ]"
+        }
+      ],
+      "name": "Event"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "goto",
+          "type_annotation": "{ row : U16, column : U16 } -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "left",
+          "type_annotation": "U16 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "right",
+          "type_annotation": "U16 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "up",
+          "type_annotation": "U16 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "down",
+          "type_annotation": "U16 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "hide",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "show",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "save",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "restore",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "blinkingBlock",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "steadyBlock",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "blinkingUnderline",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "steadyUnderline",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "blinkingBar",
+          "type_annotation": "Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "steadyBar",
+          "type_annotation": "Str"
+        }
+      ],
+      "name": "Cursor"
+    }
+  ],
+  "package_id": "kilianvounckx/okka",
+  "source_code_url": "https://github.com/kilianvounckx/okka"
+}

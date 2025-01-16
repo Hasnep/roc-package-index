@@ -1,0 +1,230 @@
+{
+  "documentation_url": "https://lukewilliamboswell.github.io/roc-pga2d/",
+  "download_url": "https://github.com/lukewilliamboswell/roc-pga2d/releases/download/0.3.0/pdeyRVVsip_FFlHVK_ybcSzKxZLspU_KyMBicijEL-c.tar.br",
+  "homepage_url": "https://github.com/lukewilliamboswell/roc-pga2d",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "A multivector is a general element of the algebra R(2, 0, 1), i.e. 2D Projective Geometric\nAlgebra (PGA).\n\nIt is basically an 8-element array of the basis elements of 2D PGA. For example, a multivector can be written as:\n```roc\na + b*e0 + c*e1 + d*e2 + e*e01 + f*e20 + g*e12 + h*e012\n```\nWhere the basis elements are;\n- `s` Scalar\n- `e0` Vector\n- `e1` Vector\n- `e2` Vector\n- `e01` Bivector\n- `e20` Bivector\n- `e12` Bivector\n- `e012` Trivector / Pseudoscalar\n",
+          "is_a": "type",
+          "name": "Multivector",
+          "type_annotation": null
+        },
+        {
+          "description": "An empty multivector with all components zeroed to `0.0`",
+          "is_a": "value",
+          "name": "zero",
+          "type_annotation": "Multivector"
+        },
+        {
+          "description": "In PGA, the origin is represented by the e12 bivector.",
+          "is_a": "value",
+          "name": "origin",
+          "type_annotation": "Multivector"
+        },
+        {
+          "description": "Scalar (grade-0 element)",
+          "is_a": "value",
+          "name": "scalar",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Line (grade-1 element) with equation `ax + by + c = 0`\n\nRepresented as `a*e1 + b*e2 + c*e0`",
+          "is_a": "value",
+          "name": "line",
+          "type_annotation": "{ a : F32, b : F32, c : F32 } -> Multivector"
+        },
+        {
+          "description": "Euclidian Point (grade-2 element) with coordinates `x,y`\n\nRepresented as: `x*e20 + y*e01 + e12`",
+          "is_a": "value",
+          "name": "point",
+          "type_annotation": "{ x : F32, y : F32 } -> Multivector"
+        },
+        {
+          "description": "Ideal Point (grade-2 element) with coordinates `x,y`\n\nRepresented as: `x*e20 + y*e01`",
+          "is_a": "value",
+          "name": "idealPoint",
+          "type_annotation": "{ x : F32, y : F32 } -> Multivector"
+        },
+        {
+          "description": "A multivector that represents a rotor which performs a rotation\nby `angle` around the center point `cx,cy`",
+          "is_a": "value",
+          "name": "rotor",
+          "type_annotation": "{ angle : F32, cx : F32, cy : F32 } -> Multivector"
+        },
+        {
+          "description": "A multivector that represents a translator which performs a translation by `dx,dy`",
+          "is_a": "value",
+          "name": "translator",
+          "type_annotation": "{ dx : F32, dy : F32 } -> Multivector"
+        },
+        {
+          "description": "Meet (wedge, outer product)\n\nUsed for intersections, e.g. intersect two Lines to get a Point\n",
+          "is_a": "value",
+          "name": "meet",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Join (vee, regressive product)\n\nUsed for joins, e.g. join two Points to get a Line",
+          "is_a": "value",
+          "name": "join",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Dot (scalar / inner product)\n\nUsed for for projections, e.g. dot two Lines to get a scalar",
+          "is_a": "value",
+          "name": "dot",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Multiply (geometric product)\n\nUsed for Reflections, Rotations, Translations",
+          "is_a": "value",
+          "name": "mul",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Add\n\ne.g. add two Lines to get a Line",
+          "is_a": "value",
+          "name": "add",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Subtract\n\ne.g. subtract two Lines to get a Line",
+          "is_a": "value",
+          "name": "sub",
+          "type_annotation": "Multivector, Multivector -> Multivector"
+        },
+        {
+          "description": "Scalar Multiplication\n\ne.g. multiply a Line by a scalar",
+          "is_a": "value",
+          "name": "smul",
+          "type_annotation": "F32, Multivector -> Multivector"
+        },
+        {
+          "description": "Scalar Multiplication\n\ne.g. multiply a Line by a scalar",
+          "is_a": "value",
+          "name": "muls",
+          "type_annotation": "Multivector, F32 -> Multivector"
+        },
+        {
+          "description": "Scalar Addition\n\ne.g. add a scalar to a Line",
+          "is_a": "value",
+          "name": "sadd",
+          "type_annotation": "F32, Multivector -> Multivector"
+        },
+        {
+          "description": "Scalar Addition\n\ne.g. add a scalar to a Line",
+          "is_a": "value",
+          "name": "adds",
+          "type_annotation": "Multivector, F32 -> Multivector"
+        },
+        {
+          "description": "Scalar Subtraction\n\ne.g. subtract a scalar from a Line",
+          "is_a": "value",
+          "name": "ssub",
+          "type_annotation": "F32, Multivector -> Multivector"
+        },
+        {
+          "description": "Scalar Subtraction\n\ne.g. subtract a scalar from a Line",
+          "is_a": "value",
+          "name": "subs",
+          "type_annotation": "Multivector, F32 -> Multivector"
+        },
+        {
+          "description": "Reverse Operator\n\nReverse the order of the basis blades",
+          "is_a": "value",
+          "name": "reverse",
+          "type_annotation": "Multivector -> Multivector"
+        },
+        {
+          "description": "Dual (Not) Operator\n\nPoincare duality operator",
+          "is_a": "value",
+          "name": "dual",
+          "type_annotation": "Multivector -> Multivector"
+        },
+        {
+          "description": "Conjugate Operator",
+          "is_a": "value",
+          "name": "conjugate",
+          "type_annotation": "Multivector -> Multivector"
+        },
+        {
+          "description": "Involute Operator",
+          "is_a": "value",
+          "name": "involute",
+          "type_annotation": "Multivector -> Multivector"
+        },
+        {
+          "description": "Normalize\n\ne.g. normalize a Line to have a magnitude of `1`",
+          "is_a": "value",
+          "name": "normalize",
+          "type_annotation": "Multivector -> Multivector"
+        },
+        {
+          "description": "Helper function for comparing Multivectors with tolerance",
+          "is_a": "value",
+          "name": "eq",
+          "type_annotation": "Multivector, Multivector -> Bool"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "pi",
+          "type_annotation": "F32"
+        },
+        {
+          "description": "Scalar",
+          "is_a": "value",
+          "name": "s",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis vector",
+          "is_a": "value",
+          "name": "e0",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis vector",
+          "is_a": "value",
+          "name": "e1",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis vector",
+          "is_a": "value",
+          "name": "e2",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis bivector",
+          "is_a": "value",
+          "name": "e01",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis bivector",
+          "is_a": "value",
+          "name": "e20",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis bivector",
+          "is_a": "value",
+          "name": "e12",
+          "type_annotation": "F32 -> Multivector"
+        },
+        {
+          "description": "Basis pseudoscalar",
+          "is_a": "value",
+          "name": "e012",
+          "type_annotation": "F32 -> Multivector"
+        }
+      ],
+      "name": "PGA2D"
+    }
+  ],
+  "package_id": "lukewilliamboswell/roc-pga2d",
+  "source_code_url": "https://github.com/lukewilliamboswell/roc-pga2d"
+}

@@ -1,0 +1,65 @@
+{
+  "documentation_url": null,
+  "download_url": "https://github.com/quelgar/roc-utils/releases/download/v0.1.0/keYHFjUG1pMAT8ECePEAIS-ncYxEV0DdhTvENUf0USs.tar.br",
+  "homepage_url": "https://github.com/quelgar/roc-utils",
+  "modules": [
+    {
+      "definitions": [
+        {
+          "description": "Encodes a list of bytes into a Base64 string.",
+          "is_a": "value",
+          "name": "encode",
+          "type_annotation": "List U8 -> Str"
+        },
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "decode",
+          "type_annotation": "Str -> Result (List U8) [ InvalidBase64Char, InvalidBase64Length ]"
+        }
+      ],
+      "name": "Base64"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Converts a list of bytes to the equivalent hex string.",
+          "is_a": "value",
+          "name": "toHexString",
+          "type_annotation": "List U8 -> Str"
+        },
+        {
+          "description": "Converts a string of hex characters to the equivalent list of bytes.",
+          "is_a": "value",
+          "name": "fromHexString",
+          "type_annotation": "Str -> Result (List U8) [ InvalidHexChar, InvalidHexLength ]"
+        }
+      ],
+      "name": "Hex"
+    },
+    {
+      "definitions": [
+        {
+          "description": "Computes the HMAC-SHA256 signature of a message using given a key.\n\n    \"this is my message\" |> Str.toUtf8 |> hmacSha256 myKey",
+          "is_a": "value",
+          "name": "hmacSha256",
+          "type_annotation": "List U8, List U8 -> List U8"
+        }
+      ],
+      "name": "Hmac"
+    },
+    {
+      "definitions": [
+        {
+          "description": null,
+          "is_a": "value",
+          "name": "sha256",
+          "type_annotation": "List U8 -> List U8"
+        }
+      ],
+      "name": "Sha"
+    }
+  ],
+  "package_id": "quelgar/roc-utils",
+  "source_code_url": "https://github.com/quelgar/roc-utils"
+}
