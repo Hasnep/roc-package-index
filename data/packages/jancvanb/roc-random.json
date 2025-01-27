@@ -1,129 +1,147 @@
 {
   "documentation_url": null,
-  "download_url": "https://github.com/JanCVanB/roc-random/releases/download/v0.1.3/YfNiz9trKhsdZ7w_MdzfxW0U01Pw2iSzbrRfcIXhYPM.tar.br",
+  "download_url": "https://github.com/JanCVanB/roc-random/releases/download/v0.4.0/23Crq6Uva-9rg5xSy1Va7jkeDZ_JRoKft_MNzU-zYfM.tar.br",
   "homepage_url": "https://github.com/jancvanb/roc-random",
   "modules": [
     {
       "definitions": [
         {
-          "description": "A psuedorandom value generator",
+          "description": "A generator that produces pseudorandom `value`s using the PCG algorithm.\n\n```\nrgbGenerator : Generator { red: U8, green: U8, blue: U8 }\nrgbGenerator =\n    { Random.chain <-\n        red: Random.u8,\n        green: Random.u8,\n        blue: Random.u8,\n    }\n```",
           "is_a": "type",
           "name": "Generator",
           "type_annotation": null
         },
         {
-          "description": "A psuedorandom value, paired with its [Generator]'s output state (for chaining)",
+          "description": "A pseudorandom value, paired with its [Generator]'s output state.\n\nThis is required to chain multiple calls together passing the updated state.",
           "is_a": "type",
           "name": "Generation",
           "type_annotation": null
         },
         {
-          "description": "Internal state for [Generator]s",
+          "description": "Internal state for Generators",
           "is_a": "type",
           "name": "State",
           "type_annotation": null
         },
         {
-          "description": "Construct a \"seed\"\n\nA \"seed\" is an initial [State] for [Generator]s.\n\nThis is an alias for [seed32].",
+          "description": "Construct an initial \"seed\" [State] for [Generator]s",
           "is_a": "value",
           "name": "seed",
-          "type_annotation": "U32 -> State U32"
+          "type_annotation": "U32 -> State"
         },
         {
-          "description": "Construct a specific \"variant\" of a \"seed\"\n\nA \"seed\" is an initial [State] for [Generator]s.\n\nA \"variant\" is a [State] that specifies a `c.updateIncrement` constant,\nto produce a sequence of internal `value`s that shares no consecutive pairs\nwith other variants of the same [State].\n\nOdd numbers are recommended for the update increment,\nto double the repetition period of sequences (by hitting odd values).\n\nThis is an alias for [seed32Variant].",
+          "description": "Construct a specific \"variant\" of a \"seed\" for more advanced use.\n\nA \"seed\" is an initial [State] for [Generator]s.\n\nA \"variant\" is a [State] that specifies a `c.updateIncrement` constant,\nto produce a sequence of internal `value`s that shares no consecutive pairs\nwith other variants of the same [State].\n\nOdd numbers are recommended for the update increment,\nto double the repetition period of sequences (by hitting odd values).",
           "is_a": "value",
           "name": "seedVariant",
-          "type_annotation": "U32, U32 -> State U32"
-        },
-        {
-          "description": "Construct an initial [State] from 8 bits of noise",
-          "is_a": "value",
-          "name": "seed8",
-          "type_annotation": "U8 -> State U8"
-        },
-        {
-          "description": "Construct an initial [State] from 8 bits of noise and a specific increment for updating",
-          "is_a": "value",
-          "name": "seed8Variant",
-          "type_annotation": "U8, U8 -> State U8"
-        },
-        {
-          "description": "Construct an initial [State] from 16 bits of noise",
-          "is_a": "value",
-          "name": "seed16",
-          "type_annotation": "U16 -> State U16"
-        },
-        {
-          "description": "Construct an initial [State] from 16 bits of noise and a specific increment for updating",
-          "is_a": "value",
-          "name": "seed16Variant",
-          "type_annotation": "U16, U16 -> State U16"
-        },
-        {
-          "description": "Construct an initial [State] from 32 bits of noise",
-          "is_a": "value",
-          "name": "seed32",
-          "type_annotation": "U32 -> State U32"
-        },
-        {
-          "description": "Construct an initial [State] from 32 bits of noise and a specific increment for updating",
-          "is_a": "value",
-          "name": "seed32Variant",
-          "type_annotation": "U32, U32 -> State U32"
-        },
-        {
-          "description": "Generate a new [Generation] from an old [Generation]'s state",
-          "is_a": "value",
-          "name": "next",
-          "type_annotation": "Generation uint *, Generator uint value -> Generation uint value"
+          "type_annotation": "U32, U32 -> State"
         },
         {
           "description": "Generate a [Generation] from a state",
           "is_a": "value",
           "name": "step",
-          "type_annotation": "State uint, Generator uint value -> Generation uint value"
+          "type_annotation": "State, Generator value -> Generation value"
         },
         {
-          "description": "Construct a [Generator] for 32-bit unsigned integers between two boundaries (inclusive)\n\nThis is an alias for [i32].",
+          "description": "Generate a new [Generation] from an old [Generation]'s state",
           "is_a": "value",
-          "name": "int",
-          "type_annotation": "I32, I32 -> Generator U32 I32"
+          "name": "next",
+          "type_annotation": "Generation *, Generator value -> Generation value"
         },
         {
-          "description": "Construct a [Generator] for 8-bit signed integers between two boundaries (inclusive)",
+          "description": "Create a [Generator] that always returns the same thing.",
           "is_a": "value",
-          "name": "i8",
-          "type_annotation": "I8, I8 -> Generator U8 I8"
+          "name": "static",
+          "type_annotation": "value -> Generator value"
         },
         {
-          "description": "Construct a [Generator] for 16-bit signed integers between two boundaries (inclusive)",
+          "description": "Map over the value of a [Generator].",
           "is_a": "value",
-          "name": "i16",
-          "type_annotation": "I16, I16 -> Generator U16 I16"
+          "name": "map",
+          "type_annotation": "Generator a, (a -> b) -> Generator b"
         },
         {
-          "description": "Construct a [Generator] for 32-bit signed integers between two boundaries (inclusive)",
+          "description": "Compose two [Generator]s into a single [Generator].\n\nThis works well with record builders:\n\n```\ndateGenerator =\n    { Random.chain <-\n        year: Random.int 1 2500,\n        month: Random.int 1 12,\n        day: Random.int 1 31,\n    }\n```",
           "is_a": "value",
-          "name": "i32",
-          "type_annotation": "I32, I32 -> Generator U32 I32"
+          "name": "chain",
+          "type_annotation": "Generator a, Generator b, (a, b -> c) -> Generator c"
+        },
+        {
+          "description": "Generate a list of random values.\n```\ngenerate10RandomU8s : Generator (List U8)\ngenerate10RandomU8s =\n    Random.list Random.u8 10\n```",
+          "is_a": "value",
+          "name": "list",
+          "type_annotation": "Generator a, Int * -> Generator (List a)"
+        },
+        {
+          "description": "Construct a [Generator] for 8-bit unsigned integers",
+          "is_a": "value",
+          "name": "u8",
+          "type_annotation": "Generator U8"
         },
         {
           "description": "Construct a [Generator] for 8-bit unsigned integers between two boundaries (inclusive)",
           "is_a": "value",
-          "name": "u8",
-          "type_annotation": "U8, U8 -> Generator U8 U8"
+          "name": "boundedU8",
+          "type_annotation": "U8, U8 -> Generator U8"
+        },
+        {
+          "description": "Construct a [Generator] for 8-bit signed integers",
+          "is_a": "value",
+          "name": "i8",
+          "type_annotation": "Generator I8"
+        },
+        {
+          "description": "Construct a [Generator] for 8-bit signed integers between two boundaries (inclusive)",
+          "is_a": "value",
+          "name": "boundedI8",
+          "type_annotation": "I8, I8 -> Generator I8"
+        },
+        {
+          "description": "Construct a [Generator] for 16-bit unsigned integers",
+          "is_a": "value",
+          "name": "u16",
+          "type_annotation": "Generator U16"
         },
         {
           "description": "Construct a [Generator] for 16-bit unsigned integers between two boundaries (inclusive)",
           "is_a": "value",
-          "name": "u16",
-          "type_annotation": "U16, U16 -> Generator U16 U16"
+          "name": "boundedU16",
+          "type_annotation": "U16, U16 -> Generator U16"
+        },
+        {
+          "description": "Construct a [Generator] for 16-bit signed integers",
+          "is_a": "value",
+          "name": "i16",
+          "type_annotation": "Generator I16"
+        },
+        {
+          "description": "Construct a [Generator] for 16-bit signed integers between two boundaries (inclusive)",
+          "is_a": "value",
+          "name": "boundedI16",
+          "type_annotation": "I16, I16 -> Generator I16"
+        },
+        {
+          "description": "Construct a [Generator] for 32-bit unsigned integers",
+          "is_a": "value",
+          "name": "u32",
+          "type_annotation": "Generator U32"
         },
         {
           "description": "Construct a [Generator] for 32-bit unsigned integers between two boundaries (inclusive)",
           "is_a": "value",
-          "name": "u32",
-          "type_annotation": "U32, U32 -> Generator U32 U32"
+          "name": "boundedU32",
+          "type_annotation": "U32, U32 -> Generator U32"
+        },
+        {
+          "description": "Construct a [Generator] for 32-bit signed integers",
+          "is_a": "value",
+          "name": "i32",
+          "type_annotation": "Generator I32"
+        },
+        {
+          "description": "Construct a [Generator] for 32-bit signed integers between two boundaries (inclusive)",
+          "is_a": "value",
+          "name": "boundedI32",
+          "type_annotation": "I32, I32 -> Generator I32"
         }
       ],
       "name": "Random"
